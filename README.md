@@ -5,7 +5,7 @@ FlipsideJS provides a library embeddable widgets that display data from the Flip
 ## Install
 
 ```html
-<script src="https://flipsidecrypto.com/flipside-js/flipside.js"></script>
+<script src="https://js.flipsidecrypto.com/flipside-v1.0.0.js"></script>
 ```
 
 ## Usage
