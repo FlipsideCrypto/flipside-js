@@ -54,11 +54,11 @@ flipside.create("container", "ETH", {
 ## Building
 
 ```
-$ npm run build
+$ yarn run build
 ```
 
 ## Development
 
 ```
-$ npm run dev
+$ yarn run dev
 ```
