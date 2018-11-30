@@ -1,0 +1,148 @@
+.fs-score {
+  margin-bottom: 25px;
+}
+
+.fs-token {
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.fs-token__logo {
+  margin-right: 8px;
+  height: 24px;
+  width: 24px;
+}
+
+.fs-token__name {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.fs-token__sym {
+  font-size: 12px;
+  color: #2d57ed;
+  text-transform: uppercase;
+  margin-left: 6px;
+}
+
+.fs-fcas {
+  display: flex;
+  align-items: center;
+}
+
+.fs-fcas__header {
+  margin: 0 10px 0 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.fs-fcas__what {
+  font-size: 8px;
+  position: relative;
+}
+
+.fs-tooltip {
+  padding-left: 15px;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+}
+
+.fs-tooltip__content {
+  position: relative;
+  width: 200px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  color: #000;
+  line-height: 14px;
+  padding: 5px 15px;
+  border: 1px solid rgba(200, 200, 200, 0.5);
+  &:before {
+    display: block;
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -10px;
+    top: calc(50% - 10px);
+    transform: rotate(-45deg);
+    background: #fff;
+    box-shadow: -1px -1px 0 rgba(200, 200, 200, 0.5);
+  }
+}
+
+.fs-data {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 10px;
+}
+
+.fs-value {
+  font-size: 58px;
+  font-weight: bold;
+  margin: 0 14px 0 0;
+}
+
+.fs-trend {
+  margin-right: 16px;
+}
+
+.fs-trend__icon {
+  margin-right: 2px;
+}
+
+.fs-trend__change {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  margin-bottom: 5px;
+  &--up {
+    color: #057511;
+  }
+  &--down {
+    color: #ff2700;
+  }
+  &--eq {
+    color: #808080;
+  }
+}
+
+.fs-rank {
+  text-align: center;
+  font-size: 10px;
+}
+
+.fs-rank__letter {
+  width: 32px;
+  height: 28px;
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 2px;
+  line-height: 28px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.fs-rank__letter--s {
+  background: #68ba66;
+}
+.fs-rank__letter--a {
+  background: #8fcb89;
+}
+.fs-rank__letter--b {
+  background: #b2dbad;
+}
+.fs-rank__letter--c {
+  background: #ff7a18;
+}
+.fs-rank__letter--f {
+  background: #ff2600;
+}
