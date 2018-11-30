@@ -1,6 +1,6 @@
 # FlipsideJS
 
-FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API.
+FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API, including FCAS.
 
 ## Install
 

@@ -1,7 +1,7 @@
 {
   "name": "flipside-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API, including FCAS.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
