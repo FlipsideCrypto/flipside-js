@@ -65,3 +65,7 @@ flipside.createFCAS("container", "ZEC", {
 ```
 $ yarn run build
 ```
+
+## Build Status
+
+[ ![Codeship Status for FlipsideCrypto/flipside-js](https://app.codeship.com/projects/90a5caa0-d718-0136-0d76-3af8ab8e471d/status?branch=master)](https://app.codeship.com/projects/317100)

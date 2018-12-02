@@ -8,7 +8,7 @@ class Flipside {
   }
 
   createFCAS(id, symbol, opts) {
-    let symbol = symbol.toLowerCase();
+    symbol = symbol.toLowerCase();
     const defaults = {
       score: true,
       plot: true,
