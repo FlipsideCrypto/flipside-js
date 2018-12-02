@@ -1,5 +1,7 @@
 # FlipsideJS
 
+[ ![Codeship Status for FlipsideCrypto/flipside-js](https://app.codeship.com/projects/90a5caa0-d718-0136-0d76-3af8ab8e471d/status?branch=master)](https://app.codeship.com/projects/317100)
+
 FlipsideJS provides a library of embeddable widgets that display data from the Flipside Platform API, including FCAS.
 
 To get started, request an API Key: api@flipsidecrypto.com.
@@ -65,7 +67,3 @@ flipside.createFCAS("container", "ZEC", {
 ```
 $ yarn run build
 ```
-
-## Build Status
-
-[ ![Codeship Status for FlipsideCrypto/flipside-js](https://app.codeship.com/projects/90a5caa0-d718-0136-0d76-3af8ab8e471d/status?branch=master)](https://app.codeship.com/projects/317100)
