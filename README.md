@@ -6,7 +6,7 @@ FlipsideJS provides a library of embeddable widgets that display data from the F
 
 To get started, request an API Key: api@flipsidecrypto.com.
 
-## Example
+## Live Example
 
 [View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/17/)
 
