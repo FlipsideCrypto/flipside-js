@@ -1,11 +1,17 @@
 # FlipsideJS
 
-FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API, including FCAS.
+FlipsideJS provides a library of embeddable widgets that display data from the Flipside Platform API, including FCAS.
+
+## Example
+
+[View Live FCAS Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/12/)
 
 ## Install
 
+The FlipsideJS library is made available over our CDN to ensure a speedy response time.
+
 ```html
-<script src="https://js.flipsidecrypto.com/flipside-v1.0.0.js"></script>
+<script src="https://d3sek7b10w79kp.cloudfront.net/flipside-v1.0.0.js"></script>
 ```
 
 ## Usage
@@ -14,18 +20,18 @@ FlipsideJS provides a library embeddable widgets that display data from the Flip
 <div id="container"></div>
 <script>
   var flipside = new Flipside(YOUR_FLIPSIDE_API_KEY);
-  flipside.create("container", "BTC");
+  flipside.create("container", "ZEC");
 </script>
 ```
 
 ## API
 
 _create(id: string, symbol: string, options: object)_
-Creates an FCAS widget in the given element ID.
+Creates an FCAS widget in the given DOM element ID.
 
 #### Parameters
 
-- _id_: ID of the element in which to create the widget.
+- _id_: ID of the DOM element in which to create the widget.
 - _symbol_: Symbol of the asset. e.g "BTC"
 - _opts_: Display options for the widget
 
@@ -55,10 +61,4 @@ flipside.create("container", "ETH", {
 
 ```
 $ yarn run build
-```
-
-## Development
-
-```
-$ yarn run dev
 ```
