@@ -6,14 +6,14 @@ To get started, request an API Key: api@flipsidecrypto.com.
 
 ## Live Example
 
-[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/18/)
+[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/20/)
 
 ## Install
 
 The FlipsideJS library is made available over our CDN to ensure a speedy response time.
 
 ```html
-<script src="https://d3sek7b10w79kp.cloudfront.net/flipside-v1.2.0.js"></script>
+<script src="https://d3sek7b10w79kp.cloudfront.net/flipside-v1.3.0.js"></script>
 ```
 
 ## Usage

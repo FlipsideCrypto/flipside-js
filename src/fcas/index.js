@@ -10,12 +10,17 @@ export default class FCAS extends Component {
   }
 
   async _getData() {
-    const data = await this.props.api.fetchAssetMetric(
+    const { data, success } = await this.props.api.fetchAssetMetric(
       this.props.symbol,
       "FCAS"
     );
 
-    if (!data) return;
+    if (!success || !data) {
+      setTimeout(() => {
+        return this._getData();
+      }, 2000);
+      return success;
+    }
 
     this.setState({
       loading: false,
@@ -25,12 +30,13 @@ export default class FCAS extends Component {
         name: data.asset_name
       }
     });
+    return success;
   }
 
   _update() {
     this.interval = setInterval(async () => {
       await this._getData();
-    }, 30000);
+    }, 300000);
   }
 
   componentWillUnmount() {
@@ -38,7 +44,17 @@ export default class FCAS extends Component {
   }
 
   async componentDidMount() {
-    await this._getData();
+    const success = await this._getData();
+    if (!success) {
+      this.setState({
+        loading: false,
+        metric: {
+          fcas: "NA",
+          change: "NA",
+          name: "NA"
+        }
+      });
+    }
     this._update();
   }
 

@@ -8,16 +8,22 @@ export default class API {
     });
   }
 
-  async _fetch(url, params, retryCount = 0, retryMax = 100) {
-    const res = await this.client.get(url, { params: params });
-    if (res.status >= 200 || res.status < 300) {
-      return res.data;
+  async _fetch(url, params, retryCount = 0, retryMax = 15) {
+    let res;
+    try {
+      res = await this.client.get(url, { params: params });
+      if (res.status >= 200 && res.status < 300) {
+        return { data: res.data, success: true };
+      }
+    } catch (e) {
+      console.log(
+        `Failed to fetch data from: "${url}". \nError message: "${e}"`
+      );
     }
     if (retryCount < retryMax) {
       return await this._fetch(url, params, retryCount + 1);
-    } else {
-      throw `Failed to fetch data from: ${url}.`;
     }
+    return { data: null, success: false };
   }
 
   async fetchAssetMetric(symbol, metric = "FCAS", days = 7) {

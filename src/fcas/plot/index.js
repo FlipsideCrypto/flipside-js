@@ -14,16 +14,23 @@ export default class Plot extends Component {
   }
 
   async _getData() {
-    let data = await this.props.api.fetchFCASDistribution();
+    const { data, success } = await this.props.api.fetchFCASDistribution();
+    if (!success || !data) {
+      setTimeout(() => {
+        return this._getData();
+      }, 2000);
+      return success;
+    }
     if (data && data.length > 0) {
       this.setState({ loading: false, distribution: data });
     }
+    return success;
   }
 
   _update() {
     this.interval = setInterval(async () => {
       await this._getData();
-    }, 30000);
+    }, 300000);
   }
 
   componentWillUnmount() {
@@ -31,7 +38,10 @@ export default class Plot extends Component {
   }
 
   async componentDidMount() {
-    await this._getData();
+    const success = await this._getData();
+    if (!success) {
+      this.setState({ loading: false, distribution: [] });
+    }
     this._update();
   }
 
