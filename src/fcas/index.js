@@ -6,17 +6,17 @@ import "./styles.scss";
 export default class FCAS extends Component {
   constructor() {
     super();
-    this.state = {
-      loading: true,
-      metric: null
-    };
+    this.state = { loading: true, metric: null };
   }
 
-  async componentDidMount() {
+  async _getData() {
     const data = await this.props.api.fetchAssetMetric(
       this.props.symbol,
       "FCAS"
     );
+
+    if (!data) return;
+
     this.setState({
       loading: false,
       metric: {
@@ -25,6 +25,21 @@ export default class FCAS extends Component {
         name: data.asset_name
       }
     });
+  }
+
+  _update() {
+    this.interval = setInterval(async () => {
+      await this._getData();
+    }, 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  async componentDidMount() {
+    await this._getData();
+    this._update();
   }
 
   render({ opts, api, symbol }, { metric, loading }) {

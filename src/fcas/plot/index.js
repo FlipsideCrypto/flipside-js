@@ -13,20 +13,40 @@ export default class Plot extends Component {
     };
   }
 
+  async _getData() {
+    let data = await this.props.api.fetchFCASDistribution();
+    if (data && data.length > 0) {
+      this.setState({ loading: false, distribution: data });
+    }
+  }
+
+  _update() {
+    this.interval = setInterval(async () => {
+      await this._getData();
+    }, 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   async componentDidMount() {
-    const data = await this.props.api.fetchFCASDistribution();
-    this.setState({
-      loading: false,
-      distribution: data
-    });
+    await this._getData();
+    this._update();
   }
 
   render({ metric, symbol }, { loading, distribution }) {
     if (loading) return null;
+    let highLightedAssetList = [];
+    if (symbol == "eth" || symbol == "btc") {
+      highLightedAssetList = ["ZEC", "XRP"];
+    } else {
+      highLightedAssetList = ["BTC"];
+    }
 
     const xPos = PLOT_SCALE * metric.fcas;
     const highlightedAssets = distribution
-      .filter(i => ["ETH", "BTC"].indexOf(i.symbol) > -1)
+      .filter(i => highLightedAssetList.indexOf(i.symbol) > -1)
       .filter(i => i.symbol != symbol.toUpperCase());
 
     let lastHighlightX, lastHighlightY;
