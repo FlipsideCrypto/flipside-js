@@ -7,7 +7,7 @@ class Flipside {
     this.api = new API(apiKey);
   }
 
-  createFCAS(id, symbol, opts) {
+  createFCAS(el, symbol, opts) {
     symbol = symbol.toLowerCase();
     const defaults = {
       score: true,
@@ -15,14 +15,14 @@ class Flipside {
       symbol: true,
       logo: true,
       trend: true,
-      rank: true
+      rank: true,
+      dark: false
     };
     const mergedOpts = Object.assign({}, defaults, opts);
 
-    render(
-      <FCAS symbol={symbol} api={this.api} opts={mergedOpts} />,
-      document.getElementById(id)
-    );
+    const element = typeof el === "string" ? document.getElementById(el) : el;
+
+    render(<FCAS symbol={symbol} api={this.api} opts={mergedOpts} />, element);
   }
 }
 

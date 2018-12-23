@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>flipside.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="flipside.js"></script>
+    <script src="flipside-v1.4.0.js"></script>
     <style>
       .wrapper {
         display: flex;
@@ -16,9 +16,17 @@
   </head>
   <body>
     <div class="wrapper"><div id="widget-0"></div></div>
+    <div class="wrapper" style="background-color: #000">
+      <div id="widget-1"></div>
+    </div>
     <script>
-      const flipside = new Flipside("<YourApiKey>");
-      flipside.create("widget-0", "btc");
+      const flipside = new Flipside("<YOUR_API_KEY>");
+      flipside.createFCAS("widget-0", "btc");
+      flipside.createFCAS("widget-1", "btc", {
+        dark: true,
+        logo: false,
+        mini: true
+      });
     </script>
   </body>
 </html>

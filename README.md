@@ -46,6 +46,7 @@ Creates an FCAS widget in the given DOM element ID.
 - `symbol: boolean`: Show/hide the asset's symbol.
 - `trend: boolean`: Show/hide the 7 day trend.
 - `rank: boolean`: Show/hide the FCAS rank.
+- `dark: boolean`: Renders the widget with white text.
 
 #### Default options
 

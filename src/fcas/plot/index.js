@@ -45,7 +45,7 @@ export default class Plot extends Component {
     this._update();
   }
 
-  render({ metric, symbol }, { loading, distribution }) {
+  render({ opts, metric, symbol }, { loading, distribution }) {
     if (loading) return null;
     let highLightedAssetList = [];
     if (symbol == "eth" || symbol == "btc") {
@@ -72,14 +72,14 @@ export default class Plot extends Component {
           </linearGradient>
         </defs>
 
-        <g>
+        <g fill={opts.dark ? "#fff" : "#000"}>
           <circle cx="0" cy="44" r="2.5" />
           <text x="6" y="47" font-size="8">
             Coins
           </text>
         </g>
 
-        <g fill="rgba(0, 0, 0, 0.4)">
+        <g fill={opts.dark ? "rgba(255, 255,255, 0.5)" : "rgba(0, 0, 0, 0.4)"}>
           {distribution.map(i => (
             <circle cx={PLOT_SCALE * i.value} cy="58" r="2.5" />
           ))}
@@ -93,7 +93,12 @@ export default class Plot extends Component {
           fill="url(#gradient)"
         />
 
-        <text y="85" text-anchor="middle" class="fs-plot__x">
+        <text
+          y="85"
+          text-anchor="middle"
+          class="fs-plot__x"
+          fill={opts.dark ? "#fff" : "#000"}
+        >
           <tspan x="0">0</tspan>
           <tspan x="50%">500</tspan>
           <tspan x="100%">1000</tspan>
@@ -103,16 +108,18 @@ export default class Plot extends Component {
           <tspan x={xPos} y="14">
             {symbol.toUpperCase()}
           </tspan>
-          <tspan x={xPos} y="104">
-            {metric.fcas}
-          </tspan>
+          {!opts.mini && (
+            <tspan x={xPos} y="104">
+              {metric.fcas}
+            </tspan>
+          )}
         </text>
 
         <line
           x1={xPos}
           y1="16"
           x2={xPos}
-          y2="92"
+          y2={opts.mini ? 60 : 92}
           style="stroke:rgb(45,87,237); stroke-width:1"
         />
 
@@ -124,7 +131,7 @@ export default class Plot extends Component {
           }
           lastHighlightX = xPos;
           return (
-            <g>
+            <g fill={opts.dark ? "#fff" : "#000"}>
               <text
                 x={xPos}
                 y={44 - yOffset}

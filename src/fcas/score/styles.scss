@@ -2,6 +2,14 @@
   margin-bottom: 25px;
 }
 
+.fs-score--dark {
+  color: #fff;
+}
+
+.fs-score--mini {
+  margin-bottom: 10px;
+}
+
 .fs-token {
   display: flex;
   align-items: center;
@@ -83,6 +91,13 @@
   font-size: 10px;
 }
 
+.fs-data-mini {
+  font-size: 14px;
+  color: #2d57ed;
+  display: flex;
+  align-items: center;
+}
+
 .fs-value {
   font-size: 58px;
   font-weight: bold;
@@ -130,6 +145,13 @@
   line-height: 28px;
   margin-bottom: 5px;
   text-transform: uppercase;
+  color: #000;
+}
+.fs-rank__letter--mini {
+  height: 22px;
+  line-height: 22px;
+  width: 50px;
+  margin: 0 0 0 auto;
 }
 .fs-rank__letter--s {
   background: #68ba66;
