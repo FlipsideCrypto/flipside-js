@@ -6,7 +6,7 @@ To get started, request an API Key: api@flipsidecrypto.com.
 
 ## Live Example
 
-[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/20/)
+[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/24/)
 
 ## Install
 
