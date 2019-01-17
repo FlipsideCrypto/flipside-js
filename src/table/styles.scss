@@ -1,0 +1,105 @@
+.fs-table {
+  white-space: nowrap;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  table {
+    border-spacing: 0;
+  }
+
+  th {
+    width: 100%;
+    text-align: left;
+  }
+
+  td {
+    text-align: right;
+    padding-left: 5%;
+  }
+
+  th,
+  td {
+    font-weight: normal;
+    line-height: 44px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.fs-table-fcas {
+  th {
+    font-weight: bold;
+  }
+}
+
+.fs-table-fcas-score {
+  font-weight: bold;
+}
+
+.fs-table-rank {
+  text-align: center;
+  font-size: 16px;
+  width: 32px;
+  height: 28px;
+  display: block;
+  font-weight: bold;
+  border-radius: 2px;
+  line-height: 28px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  color: #000;
+}
+.fs-table-rank--s {
+  background: #68ba66;
+}
+.fs-table-rank--a {
+  background: #8fcb89;
+}
+.fs-table-rank--b {
+  background: #b2dbad;
+}
+.fs-table-rank--c {
+  background: #ff7a18;
+}
+.fs-table-rank--f {
+  background: #ff2600;
+}
+
+.fs-table-trend {
+  margin-left: 10px;
+  &--up {
+    color: #057511;
+  }
+  &--down {
+    color: #ff2700;
+  }
+  &--eq {
+    color: #808080;
+  }
+}
+
+.fs-table-trend__icon {
+  margin-right: 2px;
+}
+
+.fs-table-trend__change {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  margin-bottom: 5px;
+  &--up {
+    color: #057511;
+  }
+  &--down {
+    color: #ff2700;
+  }
+  &--eq {
+    color: #808080;
+  }
+}
+
+.fs-table-link {
+  line-height: 40px;
+}

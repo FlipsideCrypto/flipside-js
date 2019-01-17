@@ -18,20 +18,26 @@
         padding: 20px;
         width: 500px;
       }
+
+      #widget-1 {
+        background: black;
+      }
     </style>
   </head>
   <body>
     <div class="wrapper"><div id="widget-0"></div></div>
-
     <div class="wrapper"><div id="widget-1"></div></div>
+    <div class="wrapper"><div id="widget-3"></div></div>
 
     <script>
       const flipside = new Flipside("<YOUR_API_KEY>");
       flipside.createFCAS("widget-0", "btc");
       flipside.createFCAS("widget-1", "btc", {
         logo: false,
-        mini: true
+        mini: true,
+        dark: true
       });
+      flipside.createTable("widget-3", "btc");
     </script>
   </body>
 </html>

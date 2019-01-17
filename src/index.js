@@ -1,10 +1,16 @@
 import { h, render } from "preact";
 import FCAS from "./fcas";
 import API from "./api";
+import Table from "./table";
 
 class Flipside {
   constructor(apiKey) {
     this.api = new API(apiKey);
+  }
+
+  createTable(el, symbol) {
+    const element = typeof el === "string" ? document.getElementById(el) : el;
+    render(<Table symbol={symbol} api={this.api} />, element);
   }
 
   createFCAS(el, symbol, opts) {

@@ -62,7 +62,7 @@ export default class Plot extends Component {
     let lastHighlightX, lastHighlightY;
 
     return (
-      <svg width="100%" height="104" overflow="visible">
+      <svg class="fs-plot" width="100%" height="104" overflow="visible">
         <defs>
           <linearGradient id="gradient">
             <stop stop-color="#ff2600" offset="0%" />
@@ -101,25 +101,6 @@ export default class Plot extends Component {
           <tspan x="100%">1000</tspan>
         </text>
 
-        <text class="fs-plot__blue" text-anchor="middle">
-          <tspan x={xPos} y="14">
-            {symbol.toUpperCase()}
-          </tspan>
-          {!opts.mini && (
-            <tspan x={xPos} y="104">
-              {metric.fcas}
-            </tspan>
-          )}
-        </text>
-
-        <line
-          x1={xPos}
-          y1="16"
-          x2={xPos}
-          y2={opts.mini ? 60 : 92}
-          style="stroke:rgb(45,87,237); stroke-width:1"
-        />
-
         {highlightedAssets.map(a => {
           let yOffset = 0;
           const xPos = `${(a.value / 1000) * 100}%`;
@@ -142,11 +123,34 @@ export default class Plot extends Component {
                 y1={47 - yOffset}
                 x2={xPos}
                 y2="60"
-                style="stroke:rgb(0,0,0); stroke-width:0.5"
+                style={`stroke:rgb(${
+                  opts.dark ? "255, 255, 255" : "0,0,0"
+                }); stroke-width:0.5`}
               />
             </g>
           );
         })}
+
+        {/* Blue FCAS Marker */}
+        <text class="fs-plot__blue" text-anchor="middle">
+          <tspan x={xPos} y={opts.mini ? 44 : 14}>
+            {symbol.toUpperCase()}
+          </tspan>
+          {!opts.mini && (
+            <tspan x={xPos} y="104">
+              {metric.fcas}
+            </tspan>
+          )}
+        </text>
+
+        {/* Blue FCAS Marker Line */}
+        <line
+          x1={xPos}
+          y1={opts.mini ? 46 : 16}
+          x2={xPos}
+          y2={opts.mini ? 60 : 92}
+          style="stroke:rgb(45,87,237); stroke-width:1"
+        />
       </svg>
     );
   }
