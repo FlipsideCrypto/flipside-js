@@ -16,6 +16,7 @@ class Flipside {
       logo: true,
       trend: true,
       rank: true,
+      header: true,
       dark: false
     };
     const mergedOpts = Object.assign({}, defaults, opts);

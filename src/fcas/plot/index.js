@@ -54,7 +54,7 @@ export default class Plot extends Component {
       highLightedAssetList = ["BTC"];
     }
 
-    const xPos = PLOT_SCALE * metric.fcas;
+    const xPos = `${(metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
       .filter(i => highLightedAssetList.indexOf(i.symbol) > -1)
       .filter(i => i.symbol != symbol.toUpperCase());
@@ -62,7 +62,7 @@ export default class Plot extends Component {
     let lastHighlightX, lastHighlightY;
 
     return (
-      <svg width={PLOT_WIDTH} height="120" overflow="visible">
+      <svg width="100%" height="104" overflow="visible">
         <defs>
           <linearGradient id="gradient">
             <stop stop-color="#ff2600" offset="0%" />
@@ -79,20 +79,17 @@ export default class Plot extends Component {
           </text>
         </g>
 
+        {/* Distribution Dots */}
         <g fill={opts.dark ? "rgba(255, 255,255, 0.5)" : "rgba(0, 0, 0, 0.4)"}>
           {distribution.map(i => (
-            <circle cx={PLOT_SCALE * i.value} cy="58" r="2.5" />
+            <circle cx={`${(i.value / 1000) * 100}%`} cy="58" r="2.5" />
           ))}
         </g>
 
-        <rect
-          x="0"
-          y="64"
-          width={PLOT_WIDTH}
-          height="8"
-          fill="url(#gradient)"
-        />
+        {/* Gradient Line */}
+        <rect x="0" y="64" width="100%" height="6" fill="url(#gradient)" />
 
+        {/* Line Labels */}
         <text
           y="85"
           text-anchor="middle"
@@ -125,7 +122,7 @@ export default class Plot extends Component {
 
         {highlightedAssets.map(a => {
           let yOffset = 0;
-          const xPos = PLOT_SCALE * a.value;
+          const xPos = `${(a.value / 1000) * 100}%`;
           if (lastHighlightX && xPos - lastHighlightX < 10) {
             yOffset = 10;
           }

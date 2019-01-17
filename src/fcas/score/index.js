@@ -33,18 +33,20 @@ export default class Score extends Component {
 
     return (
       <div class={wrapperClass}>
-        <header class="fs-token">
-          {opts.logo && (
-            <img
-              class="fs-token__logo"
-              src={`https://s3.amazonaws.com/fsc-crypto-icons/svg/color/${symbol}.svg`}
-            />
-          )}
-          <h1 class="fs-token__name">
-            {metric.name}
-            {opts.symbol && <span class="fs-token__sym">{symbol}</span>}
-          </h1>
-        </header>
+        {opts.header && (
+          <header class="fs-token">
+            {opts.logo && (
+              <img
+                class="fs-token__logo"
+                src={`https://s3.amazonaws.com/fsc-crypto-icons/svg/color/${symbol}.svg`}
+              />
+            )}
+            <h1 class="fs-token__name">
+              {metric.name}
+              {opts.symbol && <span class="fs-token__sym">{symbol}</span>}
+            </h1>
+          </header>
+        )}
 
         <DataComponent opts={opts} metric={metric} rank={rank} />
       </div>
