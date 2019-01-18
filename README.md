@@ -4,9 +4,10 @@ FlipsideJS is a library of embeddable widgets that display data from the Flipsid
 
 To get started, request an API Key: api@flipsidecrypto.com.
 
-## Live Example
+## Live Examples
 
 [View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/24/)
+[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/7/)
 
 ## Install
 
@@ -18,12 +19,27 @@ The FlipsideJS library is made available over our CDN to ensure a speedy respons
 
 ## Usage
 
+To render an FCAS widget:
+
 ```html
 <div id="container"></div>
 <script>
   var flipside = new Flipside(YOUR_FLIPSIDE_API_KEY);
   // To render an FCAS widget
   flipside.createFCAS("container", "ZEC");
+</script>
+```
+
+To render a Table Widget:
+
+```html
+<div id="container"></div>
+<script>
+  var flipside = new Flipside(YOUR_FLIPSIDE_API_KEY);
+  // To render an FCAS widget
+  flipside.createTable("container", "ZEC", {
+    dark: true
+  });
 </script>
 ```
 
@@ -59,6 +75,29 @@ flipside.createFCAS("container", "ZEC", {
   symbol: true,
   trend: true,
   rank: true
+});
+```
+
+_creatTable(id: string, symbol: string, options: object)_
+Creates a Table widget in the given DOM element ID. Widget background is transparent in order to inherit the page background color.
+
+#### Parameters
+
+- _id_: ID of the DOM element in which to create the widget.
+- _symbol_: Symbol of the asset. e.g "BTC"
+- _opts_: Display options for the widget
+
+#### Options
+
+- `dark: boolean`: Renders the widget with white text.
+- `borderColor: string`: Hexcode of the border table border color. Defaults to "#737e8d".
+
+#### Default options
+
+```js
+flipside.createTable("container", "ZEC", {
+  dark: true,
+  borderColor: "#737e8d"
 });
 ```
 

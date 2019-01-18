@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default class API {
   constructor(apiKey) {
+    this.key = apiKey;
     this.client = axios.create({
       baseURL: "https://platform-api.flipsidecrypto.com/api/v1",
       params: { api_key: apiKey }

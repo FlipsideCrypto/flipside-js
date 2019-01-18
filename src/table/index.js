@@ -43,6 +43,13 @@ export default class Table extends Component {
     });
   }
 
+  onClickLearnMore() {
+    const learnMoreUrl = `https://platform-api.flipsidecrypto.com/track/${
+      this.props.api.key
+    }`;
+    window.location.assign(learnMoreUrl);
+  }
+
   render({ dark }, { loading, metrics }) {
     if (loading) {
       return null;
@@ -66,10 +73,6 @@ export default class Table extends Component {
     let tdStyle = this.props.borderColor
       ? { borderBottom: `1px solid ${this.props.borderColor}` }
       : { borderBottom: "1px solid #737e8d" };
-
-    const learnMoreUrl = this.props.learnMoreUrl
-      ? this.props.learnMoreUrl
-      : "https://flipsidecrypto.com/monitors";
 
     return (
       <div class={`fs-table fs-table--${dark ? "dark" : "light"}`}>
@@ -116,7 +119,7 @@ export default class Table extends Component {
             </td>
           </tr>
         </table>
-        <a class="fs-table-link" href={learnMoreUrl}>
+        <a class="fs-table-link" onClick={this.onClickLearnMore.bind(this)}>
           Want to know more about these scores?
         </a>
       </div>

@@ -116,4 +116,9 @@
 .fs-table-link {
   line-height: 40px;
   color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
