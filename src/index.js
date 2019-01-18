@@ -8,9 +8,14 @@ class Flipside {
     this.api = new API(apiKey);
   }
 
-  createTable(el, symbol) {
+  createTable(el, symbol, opts) {
+    const defaults = {
+      dark: false
+    };
+    const mergedOpts = Object.assign({}, defaults, opts);
+
     const element = typeof el === "string" ? document.getElementById(el) : el;
-    render(<Table symbol={symbol} api={this.api} />, element);
+    render(<Table symbol={symbol} api={this.api} {...mergedOpts} />, element);
   }
 
   createFCAS(el, symbol, opts) {

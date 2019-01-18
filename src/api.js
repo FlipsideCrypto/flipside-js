@@ -8,7 +8,7 @@ export default class API {
     });
   }
 
-  async _fetch(url, params, retryCount = 0, retryMax = 15) {
+  async _fetch(url, params = {}, retryCount = 0, retryMax = 15) {
     let res;
     try {
       res = await this.client.get(url, { params: params });
@@ -26,11 +26,16 @@ export default class API {
     return { data: null, success: false };
   }
 
-  async fetchAssetMetric(symbol, metric = "FCAS", days = 7) {
+  async fetchAssetMetric(symbol, metric, days = 7) {
     const sym = `${symbol}`.toUpperCase();
     return await this._fetch(`/assets/${sym}/metrics/${metric}`, {
       change_over: days
     });
+  }
+
+  async fetchAssetMetrics(symbol) {
+    const sym = `${symbol}`.toUpperCase();
+    return await this._fetch(`/assets/${sym}/metrics`);
   }
 
   async fetchFCASDistribution(asset) {

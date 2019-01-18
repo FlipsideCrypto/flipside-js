@@ -1,8 +1,17 @@
 .fs-table {
   white-space: nowrap;
   font-size: 18px;
+  color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  &--light {
+    color: #000;
+  }
+
+  &--dark {
+    color: #fff;
+  }
 
   table {
     border-spacing: 0;
@@ -66,14 +75,19 @@
 }
 
 .fs-table-trend {
-  margin-left: 10px;
+  background: center left no-repeat;
+  margin-left: 12px;
+  padding-left: 12px;
   &--up {
-    color: #057511;
+    background-image: url(./images/icon-up.svg);
+    color: #30a92d;
   }
   &--down {
+    background-image: url(./images/icon-down.svg);
     color: #ff2700;
   }
   &--eq {
+    background-image: url(./images/icon-eq.svg);
     color: #808080;
   }
 }
@@ -102,4 +116,5 @@
 
 .fs-table-link {
   line-height: 40px;
+  color: inherit;
 }
