@@ -14,7 +14,7 @@ To get started, request an API Key: api@flipsidecrypto.com.
 The FlipsideJS library is made available over our CDN to ensure a speedy response time.
 
 ```html
-<script src="https://d3sek7b10w79kp.cloudfront.net/flipside-v1.4.0.js"></script>
+<script src="https://d3sek7b10w79kp.cloudfront.net/flipside-v1.5.2.js"></script>
 ```
 
 ## Usage
