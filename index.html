@@ -19,9 +19,12 @@
         width: 500px;
       }
 
-      #widget-1,
-      #widget-2 {
+      #widget-1 {
         background: black;
+      }
+      #widget-2 {
+        width: 300px;
+        background: #33435e;
       }
     </style>
   </head>
@@ -31,14 +34,17 @@
     <div class="wrapper"><div id="widget-2"></div></div>
 
     <script>
-      const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
+      const flipside = new Flipside("<YOUR-API-KEY>");
       flipside.createFCAS("widget-0", "btc");
       flipside.createFCAS("widget-1", "btc", {
         logo: false,
         mini: true,
         dark: true
       });
-      flipside.createTable("widget-2", "btc", { dark: true });
+      flipside.createTable("widget-2", "btc", {
+        dark: true,
+        borderColor: "#737e8d"
+      });
     </script>
   </body>
 </html>

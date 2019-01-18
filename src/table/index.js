@@ -63,18 +63,26 @@ export default class Table extends Component {
       rank = "s";
     }
 
+    let tdStyle = this.props.borderColor
+      ? { borderBottom: `1px solid ${this.props.borderColor}` }
+      : { borderBottom: "1px solid #737e8d" };
+
+    const learnMoreUrl = this.props.learnMoreUrl
+      ? this.props.learnMoreUrl
+      : "https://flipsidecrypto.com/monitors";
+
     return (
       <div class={`fs-table fs-table--${dark ? "dark" : "light"}`}>
         <table>
           <tr class="fs-table-fcas">
-            <th>FCAS</th>
-            <td>
+            <th style={tdStyle}>FCAS</th>
+            <td style={tdStyle}>
               <span class={`fs-table-rank fs-table-rank--${rank}`}>{rank}</span>
             </td>
-            <td>
+            <td style={tdStyle}>
               <span class="fs-table-fcas-score">{fcas.value}</span>
             </td>
-            <td>
+            <td style={tdStyle}>
               7d
               <span class={`fs-table-trend fs-table-trend--${fcas.trend}`}>
                 {calculateDiff(fcas.value, fcas.percent_change)}
@@ -83,9 +91,11 @@ export default class Table extends Component {
           </tr>
 
           <tr>
-            <th colspan="2">User Activity</th>
-            <td>{utility.value}</td>
-            <td>
+            <th style={tdStyle} colspan="2">
+              User Activity
+            </th>
+            <td style={tdStyle}>{utility.value}</td>
+            <td style={tdStyle}>
               7d
               <span class={`fs-table-trend fs-table-trend--${utility.trend}`}>
                 {calculateDiff(utility.value, utility.percent_change)}
@@ -94,9 +104,11 @@ export default class Table extends Component {
           </tr>
 
           <tr>
-            <th colspan="2">Developer Behavior</th>
-            <td>{dev.value}</td>
-            <td>
+            <th style={tdStyle} colspan="2">
+              Developer Behavior
+            </th>
+            <td style={tdStyle}>{dev.value}</td>
+            <td style={tdStyle}>
               7d
               <span class={`fs-table-trend fs-table-trend--${dev.trend}`}>
                 {calculateDiff(dev.value, dev.percent_change)}
@@ -104,7 +116,7 @@ export default class Table extends Component {
             </td>
           </tr>
         </table>
-        <a class="fs-table-link" href="#">
+        <a class="fs-table-link" href={learnMoreUrl}>
           Want to know more about these scores?
         </a>
       </div>
