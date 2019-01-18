@@ -44,7 +44,7 @@ export default class Table extends Component {
   }
 
   onClickLearnMore() {
-    const learnMoreUrl = `https://platform-api.flipsidecrypto.com/track/${
+    const learnMoreUrl = `https://platform-api.flipsidecrypto.com/track/table-widget/${
       this.props.api.key
     }`;
     window.location.assign(learnMoreUrl);
