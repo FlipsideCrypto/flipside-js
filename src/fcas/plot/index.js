@@ -1,8 +1,11 @@
 import { h, Component } from "preact";
+import { sortObjectArray } from "../../utils";
 import "./styles.scss";
 
 const PLOT_WIDTH = 240;
 const PLOT_SCALE = PLOT_WIDTH / 1000;
+const DEFAULT_BUCKET_DISTANCE = 35;
+const DEFAULT_LINE_DISTANCE = 25;
 
 export default class Plot extends Component {
   constructor() {
@@ -26,7 +29,10 @@ export default class Plot extends Component {
     }
 
     if (data && data.length > 0) {
-      this.setState({ loading: false, distribution: data });
+      this.setState({
+        loading: false,
+        distribution: data
+      });
     }
     return success;
   }
@@ -59,7 +65,6 @@ export default class Plot extends Component {
   _update() {
     this.interval = setInterval(() => {
       this._getData();
-      this._getHighlights();
     }, 300000);
   }
 
@@ -68,15 +73,15 @@ export default class Plot extends Component {
   }
 
   async componentDidMount() {
+    this._getHighlights();
     const success = await this._getData();
     if (!success) {
-      this.setState({ loading: false, distribution: [] });
+      this.setState({
+        loading: false,
+        distribution: []
+      });
     }
     this._update();
-  }
-
-  componentWillMount() {
-    this._getHighlights();
   }
 
   getHighlights() {
@@ -94,6 +99,85 @@ export default class Plot extends Component {
     return highlights;
   }
 
+  getBuckets() {
+    if (this.state.highlights.length == 0) {
+      return [];
+    }
+
+    let { bucketDistance } = this.props.opts;
+    if (!bucketDistance) {
+      bucketDistance = DEFAULT_BUCKET_DISTANCE;
+    }
+
+    let buckets = [];
+    let currentBucketIndex = 0;
+    let anchorX = 0;
+    let scoresToBuckets = {};
+    let highlightLength = this.state.highlights.length;
+    let sortedHighLights = sortObjectArray(this.state.highlights, "value");
+
+    for (let i = 0; i < highlightLength; i++) {
+      let currentAsset = sortedHighLights[i];
+      // If first item
+      if (i === 0) {
+        buckets[currentBucketIndex] = [];
+        buckets[currentBucketIndex].push(currentAsset);
+        scoresToBuckets[currentAsset.value] = currentBucketIndex;
+        anchorX = currentAsset.value;
+        continue;
+      }
+      const nextAsset =
+        i !== highlightLength - 1 ? sortedHighLights[i + 1] : null;
+
+      // const prevDist = Math.abs(prevAsset.value - currentAsset.value);
+      const prevDist = Math.abs(anchorX - currentAsset.value);
+      const nextDist = nextAsset
+        ? Math.abs(nextAsset.value - currentAsset.value)
+        : 1000000;
+
+      // Is closer to previous or next?
+      if (prevDist < nextDist && prevDist <= bucketDistance) {
+        buckets[currentBucketIndex].push(currentAsset);
+        scoresToBuckets[currentAsset.value] = currentBucketIndex;
+      } else {
+        currentBucketIndex++;
+        buckets[currentBucketIndex] = [];
+        buckets[currentBucketIndex].push(currentAsset);
+        scoresToBuckets[currentAsset.value] = currentBucketIndex;
+        anchorX = currentAsset.value;
+      }
+    }
+    return { buckets, scoresToBuckets };
+  }
+
+  getYCoords(asset, buckets, scoresToBuckets) {
+    let { lineDistance } = this.props.opts;
+    if (!lineDistance) {
+      lineDistance = DEFAULT_LINE_DISTANCE;
+    }
+
+    let bucketIndex = scoresToBuckets[asset.value];
+    let bucket = buckets[bucketIndex];
+    let index = 0;
+
+    let toClose = false;
+    for (let i = 0; i < bucket.length; i++) {
+      let ba = bucket[i];
+      if (ba.symbol == asset.symbol) {
+        index = i;
+        if (i === 0) {
+          break;
+        }
+        const prevAsset = bucket[i - 1];
+        if (prevAsset && Math.abs(prevAsset.value - ba.value) <= lineDistance) {
+          toClose = true;
+        }
+        break;
+      }
+    }
+    return { y: 44 - 10 * index, toClose };
+  }
+
   render({ opts, metric, symbol }, { loading, distribution }) {
     if (loading) return null;
 
@@ -107,7 +191,7 @@ export default class Plot extends Component {
       .filter(i => highlightedSymbols.indexOf(i.symbol) > -1)
       .filter(i => i.symbol != symbol.toUpperCase());
 
-    let lastHighlightX, lastHighlightY;
+    const { buckets, scoresToBuckets } = this.getBuckets();
 
     return (
       <svg class="fs-plot" width="100%" height="104" overflow="visible">
@@ -150,31 +234,24 @@ export default class Plot extends Component {
         </text>
 
         {highlightedAssets.map(a => {
-          let yOffset = 0;
           const xPos = `${(a.value / 1000) * 100}%`;
-          if (lastHighlightX && xPos - lastHighlightX < 10) {
-            yOffset = 10;
-          }
-          lastHighlightX = xPos;
+          let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
           return (
             <g fill={opts.dark ? "#fff" : "#000"}>
-              <text
-                x={xPos}
-                y={44 - yOffset}
-                text-anchor="middle"
-                font-size="10"
-              >
+              <text x={xPos} y={y} text-anchor="middle" font-size="10">
                 {a.symbol}
               </text>
-              <line
-                x1={xPos}
-                y1={47 - yOffset}
-                x2={xPos}
-                y2="60"
-                style={`stroke:rgb(${
-                  opts.dark ? "255, 255, 255" : "0,0,0"
-                }); stroke-width:0.5`}
-              />
+              {toClose === false && (
+                <line
+                  x1={xPos}
+                  y1={y + 3}
+                  x2={xPos}
+                  y2="60"
+                  style={`stroke:rgb(${
+                    opts.dark ? "255, 255, 255" : "0,0,0"
+                  }); stroke-width:0.5`}
+                />
+              )}
             </g>
           );
         })}

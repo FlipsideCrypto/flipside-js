@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>flipside.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="flipside-v1.5.2.js"></script>
+    <script src="flipside-v1.5.4.js"></script>
     <style>
       body {
         padding: 0;
@@ -34,8 +34,10 @@
     <div class="wrapper"><div id="widget-2"></div></div>
 
     <script>
-      const flipside = new Flipside("<YOUR-API-KEY>");
-      flipside.createFCAS("widget-0", "btc");
+      const flipside = new Flipside("<YOUR_API_KEY>");
+      flipside.createFCAS("widget-0", "btc", {
+        highlights: ["EOS", "ETH", "QTUM", "ZRX", "BTC", "ZEC", "LTC"]
+      });
       flipside.createFCAS("widget-1", "btc", {
         logo: false,
         mini: true,
