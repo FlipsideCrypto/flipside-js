@@ -9,27 +9,57 @@ export default class Plot extends Component {
     super();
     this.state = {
       loading: true,
-      distribution: null
+      distribution: null,
+      highlights: [],
+      highlightedSymbols: []
     };
   }
 
   async _getData() {
     const { data, success } = await this.props.api.fetchFCASDistribution();
+
     if (!success || !data) {
       setTimeout(() => {
         return this._getData();
       }, 2000);
       return success;
     }
+
     if (data && data.length > 0) {
       this.setState({ loading: false, distribution: data });
     }
     return success;
   }
 
+  async _getHighlights() {
+    const highlights = this.getHighlights();
+    const nextHighlightState = [];
+    const nextHighlightedSymbolState = [];
+    await Promise.all(
+      highlights.map(async asset => {
+        const { data, success } = await this.props.api.fetchAssetMetric(
+          asset,
+          "fcas"
+        );
+        if (success === true && data) {
+          nextHighlightState.push(data);
+          nextHighlightedSymbolState.push(data.symbol);
+        }
+      })
+    );
+    if (nextHighlightState.length < this.state.highlights.length) {
+      return;
+    }
+    this.setState({
+      highlights: nextHighlightState,
+      highlightedSymbols: nextHighlightedSymbolState
+    });
+  }
+
   _update() {
-    this.interval = setInterval(async () => {
-      await this._getData();
+    this.interval = setInterval(() => {
+      this._getData();
+      this._getHighlights();
     }, 300000);
   }
 
@@ -45,18 +75,36 @@ export default class Plot extends Component {
     this._update();
   }
 
+  componentWillMount() {
+    this._getHighlights();
+  }
+
+  getHighlights() {
+    let { symbol, opts } = this.props;
+    symbol = symbol.toLowerCase();
+    if (opts && opts.highlights && opts.highlights.length > 0) {
+      return opts.highlights;
+    }
+    let highlights = [];
+    if (symbol == "eth" || symbol == "btc") {
+      highlights = ["ZEC", "XRP"];
+    } else {
+      highlights = ["BTC"];
+    }
+    return highlights;
+  }
+
   render({ opts, metric, symbol }, { loading, distribution }) {
     if (loading) return null;
-    let highLightedAssetList = [];
-    if (symbol == "eth" || symbol == "btc") {
-      highLightedAssetList = ["ZEC", "XRP"];
-    } else {
-      highLightedAssetList = ["BTC"];
-    }
+
+    const highlightedSymbols = this.state.highlightedSymbols;
+    const highlights = this.state.highlights;
+
+    distribution = [...distribution, ...highlights];
 
     const xPos = `${(metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
-      .filter(i => highLightedAssetList.indexOf(i.symbol) > -1)
+      .filter(i => highlightedSymbols.indexOf(i.symbol) > -1)
       .filter(i => i.symbol != symbol.toUpperCase());
 
     let lastHighlightX, lastHighlightY;
@@ -132,8 +180,8 @@ export default class Plot extends Component {
         })}
 
         {/* Blue FCAS Marker */}
-        <text class="fs-plot__blue" text-anchor="middle">
-          <tspan x={xPos} y={opts.mini ? 44 : 14}>
+        <text class="fs-plot__blue" text-anchor="middle" font-weight="bold">
+          <tspan x={xPos} y={opts.mini ? 26 : 14}>
             {symbol.toUpperCase()}
           </tspan>
           {!opts.mini && (
@@ -146,7 +194,7 @@ export default class Plot extends Component {
         {/* Blue FCAS Marker Line */}
         <line
           x1={xPos}
-          y1={opts.mini ? 46 : 16}
+          y1={opts.mini ? 28 : 16}
           x2={xPos}
           y2={opts.mini ? 60 : 92}
           style="stroke:rgb(45,87,237); stroke-width:1"

@@ -36,7 +36,6 @@ export default class Table extends Component {
         return { ...res.data, trend, metric };
       })
     );
-    console.log(keyBy(data, "metric"));
     this.setState({
       loading: false,
       metrics: keyBy(data, "metric")
