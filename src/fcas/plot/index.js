@@ -190,7 +190,7 @@ export default class Plot extends Component {
       .filter(i => i.symbol != symbol.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
-    console.log("buckets: ", buckets, "scoresToBuckets: ", scoresToBuckets);
+
     return (
       <svg class="fs-plot" width="100%" height="104" overflow="visible">
         <defs>
