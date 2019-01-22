@@ -10,9 +10,9 @@ To get started, request an API Key: api@flipsidecrypto.com.
 
 ## Live Examples
 
-[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/26/)
+[View Live FCAS Widget Example](https://jsfiddle.net/flipsidejim/f7zpd0uj/29/)
 <br>
-[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/9/)
+[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/11/)
 
 ## Building
 
