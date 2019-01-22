@@ -29,19 +29,31 @@
     </style>
   </head>
   <body>
-    <div class="wrapper"><div id="widget-0"></div></div>
-    <div class="wrapper"><div id="widget-1"></div></div>
+    <div class="wrapper"><div id="widget-0" style="width: 289px;"></div></div>
+    <div class="wrapper"><div id="widget-1" style="width: 289px;"></div></div>
     <div class="wrapper"><div id="widget-2"></div></div>
 
     <script>
-      const flipside = new Flipside("<YOUR_API_KEY>");
-      flipside.createFCAS("widget-0", "btc", {
-        highlights: ["EOS", "ETH", "QTUM", "ZRX", "BTC", "ZEC", "LTC"]
-      });
-      flipside.createFCAS("widget-1", "btc", {
+      const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
+      // flipside.createFCAS("widget-0", "nmr", {
+      //   highlights: ["BTC", "ETH", "QTUM"]
+      // });
+      flipside.createFCAS("widget-1", "zrx", {
         logo: false,
         mini: true,
-        dark: true
+        dark: true,
+        bucketDistance: 100,
+        highlights: [
+          "BTC",
+          "ETH",
+          "eos",
+          "qtum",
+          "nmr",
+          "ltc",
+          "gnt",
+          "rep",
+          "mln"
+        ]
       });
       flipside.createTable("widget-2", "btc", {
         dark: true,

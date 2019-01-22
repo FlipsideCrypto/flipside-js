@@ -129,14 +129,12 @@ export default class Plot extends Component {
       const nextAsset =
         i !== highlightLength - 1 ? sortedHighLights[i + 1] : null;
 
-      // const prevDist = Math.abs(prevAsset.value - currentAsset.value);
       const prevDist = Math.abs(anchorX - currentAsset.value);
-      const nextDist = nextAsset
-        ? Math.abs(nextAsset.value - currentAsset.value)
-        : 1000000;
+      // const nextDist = nextAsset
+      // ? Math.abs(nextAsset.value - currentAsset.value)
+      // : 1000000;
 
-      // Is closer to previous or next?
-      if (prevDist < nextDist && prevDist <= bucketDistance) {
+      if (prevDist <= bucketDistance) {
         buckets[currentBucketIndex].push(currentAsset);
         scoresToBuckets[currentAsset.value] = currentBucketIndex;
       } else {
@@ -192,7 +190,7 @@ export default class Plot extends Component {
       .filter(i => i.symbol != symbol.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
-
+    console.log("buckets: ", buckets, "scoresToBuckets: ", scoresToBuckets);
     return (
       <svg class="fs-plot" width="100%" height="104" overflow="visible">
         <defs>
