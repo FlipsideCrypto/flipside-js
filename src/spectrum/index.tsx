@@ -4,10 +4,36 @@ import Plot from "./plot";
 import "./styles.scss";
 import API from "../api";
 
-type Props = {
-  symbol: string;
+export type Props = {
+  asset: string;
+  highlights?: string[];
+  mode?: "light" | "dark";
+  autoWidth?: boolean;
+  bucketDistance?: number;
+  relatedMarkers?: {
+    enabled?: boolean;
+    color?: string;
+    fontFamily?: string;
+  };
+  icon?: {
+    enabled?: boolean;
+  };
+  name?: {
+    enabled?: boolean;
+    style?: object;
+  };
+  rank?: {
+    enabled?: boolean;
+  };
+  spectrum?: {
+    enabled: boolean;
+  };
+  trend?: {
+    enabled: boolean;
+  };
+  // symbol: string;
   api: API;
-  opts: any;
+  // opts: any;
 };
 
 type State = {
@@ -16,6 +42,17 @@ type State = {
 };
 
 export default class FCAS extends Component<Props, State> {
+  static defaultProps: Partial<Props> = {
+    asset: "btc",
+    mode: "light",
+    spectrum: {
+      enabled: true
+    },
+    icon: {
+      enabled: true
+    }
+  };
+
   interval: number;
 
   constructor() {
@@ -25,7 +62,7 @@ export default class FCAS extends Component<Props, State> {
 
   async _getData() {
     const { data, success } = await this.props.api.fetchAssetMetric(
-      this.props.symbol,
+      this.props.asset,
       "FCAS"
     );
 
@@ -72,13 +109,13 @@ export default class FCAS extends Component<Props, State> {
     this._update();
   }
 
-  render({ opts, api, symbol }: Props, { metric, loading }: State) {
+  render(props: Props, { metric, loading }: State) {
     if (loading) return null;
     return (
       <div class="fs-container">
-        {opts.score && <Score symbol={symbol} metric={metric} opts={opts} />}
-        {opts.plot && (
-          <Plot symbol={symbol} metric={metric} api={api} opts={opts} />
+        <Score symbol={props.asset} metric={metric} {...props} mini />
+        {props.spectrum.enabled && (
+          <Plot symbol={props.asset} metric={metric} {...props} mini />
         )}
       </div>
     );

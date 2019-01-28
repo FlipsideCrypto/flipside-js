@@ -85,13 +85,13 @@ export default class Plot extends Component {
   }
 
   getHighlights() {
-    let { symbol, opts } = this.props;
-    symbol = symbol.toLowerCase();
-    if (opts && opts.highlights && opts.highlights.length > 0) {
-      return opts.highlights;
+    let { asset, highlights } = this.props;
+    asset = asset.toLowerCase();
+    if (highlights && highlights.length > 0) {
+      return highlights;
     }
-    let highlights = [];
-    if (symbol == "eth" || symbol == "btc") {
+    highlights = [];
+    if (asset == "eth" || asset == "btc") {
       highlights = ["ZEC", "XRP"];
     } else {
       highlights = ["BTC"];
@@ -104,7 +104,7 @@ export default class Plot extends Component {
       return [];
     }
 
-    let { bucketDistance } = this.props.opts;
+    let { bucketDistance } = this.props;
     if (!bucketDistance) {
       bucketDistance = DEFAULT_BUCKET_DISTANCE;
     }
@@ -149,7 +149,7 @@ export default class Plot extends Component {
   }
 
   getYCoords(asset, buckets, scoresToBuckets) {
-    let { lineDistance } = this.props.opts;
+    let { lineDistance } = this.props;
     if (!lineDistance) {
       lineDistance = DEFAULT_LINE_DISTANCE;
     }
@@ -176,7 +176,7 @@ export default class Plot extends Component {
     return { y: 44 - 10 * index, toClose };
   }
 
-  render({ opts, metric, symbol }, { loading, distribution }) {
+  render(props, { loading, distribution }) {
     if (loading) return null;
 
     const highlightedSymbols = this.state.highlightedSymbols;
@@ -184,10 +184,10 @@ export default class Plot extends Component {
 
     distribution = [...distribution, ...highlights];
 
-    const xPos = `${(metric.fcas / 1000) * 100}%`;
+    const xPos = `${(props.metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
       .filter(i => highlightedSymbols.indexOf(i.symbol) > -1)
-      .filter(i => i.symbol != symbol.toUpperCase());
+      .filter(i => i.symbol != props.asset.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 
@@ -202,7 +202,7 @@ export default class Plot extends Component {
           </linearGradient>
         </defs>
 
-        <g fill={opts.dark ? "#fff" : "#000"}>
+        <g fill={props.mode === "dark" ? "#fff" : "#000"}>
           <circle cx="0" cy="44" r="2.5" />
           <text x="6" y="47" font-size="8">
             Coins
@@ -210,7 +210,13 @@ export default class Plot extends Component {
         </g>
 
         {/* Distribution Dots */}
-        <g fill={opts.dark ? "rgba(255, 255,255, 0.5)" : "rgba(0, 0, 0, 0.4)"}>
+        <g
+          fill={
+            props.mode === "dark"
+              ? "rgba(255, 255,255, 0.5)"
+              : "rgba(0, 0, 0, 0.4)"
+          }
+        >
           {distribution.map(i => (
             <circle cx={`${(i.value / 1000) * 100}%`} cy="58" r="2.5" />
           ))}
@@ -224,7 +230,7 @@ export default class Plot extends Component {
           y="85"
           text-anchor="middle"
           class="fs-plot__x"
-          fill={opts.dark ? "#fff" : "#000"}
+          fill={props.mode === "dark" ? "#fff" : "#000"}
         >
           <tspan x="0">0</tspan>
           <tspan x="50%">500</tspan>
@@ -235,7 +241,7 @@ export default class Plot extends Component {
           const xPos = `${(a.value / 1000) * 100}%`;
           let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
           return (
-            <g fill={opts.dark ? "#fff" : "#000"}>
+            <g fill={props.mode === "dark" ? "#fff" : "#000"}>
               <text x={xPos} y={y} text-anchor="middle" font-size="10">
                 {a.symbol}
               </text>
@@ -246,7 +252,7 @@ export default class Plot extends Component {
                   x2={xPos}
                   y2="60"
                   style={`stroke:rgb(${
-                    opts.dark ? "255, 255, 255" : "0,0,0"
+                    props.mode === "dark" ? "255, 255, 255" : "0,0,0"
                   }); stroke-width:0.5`}
                 />
               )}
@@ -256,12 +262,12 @@ export default class Plot extends Component {
 
         {/* Blue FCAS Marker */}
         <text class="fs-plot__blue" text-anchor="middle" font-weight="bold">
-          <tspan x={xPos} y={opts.mini ? 26 : 14}>
-            {symbol.toUpperCase()}
+          <tspan x={xPos} y={props.mini ? 26 : 14}>
+            {props.asset.toUpperCase()}
           </tspan>
-          {!opts.mini && (
+          {!props.mini && (
             <tspan x={xPos} y="104">
-              {metric.fcas}
+              {props.metric.fcas}
             </tspan>
           )}
         </text>
@@ -269,9 +275,9 @@ export default class Plot extends Component {
         {/* Blue FCAS Marker Line */}
         <line
           x1={xPos}
-          y1={opts.mini ? 28 : 16}
+          y1={props.mini ? 28 : 16}
           x2={xPos}
-          y2={opts.mini ? 60 : 92}
+          y2={props.mini ? 60 : 92}
           style="stroke:rgb(45,87,237); stroke-width:1"
         />
       </svg>
