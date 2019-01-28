@@ -3,15 +3,20 @@ let version = require("./package.json").version;
 let filename = `flipside-v${version}.js`;
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.tsx",
   output: {
     filename: filename,
     path: path.resolve(__dirname, "dist")
   },
   mode: "development",
+  devtool: "inline-source-map",
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"]
+  },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+      { test: /\.tsx?$/, use: "ts-loader", exclude: /node_modules/ },
+      { test: /\.js$/, loader: "babel-loader", exclude: /node_modules/ },
       { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] },
       { test: /\.svg$/, use: { loader: "url-loader" } }
     ]

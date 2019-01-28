@@ -1,0 +1,67 @@
+.fs-multi {
+  table {
+    text-align: right;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    padding: 5px 10px;
+  }
+
+  th {
+    font-weight: 400;
+    vertical-align: bottom;
+  }
+
+  td {
+    font-weight: 500;
+  }
+
+  &-light {
+    td.fs-multi-fcas,
+    td.fs-multi-coin {
+      color: #2d57ed;
+    }
+  }
+
+  &-dark {
+    td.fs-multi-fcas,
+    td.fs-multi-coin {
+      color: #2d57ed;
+    }
+  }
+
+  &-alternating {
+    tbody tr:nth-child(2n-1) {
+      background-color: #eeeeee;
+    }
+  }
+
+  &-dividers {
+    td {
+      border-bottom: 1px solid #979797;
+    }
+  }
+
+  &-coin {
+    text-align: left;
+  }
+
+  // sorted column icon
+  &-caret {
+    display: inline-block;
+    background: url(./images/caret.svg);
+    width: 8px;
+    height: 6px;
+  }
+
+  // sortable columns headers
+  &-sortable {
+    cursor: pointer;
+    &:hover {
+      background: #eee;
+    }
+  }
+}

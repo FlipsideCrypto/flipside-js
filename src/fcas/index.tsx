@@ -2,8 +2,22 @@ import { h, Component } from "preact";
 import Score from "./score";
 import Plot from "./plot";
 import "./styles.scss";
+import API from "../api";
 
-export default class FCAS extends Component {
+type Props = {
+  symbol: string;
+  api: API;
+  opts: any;
+};
+
+type State = {
+  metric: any;
+  loading: boolean;
+};
+
+export default class FCAS extends Component<Props, State> {
+  interval: number;
+
   constructor() {
     super();
     this.state = { loading: true, metric: null };
@@ -58,7 +72,7 @@ export default class FCAS extends Component {
     this._update();
   }
 
-  render({ opts, api, symbol }, { metric, loading }) {
+  render({ opts, api, symbol }: Props, { metric, loading }: State) {
     if (loading) return null;
     return (
       <div class="fs-container">
