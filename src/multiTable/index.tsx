@@ -30,7 +30,7 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
   trend: {
     header: "7D",
     renderItem: (row: Row) => (
-      <Trend change={row.change_over} value={row.fcas} />
+      <Trend change={row.fcas_change} value={row.fcas} />
     ),
     sortKey: "change_over"
   },
@@ -96,7 +96,9 @@ type Row = {
   fcas: number;
   dev: number;
   utility: number;
-  change_over: number;
+  fcas_change: number;
+  dev_change: number;
+  utility_change: number;
 };
 
 type State = {
