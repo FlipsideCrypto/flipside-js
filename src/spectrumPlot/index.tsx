@@ -13,26 +13,16 @@ export type Props = {
   autoWidth?: boolean;
   relatedMarkers?: {
     bucketDistance?: number;
+    lineDistance?: number;
     enabled?: boolean;
     color?: string;
     fontFamily?: string;
   };
-  icon?: {
-    enabled?: boolean;
-  };
-  name?: {
-    enabled?: boolean;
-    style?: object;
-  };
-  rank?: {
-    enabled?: boolean;
-  };
-  spectrum?: {
-    enabled: boolean;
-  };
-  trend?: {
-    enabled: boolean;
-  };
+  icon?: { enabled?: boolean };
+  name?: { enabled?: boolean; style?: object };
+  rank?: { enabled?: boolean };
+  spectrum?: { enabled: boolean };
+  trend?: { enabled: boolean };
   api?: API;
 };
 
@@ -46,10 +36,7 @@ export default class SpectrumPlot extends Component<Props, State> {
     asset: "btc",
     mode: "light",
     fontFamily: "inherit",
-    relatedMarkers: {
-      enabled: true,
-      bucketDistance: 35
-    },
+    relatedMarkers: { enabled: true, bucketDistance: 35, lineDistance: 25 },
     name: { enabled: true },
     spectrum: { enabled: true },
     icon: { enabled: true },

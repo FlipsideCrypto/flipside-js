@@ -43,12 +43,14 @@ export default class Score extends Component {
             />
           )}
           <h1 class="fs-token__name">
-            {props.metric.name}
+            <span style={props.name.style}>
+              {props.name.enabled && props.metric.name}
+            </span>
             {props.asset && <span class="fs-token__sym">{props.asset}</span>}
           </h1>
         </header>
 
-        <DataComponent {...props} rank={rank} />
+        {props.rank.enabled && <DataComponent {...props} rank={rank} />}
       </div>
     );
   }

@@ -149,7 +149,7 @@ export default class Plot extends Component {
   }
 
   getYCoords(asset, buckets, scoresToBuckets) {
-    let { lineDistance } = this.props;
+    let { lineDistance } = this.props.relatedMarkers;
     if (!lineDistance) {
       lineDistance = DEFAULT_LINE_DISTANCE;
     }
@@ -237,28 +237,29 @@ export default class Plot extends Component {
           <tspan x="100%">1000</tspan>
         </text>
 
-        {highlightedAssets.map(a => {
-          const xPos = `${(a.value / 1000) * 100}%`;
-          let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
-          return (
-            <g fill={props.mode === "dark" ? "#fff" : "#000"}>
-              <text x={xPos} y={y} text-anchor="middle" font-size="10">
-                {a.symbol}
-              </text>
-              {toClose === false && (
-                <line
-                  x1={xPos}
-                  y1={y + 3}
-                  x2={xPos}
-                  y2="60"
-                  style={`stroke:rgb(${
-                    props.mode === "dark" ? "255, 255, 255" : "0,0,0"
-                  }); stroke-width:0.5`}
-                />
-              )}
-            </g>
-          );
-        })}
+        {props.relatedMarkers.enabled &&
+          highlightedAssets.map(a => {
+            const xPos = `${(a.value / 1000) * 100}%`;
+            let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
+            return (
+              <g fill={props.mode === "dark" ? "#fff" : "#000"}>
+                <text x={xPos} y={y} text-anchor="middle" font-size="10">
+                  {a.symbol}
+                </text>
+                {toClose === false && (
+                  <line
+                    x1={xPos}
+                    y1={y + 3}
+                    x2={xPos}
+                    y2="60"
+                    style={`stroke:rgb(${
+                      props.mode === "dark" ? "255, 255, 255" : "0,0,0"
+                    }); stroke-width:0.5`}
+                  />
+                )}
+              </g>
+            );
+          })}
 
         {/* Blue FCAS Marker */}
         <text class="fs-plot__blue" text-anchor="middle" font-weight="bold">
