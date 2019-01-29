@@ -73,8 +73,8 @@ export type Props = {
   assets?: string[];
   exclusions?: string[];
   autoWidth?: boolean;
-  size?: number;
   limit?: number;
+  page?: number;
   columns?: ColumnName[];
   fontFamily?: string;
   title?: {
@@ -82,7 +82,6 @@ export type Props = {
     style?: object;
   };
   trend?: {
-    enabled?: boolean;
     changeOver?: number;
   };
   headers?: {
@@ -130,7 +129,8 @@ export default class MultiTable extends Component<Props, State> {
 
   static defaultProps = {
     mode: "light",
-    size: 10,
+    limit: 10,
+    page: 1,
     sortBy: "fcas",
     fontFamily: "inherit",
     columns: [
@@ -142,6 +142,9 @@ export default class MultiTable extends Component<Props, State> {
     ],
     rows: {
       alternating: true
+    },
+    trend: {
+      changeOver: 7
     }
   };
 
@@ -153,11 +156,12 @@ export default class MultiTable extends Component<Props, State> {
     const res = await this.props.api.fetchMetrics({
       assets: this.props.assets,
       exclusions: this.props.exclusions,
-      page: 1,
-      size: 10,
+      page: this.props.page,
+      size: this.props.limit,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
       sort_desc: true,
-      metrics: ["fcas", "utility", "dev", "market-maturity"]
+      metrics: ["fcas", "utility", "dev", "market-maturity"],
+      change_over: this.props.trend.changeOver
     });
     this.setState({
       loading: false,

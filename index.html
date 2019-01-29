@@ -64,7 +64,34 @@
       });
 
       flipside.multiTable("multiTable", {
-        title: { text: "Top Coins" }
+        assets: null,
+        columns: [
+          "trend",
+          "userActivity",
+          "developerBehavior",
+          "marketMaturity",
+          "rank"
+        ],
+        exclusions: ["gas", "TRX"],
+        fontFamily: "inherit",
+        headers: {},
+        limit: 10,
+        page: 1,
+        mode: "light",
+        rows: {
+          alternating: true,
+          alternatingColors: "#eeeeee",
+          dividers: false,
+          dividersColor: "#979797",
+          style: {}
+        },
+        title: {
+          text: "Top Coins",
+          style: { fontSize: "24px", fontWeight: 400 }
+        },
+        trend: {
+          changeOver: 7
+        }
       });
     </script>
   </body>

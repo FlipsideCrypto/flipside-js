@@ -21,7 +21,11 @@ export default class API {
   ): Promise<any> {
     let res;
     try {
-      res = await this.client.request({ url, method, params: params });
+      res = await this.client.request({
+        url,
+        method,
+        params: params
+      });
       if (res.status >= 200 && res.status < 300) {
         return { data: res.data, success: true };
       }
@@ -62,6 +66,7 @@ export default class API {
     page: number;
     size?: number;
     metrics: string[];
+    change_over: number;
   }) {
     return await this.client.post(`/assets/metrics`, payload);
   }
