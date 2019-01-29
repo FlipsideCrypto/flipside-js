@@ -9,6 +9,7 @@ export type Props = {
   asset: string;
   highlights?: string[];
   mode?: "light" | "dark";
+  fontFamily?: string;
   autoWidth?: boolean;
   relatedMarkers?: {
     bucketDistance?: number;
@@ -44,6 +45,7 @@ export default class SpectrumPlot extends Component<Props, State> {
   static defaultProps: Props = {
     asset: "btc",
     mode: "light",
+    fontFamily: "inherit",
     relatedMarkers: {
       enabled: true,
       bucketDistance: 35

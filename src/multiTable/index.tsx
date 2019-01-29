@@ -81,8 +81,9 @@ export type Props = {
     text: string;
     style?: object;
   };
-  trends?: {
-    enabled: boolean;
+  trend?: {
+    enabled?: boolean;
+    changeOver?: number;
   };
   headers?: {
     color?: string;
