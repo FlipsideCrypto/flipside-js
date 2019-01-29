@@ -104,7 +104,7 @@ export default class Plot extends Component {
       return [];
     }
 
-    let { bucketDistance } = this.props;
+    let { bucketDistance } = this.props.relatedMarkers;
     if (!bucketDistance) {
       bucketDistance = DEFAULT_BUCKET_DISTANCE;
     }

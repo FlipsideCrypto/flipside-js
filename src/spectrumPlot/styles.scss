@@ -1,9 +1,22 @@
-.fs-container {
+.fs-spectrum {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-
   line-height: 1;
   border-radius: 25px;
+
+  &-dark {
+    color: #fff;
+    a {
+      color: #20b7fc;
+    }
+  }
+
+  &-light {
+    color: #000;
+    a {
+      color: #2d57ed;
+    }
+  }
 }
 
 .fs-link {
