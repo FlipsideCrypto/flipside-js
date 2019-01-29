@@ -2,6 +2,7 @@ import { h, Component } from "preact";
 import classnames from "classnames";
 import Rank from "../components/rank";
 import Trend from "../components/trend";
+import CustomLinks from "../components/customLinks";
 import API from "../api";
 import "./style.scss";
 
@@ -75,6 +76,7 @@ export type Props = {
   size?: number;
   limit?: number;
   columns?: ColumnName[];
+  fontFamily?: string;
   title?: {
     text: string;
     style?: object;
@@ -129,6 +131,7 @@ export default class MultiTable extends Component<Props, State> {
     mode: "light",
     size: 10,
     sortBy: "fcas",
+    fontFamily: "inherit",
     columns: [
       "trend",
       "userActivity",
@@ -184,20 +187,17 @@ export default class MultiTable extends Component<Props, State> {
       sortedRows = reverse(sortedRows);
     }
 
+    const { fontFamily } = props;
+
     return (
-      <div class={classes}>
+      <div class={classes} style={{ fontFamily }}>
         <header class="fs-multi-header">
           {props.title && (
             <h1 class="fs-multi-title" style={props.title.style}>
               {props.title.text}
             </h1>
           )}
-          <p class="fs-multi-custom1">
-            Powered by <a href="https://flipsidecrypto.com">Flipside Crypto</a>
-          </p>
-          <p class="fs-multi-custom2">
-            <a href="https://flipsidecrypto.com/fcas">What's FCAS?</a>
-          </p>
+          <CustomLinks />
         </header>
 
         <table>

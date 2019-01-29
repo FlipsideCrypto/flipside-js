@@ -1,7 +1,7 @@
 import { h, render } from "preact";
 import API from "./api";
 import Table from "./table";
-import Spectrum, { Props as SpectrumProps } from "./spectrum";
+import SpectrumPlot, { Props as SpectrumPlotProps } from "./spectrumPlot";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
 
 type MultiTableOpts = {};
@@ -18,9 +18,9 @@ export default class Flipside {
     render(<MultiTable {...opts} api={this.api} />, element);
   }
 
-  spectrum(el: string, opts: SpectrumProps): void {
+  spectrumPlot(el: string, opts: SpectrumPlotProps): void {
     const element = document.getElementById(el);
-    render(<Spectrum {...opts} api={this.api} />, element);
+    render(<SpectrumPlot {...opts} api={this.api} />, element);
   }
 
   createTable(el: string, symbol: string, opts: object) {

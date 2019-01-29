@@ -1,4 +1,5 @@
 import { h, Component } from "preact";
+import CustomLinks from "../components/customLinks";
 import Score from "./score";
 import Plot from "./plot";
 import "./styles.scss";
@@ -9,8 +10,8 @@ export type Props = {
   highlights?: string[];
   mode?: "light" | "dark";
   autoWidth?: boolean;
-  bucketDistance?: number;
   relatedMarkers?: {
+    bucketDistance?: number;
     enabled?: boolean;
     color?: string;
     fontFamily?: string;
@@ -31,9 +32,7 @@ export type Props = {
   trend?: {
     enabled: boolean;
   };
-  // symbol: string;
-  api: API;
-  // opts: any;
+  api?: API;
 };
 
 type State = {
@@ -41,16 +40,19 @@ type State = {
   loading: boolean;
 };
 
-export default class FCAS extends Component<Props, State> {
-  static defaultProps: Partial<Props> = {
+export default class SpectrumPlot extends Component<Props, State> {
+  static defaultProps: Props = {
     asset: "btc",
     mode: "light",
-    spectrum: {
-      enabled: true
+    relatedMarkers: {
+      enabled: true,
+      bucketDistance: 35
     },
-    icon: {
-      enabled: true
-    }
+    name: { enabled: true },
+    spectrum: { enabled: true },
+    icon: { enabled: true },
+    rank: { enabled: true },
+    trend: { enabled: true }
   };
 
   interval: NodeJS.Timeout;
@@ -112,11 +114,12 @@ export default class FCAS extends Component<Props, State> {
   render(props: Props, { metric, loading }: State) {
     if (loading) return null;
     return (
-      <div class="fs-container">
+      <div class={`fs-spectrum fs-spectrum-${props.mode}`}>
         <Score symbol={props.asset} metric={metric} {...props} mini />
         {props.spectrum.enabled && (
           <Plot symbol={props.asset} metric={metric} {...props} mini />
         )}
+        <CustomLinks />
       </div>
     );
   }

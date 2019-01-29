@@ -48,7 +48,7 @@ export default class API {
     return await this._fetch("GET", `/assets/${sym}/metrics`);
   }
 
-  async fetchFCASDistribution(asset: string) {
+  async fetchFCASDistribution() {
     return await this._fetch("GET", `/metrics/FCAS/assets`, {
       visual_distribution: true
     });
