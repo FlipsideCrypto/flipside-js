@@ -49,8 +49,8 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
 
   marketMaturity: {
     header: "Market Maturity",
-    renderItem: (row: Row) => row.utility,
-    sortKey: "utility"
+    renderItem: (row: Row) => row.market_maturity,
+    sortKey: "market_maturity"
   },
 
   rank: {
@@ -104,6 +104,8 @@ type Row = {
   fcas_change: number;
   dev_change: number;
   utility_change: number;
+  market_maturity: number;
+  market_maturity_change: number;
 };
 
 type State = {
@@ -127,7 +129,13 @@ export default class MultiTable extends Component<Props, State> {
     mode: "light",
     size: 10,
     sortBy: "fcas",
-    columns: ["trend", "developerBehavior", "marketMaturity", "rank"],
+    columns: [
+      "trend",
+      "userActivity",
+      "developerBehavior",
+      "marketMaturity",
+      "rank"
+    ],
     rows: {
       alternating: true
     }
@@ -145,7 +153,7 @@ export default class MultiTable extends Component<Props, State> {
       size: 10,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
       sort_desc: true,
-      metrics: ["fcas", "utility", "dev"]
+      metrics: ["fcas", "utility", "dev", "market-maturity"]
     });
     this.setState({
       loading: false,
