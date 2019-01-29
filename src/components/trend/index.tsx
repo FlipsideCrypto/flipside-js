@@ -6,6 +6,10 @@ type Props = {
   value: number;
 };
 
+export function calculateTrendDiff(value: number, percent: number): number {
+  return Math.round(Math.abs(value * (percent / 100)));
+}
+
 const Trend = (props: Props) => {
   let direction, icon;
   if (props.change < 0) {
@@ -15,7 +19,7 @@ const Trend = (props: Props) => {
     direction = "up";
     icon = require("./images/up.svg");
   }
-  const difference = Math.round(Math.abs(props.value * (props.change / 100)));
+  const difference = calculateTrendDiff(props.value, props.change);
   return (
     <span class={`fs-trend fs-trend-${direction}`}>
       <img src={icon} />

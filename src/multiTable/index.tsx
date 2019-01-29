@@ -32,13 +32,13 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
     renderItem: (row: Row) => (
       <Trend change={row.fcas_change} value={row.fcas} />
     ),
-    sortKey: "change_over"
+    sortKey: "fcas_change"
   },
 
   userActivity: {
     header: "User Activity",
-    renderItem: (_row: Row) => "usr_act",
-    sortKey: "usr_act"
+    renderItem: (row: Row) => row.utility,
+    sortKey: "utility"
   },
 
   developerBehavior: {
@@ -60,7 +60,12 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
   }
 };
 
-type ColumnName = "trend" | "developerBehavior" | "marketMaturity" | "rank";
+type ColumnName =
+  | "trend"
+  | "developerBehavior"
+  | "userActivity"
+  | "marketMaturity"
+  | "rank";
 
 export type Props = {
   mode?: "light" | "dark";
@@ -114,7 +119,7 @@ export default class MultiTable extends Component<Props, State> {
     this.state = {
       loading: true,
       sortColumn: "fcas",
-      sortOrder: "asc"
+      sortOrder: "desc"
     };
   }
 
@@ -139,7 +144,7 @@ export default class MultiTable extends Component<Props, State> {
       page: 1,
       size: 10,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
-      sort_desc: false,
+      sort_desc: true,
       metrics: ["fcas", "utility", "dev"]
     });
     this.setState({
