@@ -18,7 +18,7 @@ export default class Flipside {
     render(<MultiTable {...opts} api={this.api} />, element);
   }
 
-  spectrumPlot(el: string, opts: SpectrumPlotProps): void {
+  spectrum(el: string, opts: SpectrumPlotProps): void {
     const element = document.getElementById(el);
     render(<SpectrumPlot {...opts} api={this.api} />, element);
   }
