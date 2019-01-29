@@ -34,9 +34,13 @@
   <body>
     <div class="wrapper"><div id="widget-0" style="width: 289px;"></div></div>
 
-    <div class="wrapper"><div id="widget-1" style="width: 289px;"></div></div>
+    <div class="wrapper" style="background-color:#000000">
+      <div id="widget-1" style="width: 289px"></div>
+    </div>
 
-    <div class="wrapper"><div id="widget-2"></div></div>
+    <div class="wrapper" style="background-color: #33435e">
+      <div id="widget-2"></div>
+    </div>
 
     <div class="wrapper"><div id="multiTable"></div></div>
 
@@ -51,17 +55,7 @@
         asset: "nmr",
         mode: "dark",
         bucketDistance: 100,
-        highlights: [
-          "BTC",
-          "ETH",
-          "eos",
-          "qtum",
-          "nmr",
-          "ltc",
-          "gnt",
-          "rep",
-          "mln"
-        ]
+        highlights: ["BTC", "ETH", "eos", "nmr", "ltc", "gnt", "rep", "mln"]
       });
 
       flipside.createTable("widget-2", "btc", {
