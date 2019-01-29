@@ -1,0 +1,28 @@
+.fs-rank {
+  display: inline-block;
+  border-radius: 3px;
+  background: center no-repeat;
+  background-size: 4 8px;
+  height: 14px;
+  width: 32px;
+  &-s {
+    background-color: #68ba66;
+    background-image: url(./images/S.svg);
+  }
+  &-a {
+    background-color: #8fcb89;
+    background-image: url(./images/A.svg);
+  }
+  &-b {
+    background-color: #b2dbad;
+    background-image: url(./images/B.svg);
+  }
+  &-c {
+    background-color: #ff7a18;
+    background-image: url(./images/C.svg);
+  }
+  &-f {
+    background-color: #ff2600;
+    background-image: url(./images/F.svg);
+  }
+}

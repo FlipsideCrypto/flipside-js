@@ -1,14 +1,20 @@
 import { h, Component } from "preact";
 import classnames from "classnames";
+import Rank from "../components/rank";
+import Trend from "../components/trend";
 import API from "../api";
 import "./style.scss";
+
+import sortBy = require("lodash/sortBy");
+import reverse = require("lodash/reverse");
 
 // Define the columns, the content of their header, and how their data is rendered.
 type ColumnDefinition = {
   header: string;
   renderItem: (row: Row) => any;
-  sortable?: boolean;
+  sortKey?: string;
 };
+
 const COLUMNS: { [k: string]: ColumnDefinition } = {
   coin: {
     header: "Coin",
@@ -18,36 +24,39 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
   fcas: {
     header: "FCAS",
     renderItem: (row: Row) => row.fcas,
-    sortable: true
+    sortKey: "fcas"
   },
 
   trend: {
     header: "7D",
-    renderItem: (row: Row) => row.change_over
+    renderItem: (row: Row) => (
+      <Trend change={row.change_over} value={row.fcas} />
+    ),
+    sortKey: "change_over"
   },
 
   userActivity: {
     header: "User Activity",
     renderItem: (_row: Row) => "usr_act",
-    sortable: true
+    sortKey: "usr_act"
   },
 
   developerBehavior: {
     header: "Developer Behavior",
     renderItem: (row: Row) => row.dev,
-    sortable: true
+    sortKey: "dev"
   },
 
   marketMaturity: {
     header: "Market Maturity",
     renderItem: (row: Row) => row.utility,
-    sortable: true
+    sortKey: "utility"
   },
 
   rank: {
     header: "Rank",
-    renderItem: (row: Row) => row.fcas,
-    sortable: true
+    renderItem: (row: Row) => <Rank score={row.fcas} />,
+    sortKey: "fcas"
   }
 };
 
@@ -55,8 +64,10 @@ type ColumnName = "trend" | "developerBehavior" | "marketMaturity" | "rank";
 
 export type Props = {
   mode?: "light" | "dark";
-  assets?: string | string[];
+  assets?: string[];
+  exclusions?: string[];
   autoWidth?: boolean;
+  size?: number;
   limit?: number;
   columns?: ColumnName[];
   title?: {
@@ -90,7 +101,7 @@ type Row = {
 
 type State = {
   loading: boolean;
-  sortKey: string;
+  sortColumn: string;
   sortOrder: "asc" | "desc";
   rows?: Row[];
 };
@@ -100,20 +111,16 @@ export default class MultiTable extends Component<Props, State> {
     super();
     this.state = {
       loading: true,
-      sortKey: "rank",
+      sortColumn: "fcas",
       sortOrder: "asc"
     };
   }
 
   static defaultProps = {
     mode: "light",
-    columns: [
-      "trend",
-      "userActivity",
-      "developerBehavior",
-      "marketMaturity",
-      "rank"
-    ],
+    size: 10,
+    sortBy: "fcas",
+    columns: ["trend", "developerBehavior", "marketMaturity", "rank"],
     rows: {
       alternating: true
     }
@@ -124,7 +131,15 @@ export default class MultiTable extends Component<Props, State> {
   }
 
   async _getData() {
-    const res = await this.props.api.fetchMetrics(["btc", "eth"]);
+    const res = await this.props.api.fetchMetrics({
+      assets: this.props.assets,
+      exclusions: this.props.exclusions,
+      page: 1,
+      size: 10,
+      sort_by: COLUMNS[this.state.sortColumn].sortKey,
+      sort_desc: false,
+      metrics: ["fcas", "utility", "dev"]
+    });
     this.setState({
       loading: false,
       rows: res.data
@@ -132,8 +147,10 @@ export default class MultiTable extends Component<Props, State> {
   }
 
   handleSort(col: string) {
-    if (COLUMNS[col].sortable) {
-      this.setState({ sortKey: col });
+    if (COLUMNS[col].sortKey) {
+      const sortColumn = col;
+      const sortOrder = this.state.sortOrder === "asc" ? "desc" : "asc";
+      this.setState({ sortColumn, sortOrder });
     }
   }
 
@@ -146,14 +163,26 @@ export default class MultiTable extends Component<Props, State> {
       "fs-multi-dividers": props.rows.dividers
     });
 
+    const sortKey = COLUMNS[state.sortColumn].sortKey;
+    let sortedRows = sortBy(state.rows, sortKey);
+    if (state.sortOrder === "desc") {
+      sortedRows = reverse(sortedRows);
+    }
+
     return (
       <div class={classes}>
-        <header>
-          {props.title && <h1 style={props.title.style}>{props.title.text}</h1>}
-          <p>
-            Powered by <a href="#">Flipside Crypto</a>
+        <header class="fs-multi-header">
+          {props.title && (
+            <h1 class="fs-multi-title" style={props.title.style}>
+              {props.title.text}
+            </h1>
+          )}
+          <p class="fs-multi-custom1">
+            Powered by <a href="https://flipsidecrypto.com">Flipside Crypto</a>
           </p>
-          <a href="#">What's FCAS?</a>
+          <p class="fs-multi-custom2">
+            <a href="https://flipsidecrypto.com/fcas">What's FCAS?</a>
+          </p>
         </header>
 
         <table>
@@ -162,12 +191,24 @@ export default class MultiTable extends Component<Props, State> {
               {columns.map(col => {
                 const column = COLUMNS[col];
                 const classes = classnames(`fs-multi-${col}`, {
-                  "fs-multi-sortable": column.sortable
+                  "fs-multi-sortable": !!column.sortKey
                 });
                 return (
                   <th class={classes} onClick={() => this.handleSort(col)}>
-                    {state.sortKey === col && <span class={`fs-multi-caret`} />}
-                    {column.header}
+                    <div class="fs-multi-colhead">
+                      {column.sortKey && (
+                        <span
+                          class={classnames(
+                            "fs-multi-caret",
+                            `fs-multi-caret-${state.sortOrder}`,
+                            {
+                              "fs-multi-caret-active": col === state.sortColumn
+                            }
+                          )}
+                        />
+                      )}
+                      <span class="fs-multi-colhead-text">{column.header}</span>
+                    </div>
                   </th>
                 );
               })}
@@ -175,7 +216,7 @@ export default class MultiTable extends Component<Props, State> {
           </thead>
 
           <tbody>
-            {state.rows.map(asset => (
+            {sortedRows.map(asset => (
               <tr>
                 {columns.map(col => (
                   <td class={`fs-multi-${col}`}>

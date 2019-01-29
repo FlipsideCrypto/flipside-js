@@ -53,7 +53,7 @@ export default class FCAS extends Component<Props, State> {
     }
   };
 
-  interval: number;
+  interval: NodeJS.Timeout;
 
   constructor() {
     super();

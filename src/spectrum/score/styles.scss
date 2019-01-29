@@ -104,15 +104,15 @@
   margin: 0 14px 0 0;
 }
 
-.fs-trend {
+.fs-score-trend {
   margin-right: 16px;
 }
 
-.fs-trend__icon {
+.fs-score-trend__icon {
   margin-right: 2px;
 }
 
-.fs-trend__change {
+.fs-score-trend__change {
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -130,12 +130,12 @@
   }
 }
 
-.fs-rank {
+.fs-score-rank {
   text-align: center;
   font-size: 10px;
 }
 
-.fs-rank__letter {
+.fs-score-rank__letter {
   width: 32px;
   height: 28px;
   display: block;
@@ -147,24 +147,24 @@
   text-transform: uppercase;
   color: #000;
 }
-.fs-rank__letter--mini {
+.fs-score-rank__letter--mini {
   height: 22px;
   line-height: 22px;
   width: 50px;
   margin: 0 0 0 auto;
 }
-.fs-rank__letter--s {
+.fs-score-rank__letter--s {
   background: #68ba66;
 }
-.fs-rank__letter--a {
+.fs-score-rank__letter--a {
   background: #8fcb89;
 }
-.fs-rank__letter--b {
+.fs-score-rank__letter--b {
   background: #b2dbad;
 }
-.fs-rank__letter--c {
+.fs-score-rank__letter--c {
   background: #ff7a18;
 }
-.fs-rank__letter--f {
+.fs-score-rank__letter--f {
   background: #ff2600;
 }

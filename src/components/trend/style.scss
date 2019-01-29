@@ -1,0 +1,12 @@
+.fs-trend {
+  white-space: nowrap;
+  img {
+    margin-right: 2px;
+  }
+  &-up {
+    color: #057511;
+  }
+  &-down {
+    color: #980000;
+  }
+}

@@ -1,8 +1,9 @@
 .fs-multi {
+  font-size: 12px;
+
   table {
     text-align: right;
     border-collapse: collapse;
-    font-size: 14px;
   }
 
   th,
@@ -20,6 +21,7 @@
   }
 
   &-light {
+    a,
     td.fs-multi-fcas,
     td.fs-multi-coin {
       color: #2d57ed;
@@ -27,9 +29,20 @@
   }
 
   &-dark {
+    a,
     td.fs-multi-fcas,
     td.fs-multi-coin {
       color: #2d57ed;
+    }
+  }
+
+  &-colhead {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    &-text {
+      flex-basis: 0;
+      user-select: none;
     }
   }
 
@@ -45,6 +58,10 @@
     }
   }
 
+  &-custom1 {
+    margin-right: auto;
+  }
+
   &-coin {
     text-align: left;
   }
@@ -55,13 +72,32 @@
     background: url(./images/caret.svg);
     width: 8px;
     height: 6px;
+    margin: 0 4px 0 auto;
+    visibility: hidden;
+    &-asc {
+      transform: rotate(180deg);
+    }
+    &-active {
+      visibility: visible;
+    }
   }
 
   // sortable columns headers
   &-sortable {
     cursor: pointer;
-    &:hover {
-      background: #eee;
-    }
+  }
+
+  &-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    white-space: nowrap;
+  }
+
+  &-title {
+    margin: 0 10px 0 0;
+    font-size: 24px;
+    font-weight: 400;
   }
 }

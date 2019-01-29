@@ -54,9 +54,15 @@ export default class API {
     });
   }
 
-  async fetchMetrics(assets: string[]) {
-    return await this.client.post(`/assets/metrics`, {
-      metrics: ["fcas", "dev"]
-    });
+  async fetchMetrics(payload: {
+    assets: string[];
+    exclusions: string[];
+    sort_by?: string;
+    sort_desc?: boolean;
+    page: number;
+    size?: number;
+    metrics: string[];
+  }) {
+    return await this.client.post(`/assets/metrics`, payload);
   }
 }

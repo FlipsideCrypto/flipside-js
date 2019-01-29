@@ -79,9 +79,11 @@ export default class Data extends Component {
           <h3 class="fs-value">{metric.fcas}</h3>
 
           {opts.trend && (
-            <div class="fs-trend">
-              <div class={`fs-trend__change fs-trend__change--${trendDir}`}>
-                <img class="fs-trend__icon" src={trendIcon} />{" "}
+            <div class="fs-score-trend">
+              <div
+                class={`fs-score-trend__change fs-score-trend__change--${trendDir}`}
+              >
+                <img class="fs-score-trend__icon" src={trendIcon} />{" "}
                 {round(trendDiff)}
               </div>
               7d
@@ -89,8 +91,10 @@ export default class Data extends Component {
           )}
 
           {opts.rank && (
-            <div class="fs-rank">
-              <b class={`fs-rank__letter fs-rank__letter--${rank}`}>{rank}</b>{" "}
+            <div class="fs-score-rank">
+              <b class={`fs-score-rank__letter fs-score-rank__letter--${rank}`}>
+                {rank}
+              </b>{" "}
               Rank
             </div>
           )}

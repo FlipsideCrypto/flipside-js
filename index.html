@@ -69,7 +69,10 @@
         borderColor: "#737e8d"
       });
 
-      flipside.multiTable("multiTable", { title: { text: "Top Coins" } });
+      flipside.multiTable("multiTable", {
+        assets: ["BTC", "EOS", "LTC", "ETH", "ETC", "XRP", "ZEC"],
+        title: { text: "Top Coins" }
+      });
     </script>
   </body>
 </html>

@@ -5,7 +5,7 @@ export default props => {
     <div class="fs-data-mini">
       FCAS {props.metric.fcas}
       <div
-        class={`fs-rank fs-rank__letter fs-rank__letter--mini fs-rank__letter--${
+        class={`fs-score-rank fs-score-rank__letter fs-score-rank__letter--mini fs-score-rank__letter--${
           props.rank
         }`}
       >
