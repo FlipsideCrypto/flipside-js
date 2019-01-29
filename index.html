@@ -47,8 +47,10 @@
     <script>
       const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
       flipside.spectrumPlot("widget-0", {
-        asset: "nmr",
-        highlights: ["BTC", "ETH", "QTUM"],
+        asset: {
+          symbol: "nmr",
+          highlights: ["BTC", "ETH", "QTUM"]
+        },
         mode: "light",
         fontFamily: "inherit",
         relatedMarkers: {
@@ -66,7 +68,10 @@
       });
 
       flipside.spectrumPlot("widget-1", {
-        asset: "nmr",
+        asset: {
+          symbol: "nmr",
+          highlights: ["BTC", "ETH", "QTUM"]
+        },
         mode: "dark",
         bucketDistance: 100,
         highlights: ["BTC", "ETH", "eos", "nmr", "ltc", "gnt", "rep", "mln"]

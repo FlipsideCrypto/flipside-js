@@ -6,8 +6,10 @@ import "./styles.scss";
 import API from "../api";
 
 export type Props = {
-  asset: string;
-  highlights?: string[];
+  asset?: {
+    symbol: string;
+    highlights?: string[];
+  };
   mode?: "light" | "dark";
   fontFamily?: string;
   autoWidth?: boolean;
@@ -33,7 +35,10 @@ type State = {
 
 export default class SpectrumPlot extends Component<Props, State> {
   static defaultProps: Props = {
-    asset: "btc",
+    asset: {
+      symbol: "btc",
+      highlights: ["eth", "zec", "zrx"]
+    },
     mode: "light",
     fontFamily: "inherit",
     relatedMarkers: { enabled: true, bucketDistance: 35, lineDistance: 25 },
@@ -53,7 +58,7 @@ export default class SpectrumPlot extends Component<Props, State> {
 
   async _getData() {
     const { data, success } = await this.props.api.fetchAssetMetric(
-      this.props.asset,
+      this.props.asset.symbol,
       "FCAS"
     );
 
@@ -104,9 +109,9 @@ export default class SpectrumPlot extends Component<Props, State> {
     if (loading) return null;
     return (
       <div class={`fs-spectrum fs-spectrum-${props.mode}`}>
-        <Score symbol={props.asset} metric={metric} {...props} mini />
+        <Score symbol={props.asset.symbol} metric={metric} {...props} mini />
         {props.spectrum.enabled && (
-          <Plot symbol={props.asset} metric={metric} {...props} mini />
+          <Plot symbol={props.asset.symbol} metric={metric} {...props} mini />
         )}
         <CustomLinks />
       </div>

@@ -85,13 +85,15 @@ export default class Plot extends Component {
   }
 
   getHighlights() {
-    let { asset, highlights } = this.props;
-    asset = asset.toLowerCase();
+    let { asset } = this.props;
+    let { highlights, symbol } = asset;
+    let assetSymbol = symbol.toLowerCase();
+
     if (highlights && highlights.length > 0) {
       return highlights;
     }
     highlights = [];
-    if (asset == "eth" || asset == "btc") {
+    if (assetSymbol == "eth" || assetSymbol == "btc") {
       highlights = ["ZEC", "XRP"];
     } else {
       highlights = ["BTC"];
@@ -130,9 +132,6 @@ export default class Plot extends Component {
         i !== highlightLength - 1 ? sortedHighLights[i + 1] : null;
 
       const prevDist = Math.abs(anchorX - currentAsset.value);
-      // const nextDist = nextAsset
-      // ? Math.abs(nextAsset.value - currentAsset.value)
-      // : 1000000;
 
       if (prevDist <= bucketDistance) {
         buckets[currentBucketIndex].push(currentAsset);
@@ -187,7 +186,7 @@ export default class Plot extends Component {
     const xPos = `${(props.metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
       .filter(i => highlightedSymbols.indexOf(i.symbol) > -1)
-      .filter(i => i.symbol != props.asset.toUpperCase());
+      .filter(i => i.symbol != props.asset.symbol.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 
@@ -264,7 +263,7 @@ export default class Plot extends Component {
         {/* Blue FCAS Marker */}
         <text class="fs-plot__blue" text-anchor="middle" font-weight="bold">
           <tspan x={xPos} y={props.mini ? 26 : 14}>
-            {props.asset.toUpperCase()}
+            {props.asset.symbol.toUpperCase()}
           </tspan>
           {!props.mini && (
             <tspan x={xPos} y="104">
