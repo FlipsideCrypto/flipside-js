@@ -4,17 +4,57 @@
   line-height: 1;
   border-radius: 25px;
 
-  &-dark {
-    color: #fff;
-    a {
-      color: #20b7fc;
-    }
+  &-viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+  &-carousel {
+    transition: transform 250ms ease-out;
+    white-space: nowrap;
+  }
+  &-carousel-item {
+    width: 100%;
+    display: inline-block;
   }
 
-  &-light {
-    color: #000;
-    a {
-      color: #2d57ed;
+  &-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  &-dot {
+    border-radius: 5px;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    transition: background 250ms ease-out;
+    cursor: pointer;
+  }
+}
+
+.fs-spectrum-light {
+  color: #000;
+  a {
+    color: #2d57ed;
+  }
+  .fs-spectrum-dot {
+    background: rgba(0, 0, 0, 0.15);
+    &-active {
+      background: rgba(0, 0, 0, 1);
+    }
+  }
+}
+
+.fs-spectrum-dark {
+  color: #fff;
+  a {
+    color: #20b7fc;
+  }
+  .fs-spectrum-dot {
+    background: rgba(255, 255, 255, 0.25);
+    &-active {
+      background: rgba(255, 255, 255, 1);
     }
   }
 }

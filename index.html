@@ -67,11 +67,21 @@
         trend: { enabled: true }
       });
 
-      flipside.spectrumPlot("widget-1", {
-        asset: {
-          symbol: "nmr",
-          highlights: ["BTC", "ETH", "QTUM"]
-        },
+      flipside.spectrum("widget-1", {
+        assets: [
+          {
+            symbol: "eth",
+            highlights: ["BTC", "NMR", "QTUM"]
+          },
+          {
+            symbol: "xrp",
+            highlights: ["BTC", "NMR", "QTUM"]
+          },
+          {
+            symbol: "btc",
+            highlights: ["eos", "NMR", "QTUM"]
+          }
+        ],
         mode: "dark",
         bucketDistance: 100,
         highlights: ["BTC", "ETH", "eos", "nmr", "ltc", "gnt", "rep", "mln"]

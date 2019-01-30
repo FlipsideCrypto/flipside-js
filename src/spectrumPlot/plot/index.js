@@ -202,8 +202,8 @@ export default class Plot extends Component {
         </defs>
 
         <g fill={props.mode === "dark" ? "#fff" : "#000"}>
-          <circle cx="0" cy="44" r="2.5" />
-          <text x="6" y="47" font-size="8">
+          <circle cx="3" cy="44" r="2.5" />
+          <text x="9" y="47" font-size="8">
             Coins
           </text>
         </g>
@@ -227,13 +227,18 @@ export default class Plot extends Component {
         {/* Line Labels */}
         <text
           y="85"
-          text-anchor="middle"
           class="fs-plot__x"
           fill={props.mode === "dark" ? "#fff" : "#000"}
         >
-          <tspan x="0">0</tspan>
-          <tspan x="50%">500</tspan>
-          <tspan x="100%">1000</tspan>
+          <tspan text-anchor="start" x="0">
+            0
+          </tspan>
+          <tspan text-anchor="middle" x="50%">
+            500
+          </tspan>
+          <tspan text-anchor="end" x="100%">
+            1000
+          </tspan>
         </text>
 
         {props.relatedMarkers.enabled &&
