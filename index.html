@@ -57,8 +57,8 @@
           enabled: true,
           bucketDistance: 35,
           lineDistance: 25,
-          color: null,
-          fontFamily: "inherit"
+          color: "purple",
+          fontFamily: "Georgia"
         },
         name: { enabled: true, style: {} },
         spectrum: { enabled: true },
@@ -84,7 +84,9 @@
         ],
         mode: "dark",
         bucketDistance: 100,
-        highlights: ["BTC", "ETH", "eos", "nmr", "ltc", "gnt", "rep", "mln"]
+        relatedMarkers: {
+          color: "red"
+        }
       });
 
       flipside.createTable("widget-2", "btc", {

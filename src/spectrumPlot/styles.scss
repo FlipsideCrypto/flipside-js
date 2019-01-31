@@ -44,6 +44,18 @@
       background: rgba(0, 0, 0, 1);
     }
   }
+  .fs-plot-asset-marker {
+    fill: #2d57ed;
+  }
+  .fs-plot-asset-line {
+    stroke: #2d57ed;
+  }
+  .fs-plot-related {
+    fill: #000;
+  }
+  .fs-plot-related-line {
+    stroke: #000;
+  }
 }
 
 .fs-spectrum-dark {
@@ -56,6 +68,18 @@
     &-active {
       background: rgba(255, 255, 255, 1);
     }
+  }
+  .fs-plot-asset-marker {
+    fill: #20b7fc;
+  }
+  .fs-plot-asset-line {
+    stroke: #20b7fc;
+  }
+  .fs-plot-related {
+    fill: #fff;
+  }
+  .fs-plot-related-line {
+    stroke: #fff;
   }
 }
 

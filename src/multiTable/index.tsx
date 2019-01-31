@@ -85,7 +85,6 @@ export type Props = {
     changeOver?: number;
   };
   headers?: {
-    color?: string;
     style?: object;
   };
   rows?: {
@@ -127,11 +126,10 @@ export default class MultiTable extends Component<Props, State> {
     };
   }
 
-  static defaultProps = {
+  static defaultProps: Props = {
     mode: "light",
     limit: 10,
     page: 1,
-    sortBy: "fcas",
     fontFamily: "inherit",
     columns: [
       "trend",
@@ -140,8 +138,13 @@ export default class MultiTable extends Component<Props, State> {
       "marketMaturity",
       "rank"
     ],
+    headers: {
+      style: {}
+    },
     rows: {
-      alternating: true
+      alternating: true,
+      alternatingColors: [],
+      dividers: false
     },
     trend: {
       changeOver: 7
@@ -202,7 +205,7 @@ export default class MultiTable extends Component<Props, State> {
               {props.title.text}
             </h1>
           )}
-          <CustomLinks />
+          <CustomLinks widget="multi-table" api={this.props.api} />
         </header>
 
         <table>
@@ -215,7 +218,7 @@ export default class MultiTable extends Component<Props, State> {
                 });
                 return (
                   <th class={classes} onClick={() => this.handleSort(col)}>
-                    <div class="fs-multi-colhead">
+                    <div class="fs-multi-colhead" style={props.headers.style}>
                       {column.sortKey && (
                         <span
                           class={classnames(

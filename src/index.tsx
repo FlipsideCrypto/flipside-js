@@ -4,7 +4,7 @@ import Table from "./table";
 import SpectrumPlot, { Props as SpectrumPlotProps } from "./spectrumPlot";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
 
-type MultiTableOpts = {};
+import defaultsDeep = require("lodash/defaultsDeep");
 
 export default class Flipside {
   api: API;
@@ -15,12 +15,15 @@ export default class Flipside {
 
   multiTable(el: string, opts: MultiTableProps) {
     const element = document.getElementById(el);
-    render(<MultiTable {...opts} api={this.api} />, element);
+    const props = defaultsDeep(opts, MultiTable.defaultProps);
+    render(<MultiTable {...props} api={this.api} />, element);
   }
 
   spectrum(el: string, opts: SpectrumPlotProps): void {
     const element = document.getElementById(el);
-    render(<SpectrumPlot {...opts} api={this.api} />, element);
+    const props = defaultsDeep(opts, SpectrumPlot.defaultProps);
+    console.log(props);
+    render(<SpectrumPlot {...props} api={this.api} />, element);
   }
 
   createTable(el: string, symbol: string, opts: object) {
@@ -32,25 +35,6 @@ export default class Flipside {
     const element = typeof el === "string" ? document.getElementById(el) : el;
     render(<Table symbol={symbol} api={this.api} {...mergedOpts} />, element);
   }
-
-  // createFCAS(el: string, symbol: string, opts: object) {
-  //   symbol = symbol.toLowerCase();
-  //   const defaults = {
-  //     score: true,
-  //     plot: true,
-  //     symbol: true,
-  //     logo: true,
-  //     trend: true,
-  //     rank: true,
-  //     header: true,
-  //     dark: false
-  //   };
-  //   const mergedOpts = Object.assign({}, defaults, opts);
-
-  //   const element = typeof el === "string" ? document.getElementById(el) : el;
-
-  //   render(<FCAS symbol={symbol} api={this.api} opts={mergedOpts} />, element);
-  // }
 }
 
 declare global {

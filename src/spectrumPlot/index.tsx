@@ -38,21 +38,6 @@ type State = {
 };
 
 class SpectrumPlot extends Component<Props, State> {
-  static defaultProps: Props = {
-    asset: {
-      symbol: "btc",
-      highlights: ["eth", "zec", "zrx"]
-    },
-    mode: "light",
-    fontFamily: "inherit",
-    relatedMarkers: { enabled: true, bucketDistance: 35, lineDistance: 25 },
-    name: { enabled: true },
-    spectrum: { enabled: true },
-    icon: { enabled: true },
-    rank: { enabled: true },
-    trend: { enabled: true }
-  };
-
   interval: NodeJS.Timeout;
 
   constructor() {
@@ -114,9 +99,7 @@ class SpectrumPlot extends Component<Props, State> {
     return (
       <div>
         <Score symbol={props.asset.symbol} metric={metric} {...props} mini />
-        {props.spectrum.enabled && (
-          <Plot symbol={props.asset.symbol} metric={metric} {...props} mini />
-        )}
+        {props.spectrum.enabled && <Plot metric={metric} {...props} />}
       </div>
     );
   }
@@ -131,13 +114,34 @@ export default class Carousel extends Component<Props, CarouselState> {
     currentSlide: 0
   };
 
+  static defaultProps: Props = {
+    asset: {
+      symbol: "btc",
+      highlights: ["eth", "zec", "zrx"]
+    },
+    assets: [],
+    mode: "light",
+    fontFamily: "inherit",
+    relatedMarkers: {
+      enabled: true,
+      bucketDistance: 35,
+      lineDistance: 25,
+      fontFamily: "inherit"
+    },
+    name: { enabled: true },
+    spectrum: { enabled: true },
+    icon: { enabled: true },
+    rank: { enabled: true },
+    trend: { enabled: true }
+  };
+
   slideTo = (slide: number) => {
     this.setState({ currentSlide: slide });
   };
 
   render(props: Props, state: CarouselState) {
     let assets = [props.asset];
-    if (props.assets && props.assets.length > 0) {
+    if (props.assets.length > 0) {
       assets = props.assets;
     }
     const carouselOffset = state.currentSlide * 100;
@@ -155,7 +159,7 @@ export default class Carousel extends Component<Props, CarouselState> {
           </div>
         </div>
 
-        <CustomLinks />
+        <CustomLinks widget="spectrum" api={this.props.api} />
 
         {assets.length > 1 && (
           <div class="fs-spectrum-dots">

@@ -70,4 +70,18 @@ export default class API {
   }) {
     return await this.client.post(`/assets/metrics`, payload);
   }
+
+  async fetchWidgetLinks(slug: WidgetLinksSlug): Promise<WidgetLinksResponse> {
+    return await this.client.get(`/widgets/${slug}/links`);
+  }
 }
+
+export type WidgetLinksSlug = "spectrum" | "multi-table" | "table";
+export type WidgetLinksLink = {
+  widget_id: string;
+  name: string;
+  link_html: string;
+};
+export type WidgetLinksResponse = {
+  data: WidgetLinksLink[];
+};

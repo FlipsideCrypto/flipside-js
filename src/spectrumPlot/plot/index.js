@@ -190,6 +190,18 @@ export default class Plot extends Component {
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 
+    let relatedLabelStyle = {};
+    let relatedLineStyle = {};
+    if (props.relatedMarkers) {
+      relatedLabelStyle = {
+        fill: props.relatedMarkers.color,
+        fontFamily: props.relatedMarkers.fontFamily
+      };
+      relatedLineStyle = {
+        stroke: props.relatedMarkers.color
+      };
+    }
+
     return (
       <svg class="fs-plot" width="100%" height="104" overflow="visible">
         <defs>
@@ -224,10 +236,10 @@ export default class Plot extends Component {
         {/* Gradient Line */}
         <rect x="0" y="64" width="100%" height="6" fill="url(#gradient)" />
 
-        {/* Line Labels */}
+        {/* Spectrum Legend */}
         <text
           y="85"
-          class="fs-plot__x"
+          class="fs-plot-legend"
           fill={props.mode === "dark" ? "#fff" : "#000"}
         >
           <tspan text-anchor="start" x="0">
@@ -246,7 +258,7 @@ export default class Plot extends Component {
             const xPos = `${(a.value / 1000) * 100}%`;
             let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
             return (
-              <g fill={props.mode === "dark" ? "#fff" : "#000"}>
+              <g class="fs-plot-related" style={relatedLabelStyle}>
                 <text x={xPos} y={y} text-anchor="middle" font-size="10">
                   {a.symbol}
                 </text>
@@ -256,9 +268,8 @@ export default class Plot extends Component {
                     y1={y + 3}
                     x2={xPos}
                     y2="60"
-                    style={`stroke:rgb(${
-                      props.mode === "dark" ? "255, 255, 255" : "0,0,0"
-                    }); stroke-width:0.5`}
+                    class="fs-plot-related-line"
+                    style={relatedLineStyle}
                   />
                 )}
               </g>
@@ -266,25 +277,18 @@ export default class Plot extends Component {
           })}
 
         {/* Blue FCAS Marker */}
-        <text class="fs-plot__blue" text-anchor="middle" font-weight="bold">
-          <tspan x={xPos} y={props.mini ? 26 : 14}>
+        <text
+          class="fs-plot-asset-marker"
+          text-anchor="middle"
+          font-weight="bold"
+        >
+          <tspan x={xPos} y={26}>
             {props.asset.symbol.toUpperCase()}
           </tspan>
-          {!props.mini && (
-            <tspan x={xPos} y="104">
-              {props.metric.fcas}
-            </tspan>
-          )}
         </text>
 
         {/* Blue FCAS Marker Line */}
-        <line
-          x1={xPos}
-          y1={props.mini ? 28 : 16}
-          x2={xPos}
-          y2={props.mini ? 60 : 92}
-          style="stroke:rgb(45,87,237); stroke-width:1"
-        />
+        <line x1={xPos} y1={28} x2={xPos} y2={60} class="fs-plot-asset-line" />
       </svg>
     );
   }

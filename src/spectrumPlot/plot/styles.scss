@@ -1,8 +1,15 @@
-.fs-plot__blue {
-  fill: #2d57ed;
+.fs-plot-asset-marker {
   font-size: 12px;
 }
 
-.fs-plot__x {
+.fs-plot-asset-line {
+  stroke-width: 1;
+}
+
+.fs-plot-related-line {
+  stroke-width: 0.5;
+}
+
+.fs-plot-legend {
   font-size: 7px;
 }
