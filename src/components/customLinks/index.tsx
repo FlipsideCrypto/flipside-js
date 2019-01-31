@@ -1,6 +1,7 @@
 import { h, Component, render } from "preact";
 import "./style.scss";
 import API, { WidgetLinksLink } from "../../api";
+import find = require("lodash/find");
 
 type Props = {
   widget: "spectrum" | "multi-table" | "table";
@@ -21,12 +22,17 @@ class CustomLinks extends Component<Props, State> {
     this.setState({ links: res.data });
   }
 
-  render() {
+  render(_: Props, state: State) {
+    const leftLink = find(state.links, { name: "left_link" });
+    const rightLink = find(state.links, { name: "right_link" });
     return (
       <div class="fs-links">
-        {this.state.links.map(link => (
-          <p dangerouslySetInnerHTML={{ __html: link.link_html }} />
-        ))}
+        {leftLink && (
+          <p dangerouslySetInnerHTML={{ __html: leftLink.link_html }} />
+        )}
+        {rightLink && (
+          <p dangerouslySetInnerHTML={{ __html: rightLink.link_html }} />
+        )}
       </div>
     );
   }
