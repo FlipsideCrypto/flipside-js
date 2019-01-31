@@ -6,6 +6,7 @@ import CustomLinks from "../components/customLinks";
 import API from "../api";
 import "./style.scss";
 
+import uniq = require("lodash/uniq");
 import sortBy = require("lodash/sortBy");
 import reverse = require("lodash/reverse");
 

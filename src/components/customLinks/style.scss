@@ -3,11 +3,10 @@
   font-size: 11px;
   flex-grow: 1;
   flex-wrap: wrap;
-  &-line1,
-  &-line2 {
+  p {
     margin: 0 0 10px;
   }
-  &-line1 {
+  p:first-child {
     margin-right: auto;
   }
 }

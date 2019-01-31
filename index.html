@@ -95,26 +95,15 @@
       });
 
       flipside.multiTable("multiTable", {
-        assets: null,
-        columns: [
-          "trend",
-          "userActivity",
-          "developerBehavior",
-          "marketMaturity",
-          "rank"
-        ],
+        columns: ["rank", "trend"],
         exclusions: ["gas", "TRX"],
         fontFamily: "inherit",
         headers: {},
-        limit: 10,
+        limit: 15,
         page: 1,
         mode: "light",
         rows: {
-          alternating: true,
-          alternatingColors: "#eeeeee",
-          dividers: false,
-          dividersColor: "#979797",
-          style: {}
+          dividers: true
         },
         title: {
           text: "Top Coins",

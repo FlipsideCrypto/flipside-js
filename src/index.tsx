@@ -3,8 +3,7 @@ import API from "./api";
 import Table from "./table";
 import SpectrumPlot, { Props as SpectrumPlotProps } from "./spectrumPlot";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
-
-import defaultsDeep = require("lodash/defaultsDeep");
+import { defaultsWithoutArrays } from "./utils";
 
 export default class Flipside {
   api: API;
@@ -15,14 +14,13 @@ export default class Flipside {
 
   multiTable(el: string, opts: MultiTableProps) {
     const element = document.getElementById(el);
-    const props = defaultsDeep(opts, MultiTable.defaultProps);
+    const props = defaultsWithoutArrays(MultiTable.defaultProps, opts);
     render(<MultiTable {...props} api={this.api} />, element);
   }
 
   spectrum(el: string, opts: SpectrumPlotProps): void {
     const element = document.getElementById(el);
-    const props = defaultsDeep(opts, SpectrumPlot.defaultProps);
-    console.log(props);
+    const props = defaultsWithoutArrays(SpectrumPlot.defaultProps, opts);
     render(<SpectrumPlot {...props} api={this.api} />, element);
   }
 
