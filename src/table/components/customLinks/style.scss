@@ -1,0 +1,11 @@
+.fs-bottom-link {
+  line-height: 40px;
+  a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
