@@ -14,7 +14,7 @@ To get started, request an API Key: api@flipsidecrypto.com.
 <br>
 [View Live Multi Table Widget Example](https://jsfiddle.net/flipsidejim/hafj7drm/)
 <br>
-[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/11/)
+[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/)
 
 ## Building
 

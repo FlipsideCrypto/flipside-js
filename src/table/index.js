@@ -1,5 +1,6 @@
 import { h, Component } from "preact";
 import keyBy from "lodash/keyBy";
+import CustomLinks from "./components/customLinks";
 import "./styles.scss";
 
 function getMetricTrend(change) {
@@ -118,9 +119,7 @@ export default class Table extends Component {
             </td>
           </tr>
         </table>
-        <a class="fs-table-link" onClick={this.onClickLearnMore.bind(this)}>
-          Want to know more about these scores?
-        </a>
+        <CustomLinks api={this.props.api} widget={"table"} />
       </div>
     );
   }
