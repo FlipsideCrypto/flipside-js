@@ -37,9 +37,7 @@ export default class Score extends Component {
           {props.icon.enabled && (
             <img
               class="fs-token__logo"
-              src={`https://s3.amazonaws.com/fsc-crypto-icons/svg/color/${
-                props.asset.symbol
-              }.svg`}
+              src={`https://s3.amazonaws.com/fsc-crypto-icons/svg/color/${props.asset.symbol.toLowerCase()}.svg`}
             />
           )}
           <h1 class="fs-token__name">
