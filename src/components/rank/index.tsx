@@ -1,8 +1,10 @@
 import { h, Component } from "preact";
-import "./style.scss";
+import classNames from "classnames";
+import * as css from "./style.css";
 
 type Props = {
   score: number;
+  kind?: "slim" | "large";
 };
 
 type State = {
@@ -10,6 +12,10 @@ type State = {
 };
 
 export default class Rank extends Component<Props, State> {
+  static defaultProps = {
+    kind: "slim"
+  };
+
   state: State = {
     showTooltip: false
   };
@@ -23,19 +29,31 @@ export default class Rank extends Component<Props, State> {
   };
 
   render(props: Props) {
-    let rank;
+    let rankClass;
     if (props.score <= 500) {
-      rank = "f";
+      rankClass = css.f;
     } else if (props.score <= 649) {
-      rank = "c";
+      rankClass = css.c;
     } else if (props.score <= 749) {
-      rank = "b";
+      rankClass = css.b;
     } else if (props.score <= 899) {
-      rank = "a";
+      rankClass = css.a;
     } else {
-      rank = "s";
+      rankClass = css.s;
     }
 
-    return <span class={`fs-rank fs-rank-${rank}`} />;
+    let kindClass = css.slim;
+    if (props.kind === "large") {
+      kindClass = css.large;
+    }
+
+    const classes = classNames(css.rank, rankClass, kindClass);
+    return (
+      <div class={css.wrapper}>
+        {props.kind === "large" && "Rank"}
+        <span class={classes} />
+      </div>
+    );
+    // return <span class={`fs-rank fs-rank-${rank}`} />;
   }
 }

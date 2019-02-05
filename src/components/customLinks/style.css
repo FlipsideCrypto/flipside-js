@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+
+.link {
+  font-size: 11px;
+  margin: 0 0 10px;
+}
+
+.link:first-child {
+  margin-right: auto;
+}

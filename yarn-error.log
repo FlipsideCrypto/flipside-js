@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run dev
 
 PATH: 
   /Users/bryan/google-cloud-sdk/bin:./bin:/usr/local/bin:/usr/local/sbin:/Users/bryan/.dotfiles/bin:/Users/bryan/Code/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/bryan/google-cloud-sdk/bin:./bin:/usr/local/sbin:/Users/bryan/.dotfiles/bin:/Users/bryan/Code/go/bin:/usr/local/Cellar/node/8.1.3/bin:/usr/local/opt/go/libexec/bin:/usr/local/Cellar/node/8.1.3/bin:/usr/local/opt/go/libexec/bin:/Users/bryan/Code/go/bin
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "name": "flipside-js",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "description": "FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API, including FCAS.",
     "main": "index.js",
     "scripts": {
@@ -40,6 +40,7 @@ npm manifest:
       "@types/node": "^10.12.19",
       "babel-loader": "^8.0.4",
       "css-loader": "^1.0.1",
+      "css-modules-typescript-loader": "^1.1.1",
       "node-sass": "^4.10.0",
       "sass-loader": "^7.1.0",
       "style-loader": "^0.23.1",
@@ -1116,6 +1117,12 @@ Lockfile:
       postcss-modules-values "^1.3.0"
       postcss-value-parser "^3.3.0"
       source-list-map "^2.0.0"
+  
+  css-modules-typescript-loader@^1.1.1:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/css-modules-typescript-loader/-/css-modules-typescript-loader-1.1.1.tgz#fe03e2f02ed620c5c6825958f6945395ddf1d0df"
+    dependencies:
+      line-diff "^2.0.1"
   
   css-selector-tokenizer@^0.7.0:
     version "0.7.1"
@@ -2384,6 +2391,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lcid/-/lcid-2.0.0.tgz#6ef5d2df60e52f82eb228a4c373e8d1f397253cf"
     dependencies:
       invert-kv "^2.0.0"
+  
+  levdist@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/levdist/-/levdist-1.0.0.tgz#91d7a3044964f2ccc421a0477cac827fe75c5718"
+  
+  line-diff@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/line-diff/-/line-diff-2.0.1.tgz#d893ae8d81914cd65974fd57e714e730ce1e96a8"
+    dependencies:
+      levdist "^1.0.0"
   
   load-json-file@^1.0.0:
     version "1.1.0"
@@ -4538,14 +4555,16 @@ Lockfile:
       yargs-parser "^5.0.0"
 
 Trace: 
-  Error: Command "start" not found.
-      at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
-      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87307:17
-      at Generator.next (<anonymous>)
-      at step (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:98:30)
-      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:23451:28)
-      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:95:12
-      at runCommand (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87312:22)
-      at Object.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87412:14)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c webpack-dev-server
+  Directory: /Users/bryan/Code/flipside-js
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:182:13)
+      at maybeClose (internal/child_process.js:962:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:251:5)

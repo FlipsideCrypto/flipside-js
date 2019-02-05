@@ -1,4 +1,3 @@
-import defaultsDeep = require("lodash/defaultsDeep");
 import isArray = require("lodash/isArray");
 import mergeWith = require("lodash/mergeWith");
 

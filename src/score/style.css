@@ -1,0 +1,48 @@
+.wrapper {
+  text-align: right;
+}
+
+.header {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.fcas {
+  margin: 0 10px 0 0;
+  font-size: 11px;
+}
+
+.link {
+  color: #3578a8;
+  font-size: 11px;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.value {
+  font-size: 52px;
+  margin: 0 16px 0 0;
+}
+
+.change {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.trend {
+  margin: 0 10px;
+}
+
+.up {
+  color: #057511;
+}
+
+.down {
+  color: #980000;
+}
