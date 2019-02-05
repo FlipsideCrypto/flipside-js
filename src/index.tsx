@@ -1,9 +1,10 @@
 import { h, render } from "preact";
 import API from "./api";
 import Table from "./table";
+import { defaultsWithoutArrays } from "./utils";
 import SpectrumPlot, { Props as SpectrumPlotProps } from "./spectrumPlot";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
-import { defaultsWithoutArrays } from "./utils";
+import Score, { Props as ScoreProps } from "./score";
 
 export default class Flipside {
   api: API;
@@ -22,6 +23,10 @@ export default class Flipside {
     const element = document.getElementById(el);
     const props = defaultsWithoutArrays(SpectrumPlot.defaultProps, opts);
     render(<SpectrumPlot {...props} api={this.api} />, element);
+  }
+
+  score(el: string, opts: ScoreProps) {
+    render(<Score {...opts} api={this.api} />, document.getElementById(el));
   }
 
   createTable(el: string, symbol: string, opts: object) {
