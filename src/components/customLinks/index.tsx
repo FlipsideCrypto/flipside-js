@@ -6,6 +6,7 @@ import find = require("lodash/find");
 type Props = {
   widget: "spectrum" | "multi-table" | "table";
   api: API;
+  linkBootstrap?: WidgetLinksLink[];
 };
 
 type State = {
@@ -18,6 +19,10 @@ class CustomLinks extends Component<Props, State> {
   };
 
   async componentDidMount() {
+    if (this.props.linkBootstrap) {
+      this.setState({ links: this.props.linkBootstrap });
+      return;
+    }
     const res = await this.props.api.fetchWidgetLinks(this.props.widget);
     this.setState({ links: res.data });
   }
