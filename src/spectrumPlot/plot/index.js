@@ -19,7 +19,17 @@ export default class Plot extends Component {
   }
 
   async _getData() {
-    const { data, success } = await this.props.api.fetchFCASDistribution();
+    let data;
+    let success;
+
+    if (!this.props.bootstrapFCASDistribution) {
+      let result = await this.props.api.fetchFCASDistribution();
+      data = result.data;
+      success = result.success;
+    } else {
+      data = this.props.bootstrapFCASDistribution;
+      success = true;
+    }
 
     if (!success || !data) {
       setTimeout(() => {
@@ -39,20 +49,27 @@ export default class Plot extends Component {
 
   async _getHighlights() {
     const highlights = this.getHighlights();
-    const nextHighlightState = [];
-    const nextHighlightedSymbolState = [];
-    await Promise.all(
-      highlights.map(async asset => {
-        const { data, success } = await this.props.api.fetchAssetMetric(
-          asset,
-          "fcas"
-        );
-        if (success === true && data) {
-          nextHighlightState.push(data);
-          nextHighlightedSymbolState.push(data.symbol);
-        }
-      })
-    );
+    let nextHighlightState = [];
+    let nextHighlightedSymbolState = [];
+    if (this.props.asset && this.props.asset.bootstrapHighlights) {
+      nextHighlightState = this.props.asset.bootstrapHighlights;
+      nextHighlightedSymbolState = this.props.asset.bootstrapHighlights.map(
+        highlight => highlight.symbol
+      );
+    } else {
+      await Promise.all(
+        highlights.map(async asset => {
+          const { data, success } = await this.props.api.fetchAssetMetric(
+            asset,
+            "fcas"
+          );
+          if (success === true && data) {
+            nextHighlightState.push(data);
+            nextHighlightedSymbolState.push(data.symbol);
+          }
+        })
+      );
+    }
     if (nextHighlightState.length < this.state.highlights.length) {
       return;
     }

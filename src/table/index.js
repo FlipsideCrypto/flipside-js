@@ -78,7 +78,7 @@ export default class Table extends Component {
       <div class={`fs-table fs-table--${dark ? "dark" : "light"}`}>
         <table>
           <tr class="fs-table-fcas">
-            <th style={tdStyle}>FCAS</th>
+            <th style={tdStyle}>Project Health</th>
             <td style={tdStyle}>
               <span class={`fs-table-rank fs-table-rank--${rank}`}>{rank}</span>
             </td>

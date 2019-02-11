@@ -4,11 +4,24 @@ import CustomLinks from "../components/customLinks";
 import Score from "./score";
 import Plot from "./plot";
 import "./styles.scss";
-import API from "../api";
+import API, { WidgetLinksLink } from "../api";
+
+type BootstrapAssetType = {
+  value: number;
+  percent_change: number;
+  asset_name: string;
+};
+
+type BootstrapHighlightType = {
+  symbol: string;
+  value: number;
+};
 
 type AssetType = {
   symbol: string;
   highlights?: string[];
+  bootstrapAsset?: BootstrapAssetType;
+  bootstrapHighlights?: BootstrapHighlightType[];
 };
 
 export type Props = {
@@ -30,6 +43,9 @@ export type Props = {
   spectrum?: { enabled: boolean };
   trend?: { enabled: boolean };
   api?: API;
+  bootstrapFCASDistribution?: any;
+  disableLinks?: boolean;
+  linkBootstrap?: WidgetLinksLink[];
 };
 
 type State = {
@@ -46,10 +62,20 @@ class SpectrumPlot extends Component<Props, State> {
   }
 
   async _getData() {
-    const { data, success } = await this.props.api.fetchAssetMetric(
-      this.props.asset.symbol,
-      "FCAS"
-    );
+    let data: BootstrapAssetType;
+    let success: boolean;
+
+    if (!this.props.asset.bootstrapAsset) {
+      let result = await this.props.api.fetchAssetMetric(
+        this.props.asset.symbol,
+        "FCAS"
+      );
+      data = result.data;
+      success = result.success;
+    } else {
+      data = this.props.asset.bootstrapAsset;
+      success = true;
+    }
 
     if (!success || !data) {
       setTimeout(() => {
@@ -117,8 +143,11 @@ export default class Carousel extends Component<Props, CarouselState> {
   static defaultProps: Props = {
     asset: {
       symbol: "btc",
-      highlights: ["eth", "zec", "zrx"]
+      highlights: ["eth", "zec", "zrx"],
+      bootstrapAsset: null,
+      bootstrapHighlights: null
     },
+    disableLinks: false,
     assets: [],
     mode: "light",
     fontFamily: "inherit",
@@ -132,7 +161,8 @@ export default class Carousel extends Component<Props, CarouselState> {
     spectrum: { enabled: true },
     icon: { enabled: true },
     rank: { enabled: true },
-    trend: { enabled: true }
+    trend: { enabled: true },
+    linkBootstrap: null
   };
 
   slideTo = (slide: number) => {
@@ -145,7 +175,9 @@ export default class Carousel extends Component<Props, CarouselState> {
       assets = props.assets;
     }
     const carouselOffset = state.currentSlide * 100;
-    const carouselStyle = { transform: `translateX(-${carouselOffset}%)` };
+    const carouselStyle = {
+      transform: `translateX(-${carouselOffset}%)`
+    };
 
     return (
       <div class={`fs-spectrum fs-spectrum-${props.mode}`}>
@@ -159,7 +191,13 @@ export default class Carousel extends Component<Props, CarouselState> {
           </div>
         </div>
 
-        <CustomLinks widget="spectrum" api={this.props.api} />
+        {props.disableLinks === false && (
+          <CustomLinks
+            widget="spectrum"
+            api={props.api}
+            linkBootstrap={props.linkBootstrap}
+          />
+        )}
 
         {assets.length > 1 && (
           <div class="fs-spectrum-dots">
