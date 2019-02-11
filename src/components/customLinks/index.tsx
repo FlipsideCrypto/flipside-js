@@ -1,11 +1,14 @@
 import { h, Component, render } from "preact";
 import API, { WidgetLinksLink } from "../../api";
 import find = require("lodash/find");
+import classNames from "classnames";
 import * as css from "./style.css";
 
 type Props = {
-  widget: "spectrum" | "multi-table" | "table";
+  widget: "spectrum" | "multi-table" | "table" | "score";
   api: API;
+  style?: any;
+  linkClass?: string;
   linkBootstrap?: WidgetLinksLink[];
 };
 
@@ -27,20 +30,31 @@ class CustomLinks extends Component<Props, State> {
     this.setState({ links: res.data });
   }
 
-  render(_: Props, state: State) {
+  render(props: Props, state: State) {
+    const linkClass = classNames(css.link, props.linkClass);
+    if (state.links.length === 0) {
+      return (
+        <div class={css.wrapper} style={props.style}>
+          <span class={linkClass}>
+            <a href="https://flipsidecrypto.com/fcas">What's this?</a>
+          </span>
+        </div>
+      );
+    }
+
     const leftLink = find(state.links, { name: "left_link" });
     const rightLink = find(state.links, { name: "right_link" });
     return (
-      <div class={css.wrapper}>
+      <div class={css.wrapper} style={props.style}>
         {leftLink && (
           <span
-            class={css.link}
+            class={linkClass}
             dangerouslySetInnerHTML={{ __html: leftLink.link_html }}
           />
         )}
         {rightLink && (
           <span
-            class={css.link}
+            class={linkClass}
             dangerouslySetInnerHTML={{ __html: rightLink.link_html }}
           />
         )}

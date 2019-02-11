@@ -3,8 +3,13 @@ import withFcas, { WithFcasProps } from "../components/withFcas";
 import Trend from "../components/trend";
 import Rank from "../components/rank";
 import * as css from "./style.css";
+import CustomLinks from "../components/customLinks";
+import API from "../api";
 
-export type Props = { symbol: string } & WithFcasProps;
+export type Props = {
+  symbol: string;
+  api: API;
+} & WithFcasProps;
 
 const Score = (props: Props) => {
   const { value, percent_change } = props.fcas;
@@ -12,9 +17,12 @@ const Score = (props: Props) => {
     <div class={css.wrapper}>
       <div class={css.header}>
         <h5 class={css.fcas}>FCAS</h5>
-        <a class={css.link} href="https://flipsidecrypto.com/fcas">
-          What's this?
-        </a>
+        <CustomLinks
+          widget="score"
+          api={props.api}
+          linkClass={css.link}
+          style={{ flexGrow: 0 }}
+        />
       </div>
 
       <div class={css.score}>
