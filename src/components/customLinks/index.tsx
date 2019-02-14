@@ -1,6 +1,6 @@
 import { h, Component, render } from "preact";
 import API, { WidgetLinksLink } from "../../api";
-import find = require("lodash/find");
+import find from "lodash/find";
 import classNames from "classnames";
 import * as css from "./style.css";
 

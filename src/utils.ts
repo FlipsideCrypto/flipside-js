@@ -1,5 +1,5 @@
-import isArray = require("lodash/isArray");
-import mergeWith = require("lodash/mergeWith");
+import isArray from "lodash/isArray";
+import mergeWith from "lodash/mergeWith";
 
 export const compare = (key: string) => {
   return (a: any, b: any) => {

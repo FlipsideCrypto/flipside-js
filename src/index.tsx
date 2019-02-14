@@ -5,6 +5,7 @@ import { defaultsWithoutArrays } from "./utils";
 import SpectrumPlot, { Props as SpectrumPlotProps } from "./spectrumPlot";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
 import Score, { Props as ScoreProps } from "./score";
+import Chart, { Props as ChartProps } from "./chart";
 
 export default class Flipside {
   api: API;
@@ -27,6 +28,10 @@ export default class Flipside {
 
   score(el: string, opts: ScoreProps) {
     render(<Score {...opts} api={this.api} />, document.getElementById(el));
+  }
+
+  chart(el: string, opts: ChartProps) {
+    render(<Chart {...opts} api={this.api} />, document.getElementById(el));
   }
 
   createTable(el: string, symbol: string, opts: object) {

@@ -1,6 +1,7 @@
 const path = require("path");
-let version = require("./package.json").version;
-let filename = `flipside-v${version}.js`;
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const version = require("./package.json").version;
+const filename = `flipside-v${version}.js`;
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -13,6 +14,7 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
   },
+  plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       { test: /\.tsx?$/, use: "ts-loader", exclude: /node_modules/ },

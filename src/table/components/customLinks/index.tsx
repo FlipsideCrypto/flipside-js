@@ -1,7 +1,7 @@
 import { h, Component, render } from "preact";
 import "./style.scss";
 import API, { WidgetLinksLink } from "../../../api";
-import find = require("lodash/find");
+import find from "lodash/find";
 
 type Props = {
   widget: "spectrum" | "multi-table" | "table";

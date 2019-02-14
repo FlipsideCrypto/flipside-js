@@ -36,6 +36,8 @@
     </style>
   </head>
   <body>
+    <div class="wrapper"><div id="chart"></div></div>
+
     <div class="wrapper"><div id="score"></div></div>
 
     <div class="wrapper"><div id="widget-0" style="width: 289px;"></div></div>
@@ -52,6 +54,14 @@
 
     <script>
       const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
+
+      flipside.chart("chart", {
+        series: [
+          { symbol: "btc", metric: "fcas", type: "line", yAxis: 0 },
+          { symbol: "btc", metric: "mavg_value", type: "line", yAxis: 1 }
+        ]
+      });
+
       flipside.spectrum("widget-0", {
         asset: {
           symbol: "nmr",
