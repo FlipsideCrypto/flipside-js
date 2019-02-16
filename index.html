@@ -22,6 +22,10 @@
         width: 500px;
       }
 
+      .dark {
+        background: #000;
+      }
+
       .wrapper p {
         font-size: 40px;
       }
@@ -37,6 +41,8 @@
   </head>
   <body>
     <div class="wrapper"><div id="chart"></div></div>
+
+    <div class="wrapper dark"><div id="chart2"></div></div>
 
     <div class="wrapper"><div id="score"></div></div>
 
@@ -56,9 +62,21 @@
       const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
 
       flipside.chart("chart", {
+        title: "Bitcoin Health",
         series: [
-          { symbol: "btc", metric: "fcas", type: "line", yAxis: 0 },
-          { symbol: "btc", metric: "mavg_value", type: "line", yAxis: 1 }
+          { symbol: "BTC", metric: "fcas", type: "line", yAxis: 0 },
+          { symbol: "BTC", metric: "dev", type: "line", yAxis: 1 }
+        ]
+      });
+
+      flipside.chart("chart2", {
+        mode: "dark",
+        title: "Ethereum Health w/ Custom Colors",
+        axisTitles: ["FCAS", "Dev"],
+        colors: ["#E44C27", "#7FCCC5"],
+        series: [
+          { symbol: "ETH", metric: "fcas", type: "line", yAxis: 0 },
+          { symbol: "ETH", metric: "dev", type: "line", yAxis: 1 }
         ]
       });
 

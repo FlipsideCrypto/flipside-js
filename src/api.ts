@@ -74,7 +74,22 @@ export default class API {
   async fetchWidgetLinks(slug: WidgetLinksSlug): Promise<WidgetLinksResponse> {
     return await this.client.get(`/widgets/${slug}/links`);
   }
+
+  async fetchTimeseries(payload: APISeriesPayload) {
+    return await this.client.post("/timeseries", payload);
+  }
 }
+
+export type APISeries = {
+  symbol: string;
+  names: string[];
+};
+
+export type APISeriesPayload = {
+  start_date: string;
+  end_date: string;
+  series: APISeries[];
+};
 
 export type WidgetLinksSlug = "spectrum" | "multi-table" | "table" | "score";
 export type WidgetLinksLink = {
