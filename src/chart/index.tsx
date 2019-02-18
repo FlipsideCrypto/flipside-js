@@ -1,10 +1,13 @@
 import { h, Component } from "preact";
-import Highcharts, { SeriesLineOptions } from "highcharts";
+import Highcharts from "highcharts/highstock";
 import merge from "lodash/merge";
 import API from "../api";
 import { createApiSeries, createSeries } from "./helpers";
 import zipObject = require("lodash/zipObject");
 import { DEFAULT_HIGHCHARTS, DEFAULT_YAXIS } from "./defaults";
+import CustomLinks from "../components/customLinks";
+
+require("highcharts/modules/exporting")(Highcharts);
 
 type ChartType = "line" | "bar";
 type ChartAxis = "left" | "right";
@@ -13,6 +16,7 @@ export type ChartSeries = {
   metric: string;
   type: ChartType;
   yAxis?: ChartAxis;
+  name?: string;
 };
 
 export type Props = {
@@ -73,6 +77,18 @@ class Chart extends Component<Props> {
         }
       },
 
+      rangeSelector: {
+        buttonTheme: {
+          states: {
+            select: {
+              style: {
+                color: mode === "dark" ? "#fff" : "#000"
+              }
+            }
+          }
+        }
+      },
+
       xAxis: {
         lineColor: gridLineColor,
         tickColor: gridLineColor
@@ -101,7 +117,12 @@ class Chart extends Component<Props> {
   }
 
   render() {
-    return <div ref={el => (this.container = el)} />;
+    return (
+      <div>
+        <div ref={el => (this.container = el)} />
+        <CustomLinks widget="chart" api={this.props.api} />
+      </div>
+    );
   }
 }
 

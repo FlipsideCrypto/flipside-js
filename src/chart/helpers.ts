@@ -43,7 +43,7 @@ export function createSeries(
       .filter(r => r.symbol === s.symbol.toUpperCase())
       .map(r => [Date.parse(r.timestamp as string), r[s.metric]]);
     return {
-      name: s.metric,
+      name: s.name || s.metric,
       yAxis: s.yAxis,
       tooltip: {
         valuePrefix: prefixes[s.metric]

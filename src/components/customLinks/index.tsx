@@ -5,7 +5,7 @@ import classNames from "classnames";
 import * as css from "./style.css";
 
 type Props = {
-  widget: "spectrum" | "multi-table" | "table" | "score";
+  widget: "spectrum" | "multi-table" | "table" | "score" | "chart";
   api: API;
   style?: any;
   linkClass?: string;

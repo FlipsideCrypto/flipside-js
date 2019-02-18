@@ -15,11 +15,9 @@
         margin: 0;
       }
       .wrapper {
-        width: 100%;
-        flex-wrap: wrap;
         border: 1px solid #ccc;
         padding: 20px;
-        width: 500px;
+        width: 700px;
       }
 
       .dark {
@@ -64,14 +62,26 @@
       flipside.chart("chart", {
         title: "Bitcoin Health",
         series: [
-          { symbol: "BTC", metric: "fcas", type: "line", yAxis: 0 },
-          { symbol: "BTC", metric: "dev", type: "line", yAxis: 1 }
+          {
+            name: "BTC FCAS",
+            symbol: "BTC",
+            metric: "fcas",
+            type: "line",
+            yAxis: 0
+          },
+          {
+            name: "BTC Dev",
+            symbol: "BTC",
+            metric: "dev",
+            type: "line",
+            yAxis: 1
+          }
         ]
       });
 
       flipside.chart("chart2", {
         mode: "dark",
-        title: "Ethereum Health w/ Custom Colors",
+        title: "Ethereum Health",
         axisTitles: ["FCAS", "Dev"],
         colors: ["#E44C27", "#7FCCC5"],
         series: [

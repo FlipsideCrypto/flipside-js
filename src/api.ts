@@ -91,7 +91,12 @@ export type APISeriesPayload = {
   series: APISeries[];
 };
 
-export type WidgetLinksSlug = "spectrum" | "multi-table" | "table" | "score";
+export type WidgetLinksSlug =
+  | "spectrum"
+  | "multi-table"
+  | "table"
+  | "score"
+  | "chart";
 export type WidgetLinksLink = {
   widget_id: string;
   name: "right_link" | "left_link";
