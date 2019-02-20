@@ -1,7 +1,11 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .icon {
   height: 6px;
   margin-right: 2px;
-  vertical-align: middle;
 }
 
 .up {

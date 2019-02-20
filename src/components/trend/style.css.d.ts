@@ -3,3 +3,4 @@
 export const down: string;
 export const icon: string;
 export const up: string;
+export const wrapper: string;

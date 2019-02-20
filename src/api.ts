@@ -79,7 +79,7 @@ export default class API {
 export type WidgetLinksSlug = "spectrum" | "multi-table" | "table" | "score";
 export type WidgetLinksLink = {
   widget_id: string;
-  name: "right_link" | "left_link";
+  name: string;
   link_html: string;
 };
 export type WidgetLinksResponse = {

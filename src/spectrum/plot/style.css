@@ -1,0 +1,41 @@
+.light .marker {
+  fill: #2d57ed;
+}
+.light .line {
+  stroke: #2d57ed;
+}
+.light .related {
+  fill: #000;
+}
+.light .relatedLine {
+  stroke: #000;
+}
+
+.dark .marker {
+  fill: #20b7fc;
+}
+.dark .line {
+  stroke: #20b7fc;
+}
+.dark .related {
+  fill: #fff;
+}
+.dark .relatedLine {
+  stroke: #fff;
+}
+
+.marker {
+  font-size: 12px;
+}
+
+.line {
+  stroke-width: 1;
+}
+
+.relatedLine {
+  stroke-width: 0.5;
+}
+
+.legend {
+  font-size: 7px;
+}

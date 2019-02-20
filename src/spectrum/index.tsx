@@ -1,12 +1,13 @@
 import { h, Component } from "preact";
-import classNames from "classnames";
 import CustomLinks from "../components/customLinks";
-import Score from "./score";
 import Plot from "./plot";
-import "./styles.scss";
+import * as css from "./style.css";
 import API, { WidgetLinksLink } from "../api";
+import Rank from "../components/rank";
+import Trend from "../components/trend";
+import Carousel from "./components/carousel";
 
-type BootstrapAssetType = {
+export type BootstrapAssetType = {
   value: number;
   percent_change: number;
   asset_name: string;
@@ -17,7 +18,7 @@ type BootstrapHighlightType = {
   value: number;
 };
 
-type AssetType = {
+export type AssetType = {
   symbol: string;
   highlights?: string[];
   bootstrapAsset?: BootstrapAssetType;
@@ -49,12 +50,19 @@ export type Props = {
 };
 
 type State = {
-  metric: any;
   loading: boolean;
+  metric: {
+    name: string;
+    fcas: number;
+    change: number;
+  };
 };
 
-class SpectrumPlot extends Component<Props, State> {
+class Spectrum extends Component<Props, State> {
   interval: NodeJS.Timeout;
+  static defaultProps = {
+    mode: "light"
+  };
 
   constructor() {
     super();
@@ -111,85 +119,43 @@ class SpectrumPlot extends Component<Props, State> {
       this.setState({
         loading: false,
         metric: {
-          fcas: "NA",
-          change: "NA",
-          name: "NA"
+          name: "NA",
+          fcas: 0,
+          change: 0
         }
       });
     }
     this._update();
   }
 
-  render(props: Props, { metric, loading }: State) {
-    if (loading) return null;
-    return (
-      <div>
-        <Score symbol={props.asset.symbol} metric={metric} {...props} mini />
-        {props.spectrum.enabled && <Plot metric={metric} {...props} />}
-      </div>
-    );
-  }
-}
+  render(props: Props, state: State) {
+    if (state.loading) return null;
 
-type CarouselState = {
-  currentSlide: number;
-};
-
-export default class Carousel extends Component<Props, CarouselState> {
-  state = {
-    currentSlide: 0
-  };
-
-  static defaultProps: Props = {
-    asset: {
-      symbol: "btc",
-      highlights: ["eth", "zec", "zrx"],
-      bootstrapAsset: null,
-      bootstrapHighlights: null
-    },
-    disableLinks: false,
-    assets: [],
-    mode: "light",
-    fontFamily: "inherit",
-    relatedMarkers: {
-      enabled: true,
-      bucketDistance: 35,
-      lineDistance: 25,
-      fontFamily: "inherit"
-    },
-    name: { enabled: true },
-    spectrum: { enabled: true },
-    icon: { enabled: true },
-    rank: { enabled: true },
-    trend: { enabled: true },
-    linkBootstrap: null
-  };
-
-  slideTo = (slide: number) => {
-    this.setState({ currentSlide: slide });
-  };
-
-  render(props: Props, state: CarouselState) {
-    let assets = [props.asset];
-    if (props.assets.length > 0) {
-      assets = props.assets;
-    }
-    const carouselOffset = state.currentSlide * 100;
-    const carouselStyle = {
-      transform: `translateX(-${carouselOffset}%)`
-    };
+    const { asset, mode } = props;
+    const { metric } = state;
 
     return (
-      <div class={`fs-spectrum fs-spectrum-${props.mode}`}>
-        <div class="fs-spectrum-viewport">
-          <div class="fs-spectrum-carousel" style={carouselStyle}>
-            {assets.map(asset => (
-              <div class="fs-spectrum-carousel-item">
-                <SpectrumPlot {...props} asset={asset} />
-              </div>
-            ))}
-          </div>
+      <div class={css[mode]}>
+        <div class={css.header}>
+          <img
+            class={css.icon}
+            src={`https://d301yvow08hyfu.cloudfront.net/svg/color/${asset.symbol.toLowerCase()}.svg`}
+          />
+          <span class={css.name}>{metric.name}</span>
         </div>
+
+        <div class={css.meta}>
+          <span class={css.symbol}>{asset.symbol}</span>
+          <span class={css.fcas}>FCAS {metric.fcas}</span>
+          <span class={css.trend}>
+            <Trend change={metric.change} value={metric.fcas} />
+          </span>
+          <span class={css.rank}>
+            <Rank score={metric.fcas} kind="normal" />
+          </span>
+        </div>
+
+        {props.spectrum.enabled && <Plot metric={metric} {...props} />}
 
         {props.disableLinks === false && (
           <CustomLinks
@@ -198,18 +164,49 @@ export default class Carousel extends Component<Props, CarouselState> {
             linkBootstrap={props.linkBootstrap}
           />
         )}
-
-        {assets.length > 1 && (
-          <div class="fs-spectrum-dots">
-            {assets.map((_, i) => {
-              const classes = classNames("fs-spectrum-dot", {
-                "fs-spectrum-dot-active": state.currentSlide === i
-              });
-              return <div class={classes} onClick={() => this.slideTo(i)} />;
-            })}
-          </div>
-        )}
       </div>
     );
   }
 }
+
+const MultiSpectrum = (props: Props) => {
+  let assets = [props.asset];
+  if (props.assets.length > 0) {
+    assets = props.assets;
+  }
+
+  return (
+    <Carousel
+      mode={props.mode}
+      items={assets}
+      renderSlide={(item: any) => <Spectrum {...props} asset={item} />}
+    />
+  );
+};
+
+MultiSpectrum.defaultProps = {
+  asset: {
+    symbol: "btc",
+    highlights: ["eth", "zec", "zrx"],
+    bootstrapAsset: null,
+    bootstrapHighlights: null
+  },
+  disableLinks: false,
+  assets: [],
+  mode: "light",
+  fontFamily: "inherit",
+  relatedMarkers: {
+    enabled: true,
+    bucketDistance: 35,
+    lineDistance: 25,
+    fontFamily: "inherit"
+  },
+  name: { enabled: true },
+  spectrum: { enabled: true },
+  icon: { enabled: true },
+  rank: { enabled: true },
+  trend: { enabled: true },
+  linkBootstrap: null
+} as Props;
+
+export default MultiSpectrum;

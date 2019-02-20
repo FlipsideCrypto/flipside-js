@@ -1,11 +1,16 @@
 import { h, Component } from "preact";
 import { sortObjectArray } from "../../utils";
-import "./styles.scss";
+import * as css from "./style.css";
 
 const PLOT_WIDTH = 240;
 const PLOT_SCALE = PLOT_WIDTH / 1000;
 const DEFAULT_BUCKET_DISTANCE = 35;
 const DEFAULT_LINE_DISTANCE = 25;
+
+// TODO: Port this component to TS
+// type Props = {
+//   mode: "light" | "dark"
+// }
 
 export default class Plot extends Component {
   constructor() {
@@ -220,7 +225,7 @@ export default class Plot extends Component {
     }
 
     return (
-      <svg class="fs-plot" width="100%" height="104" overflow="visible">
+      <svg width="100%" height="104" overflow="visible" class={css[props.mode]}>
         <defs>
           <linearGradient id="gradient">
             <stop stop-color="#ff2600" offset="0%" />
@@ -256,7 +261,7 @@ export default class Plot extends Component {
         {/* Spectrum Legend */}
         <text
           y="85"
-          class="fs-plot-legend"
+          class={css.legend}
           fill={props.mode === "dark" ? "#fff" : "#000"}
         >
           <tspan text-anchor="start" x="0">
@@ -275,7 +280,7 @@ export default class Plot extends Component {
             const xPos = `${(a.value / 1000) * 100}%`;
             let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
             return (
-              <g class="fs-plot-related" style={relatedLabelStyle}>
+              <g class={css.related} style={relatedLabelStyle}>
                 <text x={xPos} y={y} text-anchor="middle" font-size="10">
                   {a.symbol}
                 </text>
@@ -285,7 +290,7 @@ export default class Plot extends Component {
                     y1={y + 3}
                     x2={xPos}
                     y2="60"
-                    class="fs-plot-related-line"
+                    class={css.relatedLine}
                     style={relatedLineStyle}
                   />
                 )}
@@ -294,18 +299,14 @@ export default class Plot extends Component {
           })}
 
         {/* Blue FCAS Marker */}
-        <text
-          class="fs-plot-asset-marker"
-          text-anchor="middle"
-          font-weight="bold"
-        >
+        <text class={css.marker} text-anchor="middle" font-weight="bold">
           <tspan x={xPos} y={26}>
             {props.asset.symbol.toUpperCase()}
           </tspan>
         </text>
 
         {/* Blue FCAS Marker Line */}
-        <line x1={xPos} y1={28} x2={xPos} y2={60} class="fs-plot-asset-line" />
+        <line x1={xPos} y1={28} x2={xPos} y2={60} class={css.line} />
       </svg>
     );
   }
