@@ -4,7 +4,8 @@ import * as css from "./style.css";
 
 type Props = {
   score: number;
-  kind?: "slim" | "large";
+  kind?: "slim" | "normal" | "large";
+  class?: string;
 };
 
 type State = {
@@ -42,10 +43,7 @@ export default class Rank extends Component<Props, State> {
       rankClass = css.s;
     }
 
-    let kindClass = css.slim;
-    if (props.kind === "large") {
-      kindClass = css.large;
-    }
+    let kindClass = css[props.kind];
 
     const classes = classNames(css.rank, rankClass, kindClass);
     return (

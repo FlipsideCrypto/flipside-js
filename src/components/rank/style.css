@@ -39,6 +39,12 @@
   width: 32px;
 }
 
+.normal {
+  background-size: auto 70%;
+  width: 54px;
+  height: 22px;
+}
+
 .large {
   background-size: auto 48%;
   height: 28px;

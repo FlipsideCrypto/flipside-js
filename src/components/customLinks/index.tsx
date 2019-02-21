@@ -44,8 +44,15 @@ class CustomLinks extends Component<Props, State> {
 
     const leftLink = find(state.links, { name: "left_link" });
     const rightLink = find(state.links, { name: "right_link" });
+    const topLink = find(state.links, { name: "top_link" });
     return (
       <div class={css.wrapper} style={props.style}>
+        {topLink && (
+          <span
+            class={linkClass}
+            dangerouslySetInnerHTML={{ __html: topLink.link_html }}
+          />
+        )}
         {leftLink && (
           <span
             class={linkClass}
