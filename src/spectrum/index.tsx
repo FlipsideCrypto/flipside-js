@@ -59,7 +59,8 @@ type State = {
 };
 
 class Spectrum extends Component<Props, State> {
-  interval: NodeJS.Timeout;
+  interval: number;
+
   static defaultProps = {
     mode: "light"
   };
@@ -104,7 +105,7 @@ class Spectrum extends Component<Props, State> {
   }
 
   _update() {
-    this.interval = setInterval(async () => {
+    this.interval = window.setInterval(async () => {
       await this._getData();
     }, 300000);
   }

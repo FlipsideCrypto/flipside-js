@@ -12,7 +12,9 @@ const DEFAULT_LINE_DISTANCE = 25;
 //   mode: "light" | "dark"
 // }
 
-export default class Plot extends Component {
+export default class Plot extends Component<any, any> {
+  interval: any;
+
   constructor() {
     super();
     this.state = {
@@ -53,13 +55,13 @@ export default class Plot extends Component {
   }
 
   async _getHighlights() {
-    const highlights = this.getHighlights();
+    const highlights: any[] = this.getHighlights();
     let nextHighlightState = [];
     let nextHighlightedSymbolState = [];
     if (this.props.asset && this.props.asset.bootstrapHighlights) {
       nextHighlightState = this.props.asset.bootstrapHighlights;
       nextHighlightedSymbolState = this.props.asset.bootstrapHighlights.map(
-        highlight => highlight.symbol
+        (highlight: any) => highlight.symbol
       );
     } else {
       await Promise.all(
@@ -123,7 +125,7 @@ export default class Plot extends Component {
     return highlights;
   }
 
-  getBuckets() {
+  getBuckets(): any {
     if (this.state.highlights.length == 0) {
       return [];
     }
@@ -133,10 +135,10 @@ export default class Plot extends Component {
       bucketDistance = DEFAULT_BUCKET_DISTANCE;
     }
 
-    let buckets = [];
+    let buckets: any[] = [];
     let currentBucketIndex = 0;
     let anchorX = 0;
-    let scoresToBuckets = {};
+    let scoresToBuckets: any = {};
     let highlightLength = this.state.highlights.length;
     let sortedHighLights = sortObjectArray(this.state.highlights, "value");
 
@@ -169,7 +171,7 @@ export default class Plot extends Component {
     return { buckets, scoresToBuckets };
   }
 
-  getYCoords(asset, buckets, scoresToBuckets) {
+  getYCoords(asset: any, buckets: any, scoresToBuckets: any) {
     let { lineDistance } = this.props.relatedMarkers;
     if (!lineDistance) {
       lineDistance = DEFAULT_LINE_DISTANCE;
@@ -197,7 +199,7 @@ export default class Plot extends Component {
     return { y: 44 - 10 * index, toClose };
   }
 
-  render(props, { loading, distribution }) {
+  render(props: any, { loading, distribution }: any) {
     if (loading) return null;
 
     const highlightedSymbols = this.state.highlightedSymbols;
@@ -207,8 +209,8 @@ export default class Plot extends Component {
 
     const xPos = `${(props.metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
-      .filter(i => highlightedSymbols.indexOf(i.symbol) > -1)
-      .filter(i => i.symbol != props.asset.symbol.toUpperCase());
+      .filter((i: any) => highlightedSymbols.indexOf(i.symbol) > -1)
+      .filter((i: any) => i.symbol != props.asset.symbol.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 
@@ -225,6 +227,7 @@ export default class Plot extends Component {
     }
 
     return (
+      // @ts-ignore
       <svg width="100%" height="104" overflow="visible" class={css[props.mode]}>
         <defs>
           <linearGradient id="gradient">
@@ -250,7 +253,7 @@ export default class Plot extends Component {
               : "rgba(0, 0, 0, 0.4)"
           }
         >
-          {distribution.map(i => (
+          {distribution.map((i: any) => (
             <circle cx={`${(i.value / 1000) * 100}%`} cy="58" r="2.5" />
           ))}
         </g>
@@ -276,7 +279,7 @@ export default class Plot extends Component {
         </text>
 
         {props.relatedMarkers.enabled &&
-          highlightedAssets.map(a => {
+          highlightedAssets.map((a: any) => {
             const xPos = `${(a.value / 1000) * 100}%`;
             let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
             return (

@@ -1,9 +1,10 @@
 import { h, Component } from "preact";
-import keyBy from "lodash/keyBy";
+import keyBy = require("lodash/keyBy");
 import CustomLinks from "./components/customLinks";
 import "./styles.scss";
+import API from "../api";
 
-function getMetricTrend(change) {
+function getMetricTrend(change: number) {
   if (change < 0) {
     return "down";
   } else if (change == 0) {
@@ -13,11 +14,23 @@ function getMetricTrend(change) {
   }
 }
 
-function calculateDiff(value, percent) {
+function calculateDiff(value: number, percent: number) {
   return Math.round(Math.abs(value * (percent / 100)));
 }
 
-export default class Table extends Component {
+type Props = {
+  api: API;
+  symbol: string;
+  dark: boolean;
+  borderColor?: string;
+};
+
+type State = {
+  loading: boolean;
+  metrics: any;
+};
+
+export default class Table extends Component<Props, State> {
   constructor() {
     super();
     this.state = { loading: true, metrics: null };
@@ -50,7 +63,7 @@ export default class Table extends Component {
     window.location.assign(learnMoreUrl);
   }
 
-  render({ dark }, { loading, metrics }) {
+  render({ dark }: Props, { loading, metrics }: State) {
     if (loading) {
       return null;
     }
@@ -94,7 +107,7 @@ export default class Table extends Component {
           </tr>
 
           <tr>
-            <th style={tdStyle} colspan="2">
+            <th style={tdStyle} colSpan={2}>
               User Activity
             </th>
             <td style={tdStyle}>{utility.value}</td>
@@ -107,7 +120,7 @@ export default class Table extends Component {
           </tr>
 
           <tr>
-            <th style={tdStyle} colspan="2">
+            <th style={tdStyle} colSpan={2}>
               Developer Behavior
             </th>
             <td style={tdStyle}>{dev.value}</td>

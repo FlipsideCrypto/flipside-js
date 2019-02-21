@@ -1,3 +1,7 @@
+// ie11 polyfills
+import "core-js/fn/promise";
+import "core-js/fn/object/assign";
+
 import { h, render } from "preact";
 import API from "./api";
 import Table from "./table";
