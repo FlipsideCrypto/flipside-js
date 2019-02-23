@@ -23,7 +23,7 @@ const Trend = (props: Props) => {
   }
 
   const difference = calculateTrendDiff(props.value, props.change);
-  const classes = classNames(directionClass, props.class);
+  const classes = classNames(css.wrapper, directionClass, props.class);
 
   return (
     <span class={classes}>

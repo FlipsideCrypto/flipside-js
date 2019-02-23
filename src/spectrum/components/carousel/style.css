@@ -1,0 +1,46 @@
+.dark .dotItem {
+  background: rgba(255, 255, 255, 0.25);
+}
+.dark .dotActive {
+  background: rgba(255, 255, 255, 1);
+}
+
+.light .dotItem {
+  background: rgba(0, 0, 0, 0.15);
+}
+.light .dotActive {
+  background: rgba(0, 0, 0, 1);
+}
+
+.wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel {
+  transition: transform 250ms ease-out;
+  white-space: nowrap;
+}
+
+.slide {
+  width: 100%;
+  display: inline-block;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dotItem {
+  border-radius: 5px;
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  transition: background 250ms ease-out;
+  cursor: pointer;
+}
+
+.dotActive {
+}

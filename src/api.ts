@@ -99,7 +99,7 @@ export type WidgetLinksSlug =
   | "chart";
 export type WidgetLinksLink = {
   widget_id: string;
-  name: "right_link" | "left_link";
+  name: string;
   link_html: string;
 };
 export type WidgetLinksResponse = {

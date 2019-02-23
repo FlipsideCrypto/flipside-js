@@ -1,0 +1,61 @@
+.light .meta,
+.light a {
+  color: #2d57ed;
+}
+
+.light .name {
+  color: #000;
+}
+
+.dark .meta,
+.dark a {
+  color: #20b7fc;
+}
+
+.dark .name {
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.icon {
+  height: 28px;
+  width: 28px;
+  margin-right: 14px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.symbol {
+  margin-right: auto;
+}
+
+.fcas {
+  margin: 0 6px;
+}
+
+.rank {
+  margin-left: 9px;
+}
+
+.trend {
+  font-size: 10px;
+  margin-left: 8px;
+  font-weight: 600;
+}
