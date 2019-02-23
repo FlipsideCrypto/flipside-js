@@ -147,7 +147,7 @@ class Spectrum extends Component<Props, State> {
 
         <div class={css.meta}>
           <span class={css.symbol}>{asset.symbol}</span>
-          <span class={css.fcas}>FCAS {metric.fcas}</span>
+          <span class={css.fcas}>HEALTH {metric.fcas}</span>
           <span class={css.trend}>
             <Trend change={metric.change} value={metric.fcas} />
           </span>
