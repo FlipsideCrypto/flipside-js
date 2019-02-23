@@ -1,5 +1,6 @@
 import { h, Component } from "preact";
 import { sortObjectArray } from "../../utils";
+import classNames from "classnames";
 import * as css from "./style.css";
 
 const PLOT_WIDTH = 240;
@@ -226,9 +227,11 @@ export default class Plot extends Component<any, any> {
       };
     }
 
+    // @ts-ignore
+    const classes = classNames(css.wrapper, css[props.mode]);
+
     return (
-      // @ts-ignore
-      <svg width="100%" height="104" overflow="visible" class={css[props.mode]}>
+      <svg width="100%" height="104" overflow="visible" class={classes}>
         <defs>
           <linearGradient id="gradient">
             <stop stop-color="#ff2600" offset="0%" />

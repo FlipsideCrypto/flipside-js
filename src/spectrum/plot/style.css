@@ -24,6 +24,11 @@
   stroke: #fff;
 }
 
+.wrapper text {
+  font-size: 11px;
+  font-weight: normal;
+}
+
 .marker {
   font-size: 12px;
 }
@@ -36,6 +41,7 @@
   stroke-width: 0.5;
 }
 
-.legend {
-  font-size: 7px;
+.legend tspan {
+  font-weight: normal;
+  font-size: 8px;
 }

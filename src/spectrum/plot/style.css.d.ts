@@ -7,3 +7,4 @@ export const line: string;
 export const marker: string;
 export const related: string;
 export const relatedLine: string;
+export const wrapper: string;
