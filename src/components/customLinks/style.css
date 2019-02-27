@@ -5,8 +5,17 @@
 }
 
 .link {
-  font-size: 11px;
+  font-size: 12px;
   margin: 0 0 10px;
+}
+
+.link a {
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.link a:hover {
+  text-decoration: underline;
 }
 
 .link:first-child {
