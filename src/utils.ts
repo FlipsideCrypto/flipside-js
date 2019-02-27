@@ -24,3 +24,7 @@ export function defaultsWithoutArrays(obj: object, src: object): object {
     return isArray(srcVal) ? srcVal : undefined;
   });
 }
+
+export function defaultFlipsideLink(apiKey: string) {
+  return `https://flipsidecrypto.com/go-beyond-price`;
+}

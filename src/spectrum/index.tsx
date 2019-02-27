@@ -6,6 +6,7 @@ import API, { WidgetLinksLink } from "../api";
 import Rank from "../components/rank";
 import Trend from "../components/trend";
 import Carousel from "./components/carousel";
+import { defaultFlipsideLink } from "../utils";
 
 export type BootstrapAssetType = {
   value: number;
@@ -132,7 +133,7 @@ class Spectrum extends Component<Props, State> {
   render(props: Props, state: State) {
     if (state.loading) return null;
 
-    const { asset, mode } = props;
+    const { asset, mode, rank, trend, api } = props;
     const { metric } = state;
 
     return (
@@ -147,13 +148,19 @@ class Spectrum extends Component<Props, State> {
 
         <div class={css.meta}>
           <span class={css.symbol}>{asset.symbol}</span>
-          <span class={css.fcas}>HEALTH {metric.fcas}</span>
-          <span class={css.trend}>
-            <Trend change={metric.change} value={metric.fcas} />
-          </span>
-          <span class={css.rank}>
-            <Rank score={metric.fcas} kind="normal" />
-          </span>
+          <span class={css.fcas}>Health {metric.fcas}</span>
+          {trend.enabled && (
+            <span class={css.trend}>
+              <Trend change={metric.change} value={metric.fcas} />
+            </span>
+          )}
+          {rank.enabled && (
+            <a href={defaultFlipsideLink(api.key)}>
+              <span class={css.rank}>
+                <Rank score={metric.fcas} kind="normal" />
+              </span>
+            </a>
+          )}
         </div>
 
         {props.spectrum.enabled && <Plot metric={metric} {...props} />}
