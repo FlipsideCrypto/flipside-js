@@ -25,6 +25,6 @@ export function defaultsWithoutArrays(obj: object, src: object): object {
   });
 }
 
-export function defaultFlipsideLink(apiKey: string) {
-  return `https://flipsidecrypto.com/go-beyond-price`;
+export function defaultFlipsideLink(apiKey: string, widget: string) {
+  return `https://platform-api.flipsidecrypto.com/track/${widget}/${apiKey}?redirect_url=https://flipsidecrypto.com/go-beyond-price`;
 }

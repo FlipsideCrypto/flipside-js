@@ -155,7 +155,7 @@ class Spectrum extends Component<Props, State> {
             </span>
           )}
           {rank.enabled && (
-            <a href={defaultFlipsideLink(api.key)}>
+            <a href={defaultFlipsideLink(api.key, "spectrum")}>
               <span class={css.rank}>
                 <Rank score={metric.fcas} kind="normal" />
               </span>

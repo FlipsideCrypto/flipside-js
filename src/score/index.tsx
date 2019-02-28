@@ -28,7 +28,7 @@ const Score = (props: Props) => {
 
       <div class={css.score}>
         <h2 class={css.value}>{value}</h2>
-        <a href={defaultFlipsideLink(props.api.key)}>
+        <a href={defaultFlipsideLink(props.api.key, "score")}>
           <Rank kind="large" score={value} />
         </a>
       </div>
