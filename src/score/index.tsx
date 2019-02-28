@@ -5,6 +5,7 @@ import Rank from "../components/rank";
 import * as css from "./style.css";
 import CustomLinks from "../components/customLinks";
 import API from "../api";
+import { defaultFlipsideLink } from "../utils";
 
 export type Props = {
   symbol: string;
@@ -27,7 +28,9 @@ const Score = (props: Props) => {
 
       <div class={css.score}>
         <h2 class={css.value}>{value}</h2>
-        <Rank kind="large" score={value} />
+        <a href={defaultFlipsideLink(props.api.key)}>
+          <Rank kind="large" score={value} />
+        </a>
       </div>
 
       <div class={css.change}>
