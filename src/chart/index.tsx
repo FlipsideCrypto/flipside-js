@@ -28,11 +28,13 @@ export type Props = {
   endDate?: string;
   series: ChartSeries[];
   api: API;
+  exportingEnabled?: boolean;
 };
 
 class Chart extends Component<Props> {
   static defaultProps: Partial<Props> = {
-    axisTitles: []
+    axisTitles: [],
+    exportingEnabled: false
   };
 
   container: HTMLElement;
@@ -127,15 +129,51 @@ class Chart extends Component<Props> {
       },
       rest
     );
+    if (this.props.exportingEnabled) {
+      options.exporting = {
+        enabled: true,
+        buttons: {
+          contextButton: {
+            verticalAlign: "bottom",
+            horizontalAlign: "right",
+            x: 0,
+            y: 0,
 
+            color: "#ffffff",
+            symbolFill: "#ffffff",
+            theme: {
+              fill: "transparent",
+              cursor: "pointer",
+              states: { hover: { fill: "transparent", opacity: 0.7 } }
+            },
+            menuItems: [
+              "downloadCSV",
+              "separator",
+              "printChart",
+              "separator",
+              "downloadPNG",
+              "downloadJPEG",
+              "downloadPDF",
+              "downloadSVG"
+            ]
+          }
+        }
+      };
+    } else {
+      options.exporting = { enabled: false };
+    }
     Highcharts.chart(options);
   }
 
   render() {
     return (
       <div className={css.wrapper}>
+        <CustomLinks
+          widget="chart"
+          api={this.props.api}
+          style={{ display: "block", textAlign: "right" }}
+        />
         <div ref={el => (this.container = el)} />
-        <CustomLinks widget="chart" api={this.props.api} />
       </div>
     );
   }

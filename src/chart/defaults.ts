@@ -72,35 +72,6 @@ export const DEFAULT_HIGHCHARTS: Highcharts.Options = {
       } as any
     },
     inputEnabled: false
-  },
-
-  exporting: {
-    enabled: true,
-    buttons: {
-      contextButton: {
-        verticalAlign: "top",
-        x: 0,
-        y: 0,
-
-        color: "#ffffff",
-        symbolFill: "#ffffff",
-        theme: {
-          fill: "transparent",
-          cursor: "pointer",
-          states: { hover: { fill: "transparent", opacity: 0.7 } }
-        },
-        menuItems: [
-          "downloadCSV",
-          "separator",
-          "printChart",
-          "separator",
-          "downloadPNG",
-          "downloadJPEG",
-          "downloadPDF",
-          "downloadSVG"
-        ]
-      }
-    }
   }
 };
 
