@@ -6,6 +6,7 @@ import { createApiSeries, createSeries } from "./helpers";
 import zipObject = require("lodash/zipObject");
 import { DEFAULT_HIGHCHARTS, DEFAULT_YAXIS } from "./defaults";
 import CustomLinks from "../components/customLinks";
+import * as css from "./style.css";
 
 require("highcharts/modules/exporting")(Highcharts);
 
@@ -132,7 +133,7 @@ class Chart extends Component<Props> {
 
   render() {
     return (
-      <div>
+      <div className={css.wrapper}>
         <div ref={el => (this.container = el)} />
         <CustomLinks widget="chart" api={this.props.api} />
       </div>
