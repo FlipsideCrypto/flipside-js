@@ -34,6 +34,7 @@ export type Props = {
 class Chart extends Component<Props> {
   static defaultProps: Partial<Props> = {
     axisTitles: [],
+    mode: "light",
     exportingEnabled: false
   };
 
@@ -81,6 +82,7 @@ class Chart extends Component<Props> {
         },
 
         legend: {
+          enabled: series && series.length > 1,
           itemStyle: { color: textColor },
           itemHoverStyle: { color: textColor }
         },
@@ -166,8 +168,9 @@ class Chart extends Component<Props> {
   }
 
   render() {
+    const { mode } = this.props;
     return (
-      <div className={css.wrapper}>
+      <div className={css[mode]}>
         <CustomLinks
           widget="chart"
           api={this.props.api}

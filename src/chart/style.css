@@ -1,3 +1,19 @@
 .wrapper text {
   font-size: 12px;
 }
+.wrapper a {
+  color: #20b7fc;
+}
+
+.dark text,
+.light text {
+  font-size: 12px;
+}
+
+.dark a {
+  color: #20b7fc;
+}
+
+.light a {
+  color: #2d57ed;
+}
