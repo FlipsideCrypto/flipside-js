@@ -6,9 +6,8 @@ import CustomLinks from "../components/customLinks";
 import API from "../api";
 import "./style.scss";
 
-import uniq = require("lodash/uniq");
-import sortBy = require("lodash/sortBy");
-import reverse = require("lodash/reverse");
+import sortBy from "lodash/sortBy";
+import reverse from "lodash/reverse";
 
 // Define the columns, the content of their header, and how their data is rendered.
 type ColumnDefinition = {

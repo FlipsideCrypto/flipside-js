@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import keyBy = require("lodash/keyBy");
+import keyBy from "lodash/keyBy";
 import CustomLinks from "./components/customLinks";
 import "./styles.scss";
 import API from "../api";

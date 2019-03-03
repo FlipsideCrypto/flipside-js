@@ -7,6 +7,7 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     filename: filename,
+    chunkFilename: `flipside-[name]-v${version}.js`,
     path: path.resolve(__dirname, "dist")
   },
   mode: "development",

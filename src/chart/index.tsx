@@ -3,7 +3,7 @@ import Highcharts from "highcharts/highstock";
 import merge from "lodash/merge";
 import API from "../api";
 import { createApiSeries, createSeries } from "./helpers";
-import zipObject = require("lodash/zipObject");
+import zipObject from "lodash/zipObject";
 import { DEFAULT_HIGHCHARTS, DEFAULT_YAXIS } from "./defaults";
 import CustomLinks from "../components/customLinks";
 import * as css from "./style.css";
