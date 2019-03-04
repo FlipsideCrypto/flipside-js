@@ -15,7 +15,7 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
   },
-  plugins: [new BundleAnalyzerPlugin()],
+  // plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       { test: /\.tsx?$/, use: "ts-loader", exclude: /node_modules/ },
