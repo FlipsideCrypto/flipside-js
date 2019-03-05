@@ -8,14 +8,6 @@ To get started, request an API Key: api@flipsidecrypto.com.
 
 [View Wiki](https://github.com/FlipsideCrypto/flipside-js/wiki)
 
-## Live Examples
-
-[View Live FCAS Spectrum Widget Example](https://jsfiddle.net/flipsidejim/edk823fb/)
-<br>
-[View Live Multi Table Widget Example](https://jsfiddle.net/flipsidejim/hafj7drm/)
-<br>
-[View Live Table Widget Example](https://jsfiddle.net/flipsidejim/vsh5dq9y/)
-
 ## Building
 
 ```
