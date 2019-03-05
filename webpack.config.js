@@ -8,7 +8,8 @@ module.exports = {
   output: {
     filename: filename,
     chunkFilename: `flipside-[name]-v${version}.js`,
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "https://d3sek7b10w79kp.cloudfront.net/"
   },
   mode: "development",
   devtool: "inline-source-map",
