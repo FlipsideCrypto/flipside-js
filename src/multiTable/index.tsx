@@ -4,75 +4,78 @@ import Rank from "../components/rank";
 import Trend from "../components/trend";
 import CustomLinks from "../components/customLinks";
 import API from "../api";
+import { Row, ColumnName, ColumnDefinition } from "./types";
+
 import "./style.scss";
 
 import sortBy from "lodash/sortBy";
+import intersection from "lodash/intersection";
+import without from "lodash/without";
 import reverse from "lodash/reverse";
 
-// Define the columns, the content of their header, and how their data is rendered.
-type ColumnDefinition = {
-  header: string;
-  renderItem: (row: Row) => any;
-  sortKey?: string;
-};
-
 const COLUMNS: { [k: string]: ColumnDefinition } = {
-  coin: {
+  symbol: {
     header: "Coin",
-    renderItem: (row: Row) => row.symbol
+    renderItem: row => row.symbol
   },
-
+  name: {
+    header: "Coin",
+    renderItem: row => row.asset_name || row.symbol
+  },
   fcas: {
     header: "FCAS",
-    renderItem: (row: Row) => row.fcas,
+    renderItem: row => row.fcas,
     sortKey: "fcas"
   },
-
   trend: {
     header: "7D",
-    renderItem: (row: Row) => (
-      <Trend change={row.fcas_change} value={row.fcas} />
-    ),
+    renderItem: row => <Trend change={row.fcas_change} value={row.fcas} />,
     sortKey: "fcas_change"
   },
-
   userActivity: {
     header: "User Activity",
-    renderItem: (row: Row) => row.utility,
+    renderItem: row => row.utility,
     sortKey: "utility"
   },
-
   developerBehavior: {
     header: "Developer Behavior",
-    renderItem: (row: Row) => row.dev,
+    renderItem: row => row.dev,
     sortKey: "dev"
   },
-
   marketMaturity: {
     header: "Market Maturity",
-    renderItem: (row: Row) => row.market_maturity,
+    renderItem: row => row.market_maturity,
     sortKey: "market_maturity"
   },
-
   rank: {
     header: "Rank",
-    renderItem: (row: Row) => <Rank score={row.fcas} />,
+    renderItem: row => <Rank score={row.fcas} />,
     sortKey: "fcas"
+  },
+  volume_24h: {
+    header: "Volume",
+    renderItem: row => row.volume_24h,
+    sortKey: "volume_24h"
+  },
+  market_cap: {
+    header: "Market Cap",
+    renderItem: row => row.market_cap,
+    sortKey: "market_cap"
+  },
+  price: {
+    header: "Price",
+    renderItem: row => `$${row.price}`,
+    sortKey: "price"
   }
 };
-
-type ColumnName =
-  | "trend"
-  | "developerBehavior"
-  | "userActivity"
-  | "marketMaturity"
-  | "rank";
 
 export type Props = {
   mode?: "light" | "dark";
   assets?: string[];
+  showFullName?: boolean;
   exclusions?: string[];
   autoWidth?: boolean;
+  sortBy?: ColumnName;
   limit?: number;
   page?: number;
   columns?: ColumnName[];
@@ -97,32 +100,38 @@ export type Props = {
   api?: API;
 };
 
-type Row = {
-  symbol: string;
-  fcas: number;
-  dev: number;
-  utility: number;
-  fcas_change: number;
-  dev_change: number;
-  utility_change: number;
-  market_maturity: number;
-  market_maturity_change: number;
-};
-
 type State = {
   loading: boolean;
+  filteredColumns: ColumnName[];
+  pageSortBy: ColumnName;
   sortColumn: string;
   sortOrder: "asc" | "desc";
   rows?: Row[];
 };
 
 export default class MultiTable extends Component<Props, State> {
-  constructor() {
-    super();
+  updateInterval: any;
+
+  constructor(props: Props) {
+    super(props);
+
+    // if price, market_cap, or volume_24h are included in columns then remove all other columns
+    let filteredColumns = props.columns;
+    const includedMarketCapColumns = intersection(filteredColumns, [
+      "price",
+      "market_cap",
+      "volume_24h"
+    ]) as ColumnName[];
+    if (includedMarketCapColumns.length > 0) {
+      filteredColumns = includedMarketCapColumns;
+    }
+
     this.state = {
       loading: true,
-      sortColumn: "fcas",
-      sortOrder: "desc"
+      pageSortBy: props.sortBy || props.columns[0],
+      sortColumn: props.sortBy || "fcas",
+      sortOrder: "desc",
+      filteredColumns
     };
   }
 
@@ -152,10 +161,15 @@ export default class MultiTable extends Component<Props, State> {
   };
 
   async componentDidMount() {
-    this._getData();
+    await this._getData();
+    this.updateInterval = setInterval(this._getData, 60000);
   }
 
-  async _getData() {
+  componentWillUnmount() {
+    clearInterval(this.updateInterval);
+  }
+
+  _getData = async () => {
     const res = await this.props.api.fetchMetrics({
       assets: this.props.assets,
       exclusions: this.props.exclusions,
@@ -163,16 +177,16 @@ export default class MultiTable extends Component<Props, State> {
       size: this.props.limit,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
       sort_desc: true,
-      metrics: ["fcas", "utility", "dev", "market-maturity"],
+      metrics: this.state.filteredColumns,
       change_over: this.props.trend.changeOver
     });
     this.setState({
       loading: false,
       rows: res.data
     });
-  }
+  };
 
-  handleSort(col: string) {
+  handleClickSort(col: string) {
     if (COLUMNS[col].sortKey) {
       const sortColumn = col;
       const sortOrder = this.state.sortOrder === "asc" ? "desc" : "asc";
@@ -182,8 +196,8 @@ export default class MultiTable extends Component<Props, State> {
 
   render(props: Props, state: State) {
     if (state.loading) return null;
-
-    const columns = ["coin", "fcas", ...props.columns];
+    const coinColumn = props.showFullName ? "name" : "symbol";
+    const columns = [coinColumn, ...state.filteredColumns];
     const classes = classnames("fs-multi", `fs-multi-${props.mode}`, {
       "fs-multi-alternating": props.rows.alternating,
       "fs-multi-dividers": props.rows.dividers
@@ -217,7 +231,7 @@ export default class MultiTable extends Component<Props, State> {
                   "fs-multi-sortable": !!column.sortKey
                 });
                 return (
-                  <th class={classes} onClick={() => this.handleSort(col)}>
+                  <th class={classes} onClick={() => this.handleClickSort(col)}>
                     <div class="fs-multi-colhead" style={props.headers.style}>
                       {column.sortKey && (
                         <span

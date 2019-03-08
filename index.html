@@ -141,10 +141,11 @@
       });
 
       flipside.multiTable("multiTable", {
-        columns: ["rank", "trend"],
-        exclusions: ["gas", "TRX"],
+        columns: ["volume_24h", "price", "fcas"],
+        exclusions: ["btc", "TRX"],
+        sortBy: "volume_24h",
+        showFullName: true,
         fontFamily: "inherit",
-        headers: {},
         limit: 15,
         page: 1,
         mode: "light",
