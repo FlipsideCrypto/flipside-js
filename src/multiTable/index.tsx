@@ -54,17 +54,24 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
   },
   volume_24h: {
     header: "Volume",
-    renderItem: row => `$${row.volume_24h.toLocaleString()}`,
+    renderItem: row =>
+      `$${row.volume_24h.toLocaleString(undefined, {
+        maximumFractionDigits: 2
+      })}`,
     sortKey: "volume_24h"
   },
   market_cap: {
     header: "Market Cap",
-    renderItem: row => `$${row.market_cap.toLocaleString()}`,
+    renderItem: row =>
+      `$${row.market_cap.toLocaleString(undefined, {
+        maximumFractionDigits: 2
+      })}`,
     sortKey: "market_cap"
   },
   price: {
     header: "Price",
-    renderItem: row => `$${row.price.toLocaleString()}`,
+    renderItem: row =>
+      `$${row.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
     sortKey: "price"
   }
 };
