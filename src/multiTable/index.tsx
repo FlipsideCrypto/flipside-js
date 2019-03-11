@@ -54,17 +54,17 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
   },
   volume_24h: {
     header: "Volume",
-    renderItem: row => row.volume_24h,
+    renderItem: row => `$${row.volume_24h.toLocaleString()}`,
     sortKey: "volume_24h"
   },
   market_cap: {
     header: "Market Cap",
-    renderItem: row => row.market_cap,
+    renderItem: row => `$${row.market_cap.toLocaleString()}`,
     sortKey: "market_cap"
   },
   price: {
     header: "Price",
-    renderItem: row => `$${row.price}`,
+    renderItem: row => `$${row.price.toLocaleString()}`,
     sortKey: "price"
   }
 };
