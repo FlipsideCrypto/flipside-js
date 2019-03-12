@@ -25,6 +25,7 @@ type ColumnDefinition = {
 };
 
 type ColumnName =
+  | "fcas"
   | "trend"
   | "developerBehavior"
   | "userActivity"

@@ -125,6 +125,7 @@ export type Props = {
 
 type State = {
   loading: boolean;
+  priceFilterRequired: boolean;
   filteredColumns: ColumnName[];
   pageSortBy: ColumnName;
   sortColumn: string;
@@ -140,6 +141,7 @@ export default class MultiTable extends Component<Props, State> {
 
     // if price, market_cap, or volume_24h are included in columns then remove all other columns
     let filteredColumns = props.columns;
+    let priceFilterRequired = false;
     const includedMarketCapColumns = intersection(filteredColumns, [
       "price",
       "market_cap",
@@ -147,6 +149,11 @@ export default class MultiTable extends Component<Props, State> {
     ]) as ColumnName[];
     if (includedMarketCapColumns.length > 0) {
       filteredColumns = includedMarketCapColumns;
+      priceFilterRequired = true;
+    } else {
+      if (filteredColumns.indexOf("fcas") === -1) {
+        filteredColumns = ["fcas", ...filteredColumns];
+      }
     }
 
     this.state = {
@@ -154,6 +161,7 @@ export default class MultiTable extends Component<Props, State> {
       pageSortBy: props.sortBy || props.columns[0],
       sortColumn: props.sortBy || "fcas",
       sortOrder: "desc",
+      priceFilterRequired: priceFilterRequired,
       filteredColumns
     };
   }
@@ -164,6 +172,7 @@ export default class MultiTable extends Component<Props, State> {
     page: 1,
     fontFamily: "inherit",
     columns: [
+      "fcas",
       "trend",
       "userActivity",
       "developerBehavior",
@@ -177,7 +186,7 @@ export default class MultiTable extends Component<Props, State> {
       alternating: true,
       alternatingColors: [],
       dividers: false,
-      dividersColor: "#aeaeae",
+      dividersColor: null,
       padding: "5px 10px",
       headerBold: false
     },
@@ -204,7 +213,9 @@ export default class MultiTable extends Component<Props, State> {
       size: this.props.limit,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
       sort_desc: true,
-      metrics: this.state.filteredColumns,
+      metrics: this.state.priceFilterRequired
+        ? this.state.filteredColumns
+        : ["fcas", "utility", "dev", "market-maturity"],
       change_over: this.props.trend.changeOver
     });
     this.setState({
