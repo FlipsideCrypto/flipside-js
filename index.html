@@ -23,7 +23,7 @@
       .wrapper {
         border: 1px solid #ccc;
         padding: 20px;
-        width: 500px;
+        width: 600px;
         font-weight: 700;
         font-size: 20px;
       }
@@ -139,25 +139,25 @@
         dark: true,
         borderColor: "#737e8d"
       });
-
+      // Price table
       flipside.multiTable("multiTable", {
-        columns: ["volume_24h", "price", "fcas"],
-        exclusions: ["btc", "TRX"],
-        sortBy: "volume_24h",
+        widgetType: "price-multi-tabe",
+        columns: ["market_cap", "price", "volume_24h"],
+        sortBy: "market_cap",
         showFullName: true,
         fontFamily: "inherit",
-        limit: 15,
-        page: 1,
+        limit: 50,
         mode: "light",
         rows: {
-          dividers: false
+          dividers: true,
+          dividersColor: "#eaeaea",
+          alternating: false,
+          padding: "10px 0 10px 0",
+          headerBold: true
         },
         title: {
-          text: "Top Coins",
+          text: "Top 50 Coins By Market Cap",
           style: { fontSize: "24px", fontWeight: 400 }
-        },
-        trend: {
-          changeOver: 7
         }
       });
 

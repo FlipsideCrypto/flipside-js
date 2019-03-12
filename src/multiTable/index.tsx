@@ -56,7 +56,7 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
     header: "Volume",
     renderItem: row =>
       `$${row.volume_24h.toLocaleString(undefined, {
-        maximumFractionDigits: 2
+        maximumFractionDigits: 0
       })}`,
     sortKey: "volume_24h"
   },
@@ -64,19 +64,33 @@ const COLUMNS: { [k: string]: ColumnDefinition } = {
     header: "Market Cap",
     renderItem: row =>
       `$${row.market_cap.toLocaleString(undefined, {
-        maximumFractionDigits: 2
+        maximumFractionDigits: 0
       })}`,
     sortKey: "market_cap"
   },
   price: {
     header: "Price",
-    renderItem: row =>
-      `$${row.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+    renderItem: row => {
+      let price: any = row.price;
+      if (!price) return "NA";
+      let value: number = parseFloat(parseFloat(price).toFixed(2));
+      if (value === 0.0) {
+        value = parseFloat(parseFloat(price).toFixed(4));
+      }
+      return `$${value}`;
+    },
     sortKey: "price"
   }
 };
 
 export type Props = {
+  widgetType?:
+    | "spectrum"
+    | "multi-table"
+    | "table"
+    | "score"
+    | "chart"
+    | "price-multi-table";
   mode?: "light" | "dark";
   assets?: string[];
   showFullName?: boolean;
@@ -103,6 +117,8 @@ export type Props = {
     dividers?: boolean;
     dividersColor?: string;
     style?: object;
+    padding?: string;
+    headerBold?: boolean;
   };
   api?: API;
 };
@@ -160,11 +176,15 @@ export default class MultiTable extends Component<Props, State> {
     rows: {
       alternating: true,
       alternatingColors: [],
-      dividers: false
+      dividers: false,
+      dividersColor: "#aeaeae",
+      padding: "5px 10px",
+      headerBold: false
     },
     trend: {
       changeOver: 7
-    }
+    },
+    widgetType: "multi-table"
   };
 
   async componentDidMount() {
@@ -216,7 +236,7 @@ export default class MultiTable extends Component<Props, State> {
       sortedRows = reverse(sortedRows);
     }
 
-    const { fontFamily } = props;
+    const { fontFamily, widgetType } = props;
 
     return (
       <div class={classes} style={{ fontFamily }}>
@@ -226,7 +246,7 @@ export default class MultiTable extends Component<Props, State> {
               {props.title.text}
             </h1>
           )}
-          <CustomLinks widget="multi-table" api={this.props.api} />
+          <CustomLinks widget={widgetType} api={this.props.api} />
         </header>
 
         <table>
@@ -238,7 +258,14 @@ export default class MultiTable extends Component<Props, State> {
                   "fs-multi-sortable": !!column.sortKey
                 });
                 return (
-                  <th class={classes} onClick={() => this.handleClickSort(col)}>
+                  <th
+                    class={classes}
+                    onClick={() => this.handleClickSort(col)}
+                    style={{
+                      padding: props.rows.padding,
+                      fontWeight: props.rows.headerBold ? "bold" : "normal"
+                    }}
+                  >
                     <div class="fs-multi-colhead" style={props.headers.style}>
                       {column.sortKey && (
                         <span
@@ -263,7 +290,13 @@ export default class MultiTable extends Component<Props, State> {
             {sortedRows.map(asset => (
               <tr>
                 {columns.map(col => (
-                  <td class={`fs-multi-${col}`}>
+                  <td
+                    class={`fs-multi-${col}`}
+                    style={{
+                      borderBottom: `1px solid ${props.rows.dividersColor}`,
+                      padding: props.rows.padding
+                    }}
+                  >
                     {COLUMNS[col].renderItem(asset)}
                   </td>
                 ))}

@@ -96,7 +96,8 @@ export type WidgetLinksSlug =
   | "multi-table"
   | "table"
   | "score"
-  | "chart";
+  | "chart"
+  | "price-multi-table";
 export type WidgetLinksLink = {
   widget_id: string;
   name: string;
