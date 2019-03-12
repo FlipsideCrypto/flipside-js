@@ -152,12 +152,19 @@
         fontFamily: "inherit",
         limit: 50,
         mode: "light",
+        headers: {
+          style: {
+            fontWeight: "bold",
+            padding: "10px 0 10px 0"
+          }
+        },
         rows: {
           dividers: true,
           dividersColor: "#eaeaea",
           alternating: false,
-          padding: "10px 0 10px 0",
-          headerBold: true
+          style: {
+            padding: "10px 0 10px 0"
+          }
         },
         title: {
           text: "Top 50 Coins By Market Cap",
@@ -185,8 +192,10 @@
         rows: {
           alternating: true,
           alternatingColors: "#eeeeee",
-          dividers: false,
-          style: {}
+          dividers: false
+          // style: {
+          //   padding: "5px 10px"
+          // }
         },
         title: {
           text: "Top Coins",

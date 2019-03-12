@@ -187,8 +187,7 @@ export default class MultiTable extends Component<Props, State> {
       alternatingColors: [],
       dividers: false,
       dividersColor: null,
-      padding: "5px 10px",
-      headerBold: false
+      style: {}
     },
     trend: {
       changeOver: 7
@@ -272,10 +271,7 @@ export default class MultiTable extends Component<Props, State> {
                   <th
                     class={classes}
                     onClick={() => this.handleClickSort(col)}
-                    style={{
-                      padding: props.rows.padding,
-                      fontWeight: props.rows.headerBold ? "bold" : "normal"
-                    }}
+                    style={props.headers.style}
                   >
                     <div class="fs-multi-colhead" style={props.headers.style}>
                       {column.sortKey && (
@@ -305,7 +301,7 @@ export default class MultiTable extends Component<Props, State> {
                     class={`fs-multi-${col}`}
                     style={{
                       borderBottom: `1px solid ${props.rows.dividersColor}`,
-                      padding: props.rows.padding
+                      ...props.rows.style
                     }}
                   >
                     {COLUMNS[col].renderItem(asset)}
