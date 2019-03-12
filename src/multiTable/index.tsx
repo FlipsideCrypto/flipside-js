@@ -300,7 +300,9 @@ export default class MultiTable extends Component<Props, State> {
                   <td
                     class={`fs-multi-${col}`}
                     style={{
-                      borderBottom: `1px solid ${props.rows.dividersColor}`,
+                      borderBottom: props.rows.dividers
+                        ? `1px solid ${props.rows.dividersColor}`
+                        : null,
                       ...props.rows.style
                     }}
                   >
