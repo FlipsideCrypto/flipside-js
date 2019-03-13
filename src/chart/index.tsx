@@ -13,7 +13,8 @@ require("highcharts/modules/exporting")(Highcharts);
 type ChartType = "line" | "bar";
 type ChartAxis = "left" | "right";
 export type ChartSeries = {
-  symbol: string;
+  symbol?: string;
+  id?: number;
   metric: string;
   type: ChartType;
   yAxis?: ChartAxis;

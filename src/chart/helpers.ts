@@ -9,11 +9,19 @@ import zipObject from "lodash/zipObject";
 export function createApiSeries(chartSeries: ChartSeries[]): APISeries[] {
   const series = chartSeries.reduce(
     (acc, s) => {
-      const idx = acc.findIndex(i => i.symbol === s.symbol);
-      if (idx >= 0) {
-        acc[idx].names = acc[idx].names.concat([s.metric]);
+      const idKey = s.id ? "id" : "symbol";
+      // @ts-ignore
+      const existingIdx = acc.findIndex(i => i[idKey] === s[idKey]);
+      if (existingIdx >= 0) {
+        acc[existingIdx].names = acc[existingIdx].names.concat([s.metric]);
       } else {
-        acc.push({ symbol: s.symbol, names: [s.metric] });
+        const apiSeries: APISeries = { names: [s.metric] };
+        if (idKey === "id") {
+          apiSeries.asset_id = s.id;
+        } else {
+          apiSeries.symbol = s.symbol;
+        }
+        acc.push(apiSeries);
       }
       return acc;
     },
@@ -39,8 +47,9 @@ export function createSeries(
   });
 
   return series.map(s => {
+    // const idKey = s.id ? "id" : "symbol";
     const data = zippedData
-      .filter(r => r.symbol === s.symbol.toUpperCase())
+      .filter(r => r.symbol === s.symbol)
       .map(r => [Date.parse(r.timestamp as string), r[s.metric]]);
     return {
       name: s.name || s.metric,

@@ -87,14 +87,14 @@
         axisTitles: ["FCAS", "Dev"],
         colors: ["#E44C27", "#7FCCC5"],
         series: [
-          { symbol: "ETH", metric: "fcas", type: "line", yAxis: 0 },
-          { symbol: "ETH", metric: "dev", type: "line", yAxis: 1 }
+          { id: 2, symbol: "LTC", metric: "fcas", type: "line", yAxis: 0 },
+          { id: 2, symbol: "LTC", metric: "dev", type: "line", yAxis: 1 }
         ]
       });
 
       flipside.spectrum("widget-0", {
         asset: {
-          symbol: "nmr",
+          id: "1",
           highlights: ["BTC", "ETH", "QTUM"]
         },
         mode: "light",
@@ -115,16 +115,12 @@
       flipside.spectrum("widget-1", {
         assets: [
           {
-            symbol: "eth",
+            id: 1,
             highlights: ["BTC", "NMR", "QTUM"]
           },
           {
-            symbol: "xrp",
+            id: 2,
             highlights: ["BTC", "NMR", "QTUM"]
-          },
-          {
-            symbol: "btc",
-            highlights: ["eos", "NMR", "QTUM"]
           }
         ],
         mode: "dark",
@@ -141,8 +137,8 @@
       });
 
       flipside.multiTable("multiTable", {
+        assets: ["btc", "etc"],
         columns: ["rank", "trend"],
-        exclusions: ["gas", "TRX"],
         fontFamily: "inherit",
         headers: {},
         limit: 15,

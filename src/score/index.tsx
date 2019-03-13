@@ -1,4 +1,4 @@
-import { h, Component } from "preact";
+import { h } from "preact";
 import withFcas, { WithFcasProps } from "../components/withFcas";
 import Trend from "../components/trend";
 import Rank from "../components/rank";

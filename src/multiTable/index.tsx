@@ -156,20 +156,22 @@ export default class MultiTable extends Component<Props, State> {
   }
 
   async _getData() {
-    const res = await this.props.api.fetchMetrics({
-      assets: this.props.assets,
-      exclusions: this.props.exclusions,
-      page: this.props.page,
-      size: this.props.limit,
-      sort_by: COLUMNS[this.state.sortColumn].sortKey,
-      sort_desc: true,
-      metrics: ["fcas", "utility", "dev", "market-maturity"],
-      change_over: this.props.trend.changeOver
-    });
-    this.setState({
-      loading: false,
-      rows: res.data
-    });
+    try {
+      const res = await this.props.api.fetchMetrics({
+        assets: this.props.assets,
+        exclusions: this.props.exclusions,
+        page: this.props.page,
+        size: this.props.limit,
+        sort_by: COLUMNS[this.state.sortColumn].sortKey,
+        sort_desc: true,
+        metrics: ["fcas", "utility", "dev", "market-maturity"],
+        change_over: this.props.trend.changeOver
+      });
+      this.setState({
+        loading: false,
+        rows: res.data
+      });
+    } catch (e) {}
   }
 
   handleSort(col: string) {

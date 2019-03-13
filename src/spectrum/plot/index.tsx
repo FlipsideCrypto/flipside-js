@@ -13,7 +13,12 @@ const DEFAULT_LINE_DISTANCE = 25;
 //   mode: "light" | "dark"
 // }
 
-export default class Plot extends Component<any, any> {
+type Props = {
+  mode: "light" | "dark";
+  symbol: string;
+} & any;
+
+export default class Plot extends Component<Props, any> {
   interval: any;
 
   constructor() {
@@ -111,8 +116,8 @@ export default class Plot extends Component<any, any> {
 
   getHighlights() {
     let { asset } = this.props;
-    let { highlights, symbol } = asset;
-    let assetSymbol = symbol.toLowerCase();
+    let { highlights } = asset;
+    let assetSymbol = this.props.symbol.toLowerCase();
 
     if (highlights && highlights.length > 0) {
       return highlights;
@@ -211,7 +216,7 @@ export default class Plot extends Component<any, any> {
     const xPos = `${(props.metric.fcas / 1000) * 100}%`;
     const highlightedAssets = distribution
       .filter((i: any) => highlightedSymbols.indexOf(i.symbol) > -1)
-      .filter((i: any) => i.symbol != props.asset.symbol.toUpperCase());
+      .filter((i: any) => i.symbol != props.symbol.toUpperCase());
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 
@@ -307,7 +312,7 @@ export default class Plot extends Component<any, any> {
         {/* Blue FCAS Marker */}
         <text class={css.marker} text-anchor="middle" font-weight="bold">
           <tspan x={xPos} y={26}>
-            {props.asset.symbol.toUpperCase()}
+            {props.symbol.toUpperCase()}
           </tspan>
         </text>
 

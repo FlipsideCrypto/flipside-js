@@ -40,15 +40,15 @@ export default class API {
     return { data: null, success: false };
   }
 
-  async fetchAssetMetric(symbol: string, metric: string, days = 7) {
-    const sym = `${symbol}`.toUpperCase();
+  async fetchAssetMetric(id: string, metric: string, days = 7) {
+    const sym = `${id}`.toUpperCase();
     return await this._fetch("GET", `/assets/${sym}/metrics/${metric}`, {
       change_over: days
     });
   }
 
-  async fetchAssetMetrics(symbol: string) {
-    const sym = `${symbol}`.toUpperCase();
+  async fetchAssetMetrics(id: string) {
+    const sym = `${id}`.toUpperCase();
     return await this._fetch("GET", `/assets/${sym}/metrics`);
   }
 
@@ -81,7 +81,8 @@ export default class API {
 }
 
 export type APISeries = {
-  symbol: string;
+  symbol?: string;
+  asset_id?: number;
   names: string[];
 };
 

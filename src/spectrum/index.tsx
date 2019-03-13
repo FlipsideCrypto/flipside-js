@@ -20,7 +20,8 @@ type BootstrapHighlightType = {
 };
 
 export type AssetType = {
-  symbol: string;
+  id?: string;
+  symbol?: string;
   highlights?: string[];
   bootstrapAsset?: BootstrapAssetType;
   bootstrapHighlights?: BootstrapHighlightType[];
@@ -52,6 +53,13 @@ export type Props = {
 
 type State = {
   loading: boolean;
+  data?: {
+    value: number;
+    symbol: string;
+    slug: string;
+    percent_change: number;
+    asset_name: string;
+  };
   metric: {
     name: string;
     fcas: number;
@@ -74,12 +82,9 @@ class Spectrum extends Component<Props, State> {
   async _getData() {
     let data: BootstrapAssetType;
     let success: boolean;
-
+    const assetId = this.props.asset.id || this.props.asset.symbol;
     if (!this.props.asset.bootstrapAsset) {
-      let result = await this.props.api.fetchAssetMetric(
-        this.props.asset.symbol,
-        "FCAS"
-      );
+      let result = await this.props.api.fetchAssetMetric(assetId, "FCAS");
       data = result.data;
       success = result.success;
     } else {
@@ -96,6 +101,7 @@ class Spectrum extends Component<Props, State> {
 
     this.setState({
       loading: false,
+      data: data as any,
       metric: {
         fcas: Math.round(data.value),
         change: data.percent_change,
@@ -132,38 +138,42 @@ class Spectrum extends Component<Props, State> {
 
   render(props: Props, state: State) {
     if (state.loading) return null;
+    if (!state.data) return null;
 
-    const { asset, mode, rank, trend, api } = props;
-    const { metric } = state;
+    const { mode, rank, trend, api } = props;
+    const { metric, data } = state;
+    const fcas = Math.round(data.value);
 
     return (
       <div class={css[mode]}>
         <div class={css.header}>
           <img
             class={css.icon}
-            src={`https://d301yvow08hyfu.cloudfront.net/svg/color/${asset.symbol.toLowerCase()}.svg`}
+            src={`https://d301yvow08hyfu.cloudfront.net/svg/color/${data.symbol.toLowerCase()}.svg`}
           />
-          <span class={css.name}>{metric.name}</span>
+          <span class={css.name}>{data.asset_name}</span>
         </div>
 
         <div class={css.meta}>
-          <span class={css.symbol}>{asset.symbol}</span>
-          <span class={css.fcas}>Health {metric.fcas}</span>
+          <span class={css.symbol}>{data.symbol}</span>
+          <span class={css.fcas}>Health {fcas}</span>
           {trend.enabled && (
             <span class={css.trend}>
-              <Trend change={metric.change} value={metric.fcas} />
+              <Trend change={data.percent_change} value={fcas} />
             </span>
           )}
           {rank.enabled && (
             <a href={defaultFlipsideLink(api.key, "spectrum")}>
               <span class={css.rank}>
-                <Rank score={metric.fcas} kind="normal" />
+                <Rank score={fcas} kind="normal" />
               </span>
             </a>
           )}
         </div>
 
-        {props.spectrum.enabled && <Plot metric={metric} {...props} />}
+        {props.spectrum.enabled && (
+          <Plot metric={metric} {...props} symbol={data.symbol} />
+        )}
 
         {props.disableLinks === false && (
           <CustomLinks
