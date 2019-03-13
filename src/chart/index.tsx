@@ -1,5 +1,4 @@
 import { h, Component } from "preact";
-import Highcharts from "highcharts/highstock";
 import merge from "lodash/merge";
 import API from "../api";
 import { createApiSeries, createSeries } from "./helpers";
@@ -8,7 +7,13 @@ import { DEFAULT_HIGHCHARTS, DEFAULT_YAXIS } from "./defaults";
 import CustomLinks from "../components/customLinks";
 import * as css from "./style.css";
 
-require("highcharts/modules/exporting")(Highcharts);
+let Highcharts: any;
+if (!window.Highcharts) {
+  Highcharts = require("highcharts/highstock");
+  require("highcharts/modules/exporting")(Highcharts);
+} else {
+  Highcharts = window.Highcharts;
+}
 
 type ChartType = "line" | "bar";
 type ChartAxis = "left" | "right";
