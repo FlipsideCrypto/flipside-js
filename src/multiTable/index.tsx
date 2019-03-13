@@ -5,13 +5,19 @@ import Trend from "../components/trend";
 import CustomLinks from "../components/customLinks";
 import API from "../api";
 import { Row, ColumnName, ColumnDefinition } from "./types";
-
-import "./style.scss";
-
 import sortBy from "lodash/sortBy";
 import intersection from "lodash/intersection";
-import without from "lodash/without";
 import reverse from "lodash/reverse";
+import "./style.scss";
+
+function mapConfigColumnsNames(columns: string[]): string[] {
+  const actualColumnNames: { [k: string]: string } = {
+    marketMaturity: "market-maturity",
+    userActivity: "utility",
+    developerBehavior: "dev"
+  };
+  return columns.map(col => actualColumnNames[col] || col);
+}
 
 const COLUMNS: { [k: string]: ColumnDefinition } = {
   symbol: {
@@ -212,9 +218,7 @@ export default class MultiTable extends Component<Props, State> {
       size: this.props.limit,
       sort_by: COLUMNS[this.state.sortColumn].sortKey,
       sort_desc: true,
-      metrics: this.state.priceFilterRequired
-        ? this.state.filteredColumns
-        : ["fcas", "utility", "dev", "market-maturity"],
+      metrics: mapConfigColumnsNames(this.state.filteredColumns),
       change_over: this.props.trend.changeOver
     });
     this.setState({
