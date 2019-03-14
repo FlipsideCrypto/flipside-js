@@ -59,14 +59,14 @@ export default class API {
   }
 
   async fetchMetrics(payload: {
-    assets: string[];
-    exclusions: string[];
+    assets?: string[];
+    exclusions?: string[];
     sort_by?: string;
     sort_desc?: boolean;
-    page: number;
+    page?: number;
     size?: number;
-    metrics: string[];
-    change_over: number;
+    metrics?: string[];
+    change_over?: number;
   }) {
     return await this.client.post(`/assets/metrics`, payload);
   }
@@ -97,7 +97,8 @@ export type WidgetLinksSlug =
   | "multi-table"
   | "table"
   | "score"
-  | "chart";
+  | "chart"
+  | "price-multi-table";
 export type WidgetLinksLink = {
   widget_id: string;
   name: string;

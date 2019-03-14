@@ -4,7 +4,7 @@
   "description": "FlipsideJS provides a library embeddable widgets that display data from the Flipside Platform API, including FCAS.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "build": "webpack -p --env production",
     "build:stats": "webpack -p --env production --json > stats.json"
   },

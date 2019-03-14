@@ -23,7 +23,7 @@
       .wrapper {
         border: 1px solid #ccc;
         padding: 20px;
-        width: 500px;
+        width: 600px;
         font-weight: 700;
         font-size: 20px;
       }
@@ -61,21 +61,25 @@
     </div>
 
     <div class="wrapper"><div id="multiTable"></div></div>
+    <div class="wrapper">
+      <div id="multiTableFcas"></div>
+    </div>
 
     <script>
       const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
 
       flipside.chart("chart", {
-        title: "Bitcoin Health",
+        title: "Flipside 25 - Overall Industry Health",
         series: [
           {
-            name: "BTC FCAS",
-            asset_id: 00303043,
+            name: "FLIP25",
+            symbol: "FLIP25",
             metric: "fcas",
             type: "line",
             yAxis: 1
           }
         ],
+        colors: ["#81A0F1"],
         rangeSelector: {
           enabled: true
         }
@@ -136,23 +140,65 @@
         borderColor: "#737e8d"
       });
 
+      // Price table
       flipside.multiTable("multiTable", {
-        assets: ["btc", "etc"],
-        columns: ["rank", "trend"],
+        widgetType: "price-multi-table",
+        columns: ["market_cap", "price", "volume_24h"],
+        sortBy: "market_cap",
+        showFullName: true,
+        fontFamily: "inherit",
+        limit: 50,
+        mode: "light",
+        headers: {
+          style: {
+            fontWeight: "bold",
+            padding: "10px 0 10px 0"
+          }
+        },
+        rows: {
+          dividers: true,
+          dividersColor: "#eaeaea",
+          alternating: false,
+          style: {
+            padding: "10px 0 10px 0"
+          }
+        },
+        title: {
+          text: "Top 50 Coins By Market Cap",
+          style: { fontSize: "24px", fontWeight: 400 }
+        }
+      });
+
+      // FCAS
+      flipside.multiTable("multiTableFcas", {
+        autoWidth: false,
+        assets: null,
+        columns: [
+          "fcas",
+          "trend",
+          "userActivity",
+          "developerBehavior",
+          "marketMaturity",
+          "rank"
+        ],
+        exlusions: null,
         fontFamily: "inherit",
         headers: {},
-        limit: 15,
-        page: 1,
+        limit: 10,
         mode: "light",
         rows: {
-          dividers: true
+          alternating: true,
+          alternatingColors: "#eeeeee",
+          dividers: false
         },
         title: {
           text: "Top Coins",
-          style: { fontSize: "24px", fontWeight: 400 }
+          style: {}
         },
         trend: {
-          changeOver: 7
+          enabled: true,
+          changeOver: 7,
+          style: {}
         }
       });
 

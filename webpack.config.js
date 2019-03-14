@@ -3,13 +3,18 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const version = require("./package.json").version;
 const filename = `flipside-v${version}.js`;
 
+const PUBLIC_PATH =
+  process.env.NODE_ENV === "development"
+    ? "/"
+    : "https://d3sek7b10w79kp.cloudfront.net/";
+
 module.exports = {
   entry: "./src/index.tsx",
   output: {
     filename: filename,
     chunkFilename: `flipside-[name]-v${version}.js`,
     path: path.resolve(__dirname, "dist"),
-    publicPath: "https://d3sek7b10w79kp.cloudfront.net/"
+    publicPath: PUBLIC_PATH
   },
   mode: "development",
   devtool: "inline-source-map",

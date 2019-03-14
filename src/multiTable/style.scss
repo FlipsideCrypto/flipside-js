@@ -4,6 +4,7 @@
   table {
     text-align: right;
     border-collapse: collapse;
+    width: 100%;
   }
 
   th,
@@ -18,6 +19,11 @@
 
   td {
     font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    &:first-child {
+      text-align: left;
+      color: #2d57ed;
+    }
   }
 
   &-light {
@@ -39,9 +45,8 @@
   &-colhead {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     &-text {
-      flex-basis: 0;
+      // flex-basis: 0;
       user-select: none;
     }
   }
