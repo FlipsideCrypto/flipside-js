@@ -7,6 +7,7 @@ import zipObject from "lodash/zipObject";
 import { DEFAULT_HIGHCHARTS, DEFAULT_YAXIS } from "./defaults";
 import CustomLinks from "../components/customLinks";
 import * as css from "./style.css";
+import NoDataMessage from "../components/noDataMessage";
 
 require("highcharts/modules/exporting")(Highcharts);
 
@@ -14,7 +15,7 @@ type ChartType = "line" | "bar";
 type ChartAxis = "left" | "right";
 export type ChartSeries = {
   symbol?: string;
-  id?: number;
+  asset_id?: number;
   metric: string;
   type: ChartType;
   yAxis?: ChartAxis;
@@ -32,11 +33,20 @@ export type Props = {
   exportingEnabled?: boolean;
 };
 
+type State = {
+  loading: boolean;
+  data: any;
+};
+
 class Chart extends Component<Props> {
   static defaultProps: Partial<Props> = {
     axisTitles: [],
     mode: "light",
     exportingEnabled: false
+  };
+
+  state = {
+    loading: true
   };
 
   container: HTMLElement;
@@ -53,11 +63,22 @@ class Chart extends Component<Props> {
     } = this.props;
 
     const apiSeries = createApiSeries(series);
-    const data = await api.fetchTimeseries({
-      series: apiSeries,
-      start_date: startDate,
-      end_date: endDate
-    });
+    let data;
+    try {
+      data = await api.fetchTimeseries({
+        series: apiSeries,
+        start_date: startDate,
+        end_date: endDate
+      });
+      if (data.data.data.length > 0) {
+        this.setState({ loading: false, data: data.data.data });
+      } else {
+        this.setState({ loading: false });
+        return;
+      }
+    } catch (e) {
+      return;
+    }
 
     const prefixes = zipObject(data.data.columns, data.data.prefixes) as {
       [k: string]: string;
@@ -168,15 +189,18 @@ class Chart extends Component<Props> {
     Highcharts.chart(options);
   }
 
-  render() {
+  render(_: Props, state: State) {
     const { mode } = this.props;
     return (
       <div className={css[mode]}>
-        <CustomLinks
-          widget="chart"
-          api={this.props.api}
-          style={{ display: "block", textAlign: "right" }}
-        />
+        {!state.loading && !state.data && <NoDataMessage />}
+        {state.data && (
+          <CustomLinks
+            widget="chart"
+            api={this.props.api}
+            style={{ display: "block", textAlign: "right" }}
+          />
+        )}
         <div ref={el => (this.container = el)} />
       </div>
     );

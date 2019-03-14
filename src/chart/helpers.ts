@@ -9,15 +9,15 @@ import zipObject from "lodash/zipObject";
 export function createApiSeries(chartSeries: ChartSeries[]): APISeries[] {
   const series = chartSeries.reduce(
     (acc, s) => {
-      const idKey = s.id ? "id" : "symbol";
+      const idKey = s.asset_id ? "asset_id" : "symbol";
       // @ts-ignore
       const existingIdx = acc.findIndex(i => i[idKey] === s[idKey]);
       if (existingIdx >= 0) {
         acc[existingIdx].names = acc[existingIdx].names.concat([s.metric]);
       } else {
         const apiSeries: APISeries = { names: [s.metric] };
-        if (idKey === "id") {
-          apiSeries.asset_id = s.id;
+        if (idKey === "asset_id") {
+          apiSeries.asset_id = s.asset_id;
         } else {
           apiSeries.symbol = s.symbol;
         }
@@ -47,9 +47,9 @@ export function createSeries(
   });
 
   return series.map(s => {
-    // const idKey = s.id ? "id" : "symbol";
+    const idKey = s.asset_id ? "asset_id" : "symbol";
     const data = zippedData
-      .filter(r => r.symbol === s.symbol)
+      .filter(r => r[idKey] === s[idKey])
       .map(r => [Date.parse(r.timestamp as string), r[s.metric]]);
     return {
       name: s.name || s.metric,

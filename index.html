@@ -70,7 +70,7 @@
         series: [
           {
             name: "BTC FCAS",
-            symbol: "BTC",
+            asset_id: 00303043,
             metric: "fcas",
             type: "line",
             yAxis: 1
@@ -87,14 +87,14 @@
         axisTitles: ["FCAS", "Dev"],
         colors: ["#E44C27", "#7FCCC5"],
         series: [
-          { id: 2, symbol: "LTC", metric: "fcas", type: "line", yAxis: 0 },
-          { id: 2, symbol: "LTC", metric: "dev", type: "line", yAxis: 1 }
+          { asset_id: 2, metric: "fcas", type: "line", yAxis: 0 },
+          { asset_id: 2, metric: "dev", type: "line", yAxis: 1 }
         ]
       });
 
       flipside.spectrum("widget-0", {
         asset: {
-          id: "1",
+          asset_id: 1,
           highlights: ["BTC", "ETH", "QTUM"]
         },
         mode: "light",
@@ -115,11 +115,11 @@
       flipside.spectrum("widget-1", {
         assets: [
           {
-            id: 1,
+            asset_id: 1,
             highlights: ["BTC", "NMR", "QTUM"]
           },
           {
-            id: 2,
+            asset_id: 2,
             highlights: ["BTC", "NMR", "QTUM"]
           }
         ],

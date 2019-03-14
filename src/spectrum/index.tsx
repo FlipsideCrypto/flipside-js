@@ -7,6 +7,7 @@ import Rank from "../components/rank";
 import Trend from "../components/trend";
 import Carousel from "./components/carousel";
 import { defaultFlipsideLink } from "../utils";
+import NoDataMessage from "../components/noDataMessage";
 
 export type BootstrapAssetType = {
   value: number;
@@ -20,7 +21,7 @@ type BootstrapHighlightType = {
 };
 
 export type AssetType = {
-  id?: string;
+  asset_id?: string;
   symbol?: string;
   highlights?: string[];
   bootstrapAsset?: BootstrapAssetType;
@@ -82,7 +83,7 @@ class Spectrum extends Component<Props, State> {
   async _getData() {
     let data: BootstrapAssetType;
     let success: boolean;
-    const assetId = this.props.asset.id || this.props.asset.symbol;
+    const assetId = this.props.asset.asset_id || this.props.asset.symbol;
     if (!this.props.asset.bootstrapAsset) {
       let result = await this.props.api.fetchAssetMetric(assetId, "FCAS");
       data = result.data;
@@ -138,7 +139,7 @@ class Spectrum extends Component<Props, State> {
 
   render(props: Props, state: State) {
     if (state.loading) return null;
-    if (!state.data) return null;
+    if (!state.data) return <NoDataMessage />;
 
     const { mode, rank, trend, api } = props;
     const { metric, data } = state;
