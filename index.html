@@ -70,6 +70,23 @@
 
       flipside.chart("chart", {
         title: "Flipside 25 - Overall Industry Health",
+        chart: {
+          type: "area"
+        },
+        plotOptions: {
+          area: {
+            threshold: null,
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [[0, "#9EC9FE"], [1, "rgba(255, 255, 255, 0)"]]
+            }
+          }
+        },
         series: [
           {
             name: "FLIP25",
@@ -79,7 +96,7 @@
             yAxis: 1
           }
         ],
-        colors: ["#81A0F1"],
+        colors: ["#9EC9FE"],
         rangeSelector: {
           enabled: true
         }
