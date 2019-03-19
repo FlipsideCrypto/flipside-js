@@ -60,6 +60,7 @@ type State = {
     slug: string;
     percent_change: number;
     asset_name: string;
+    has_rank: boolean;
   };
   metric: {
     name: string;
@@ -163,7 +164,7 @@ class Spectrum extends Component<Props, State> {
               <Trend change={data.percent_change} value={fcas} />
             </span>
           )}
-          {rank.enabled && (
+          {rank.enabled && data.has_rank && (
             <a href={defaultFlipsideLink(api.key, "spectrum")}>
               <span class={css.rank}>
                 <Rank score={fcas} kind="normal" />
