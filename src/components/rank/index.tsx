@@ -4,6 +4,7 @@ import * as css from "./style.css";
 
 type Props = {
   score: number;
+  grade?: string;
   kind?: "slim" | "normal" | "large";
   class?: string;
 };
@@ -31,16 +32,21 @@ export default class Rank extends Component<Props, State> {
 
   render(props: Props) {
     let rankClass;
-    if (props.score <= 500) {
-      rankClass = css.f;
-    } else if (props.score <= 649) {
-      rankClass = css.c;
-    } else if (props.score <= 749) {
-      rankClass = css.b;
-    } else if (props.score <= 899) {
-      rankClass = css.a;
+    let css_: any = css;
+    if (props.grade) {
+      rankClass = css_[props.grade.toLowerCase()];
     } else {
-      rankClass = css.s;
+      if (props.score <= 500) {
+        rankClass = css_.f;
+      } else if (props.score <= 649) {
+        rankClass = css_.c;
+      } else if (props.score <= 749) {
+        rankClass = css_.b;
+      } else if (props.score <= 899) {
+        rankClass = css_.a;
+      } else {
+        rankClass = css_.s;
+      }
     }
 
     let kindClass = css[props.kind];

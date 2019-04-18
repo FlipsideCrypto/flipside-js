@@ -58,7 +58,9 @@ type State = {
     value: number;
     symbol: string;
     slug: string;
+    grade?: string;
     percent_change: number;
+    point_change?: number;
     asset_name: string;
     has_rank: boolean;
   };
@@ -161,13 +163,13 @@ class Spectrum extends Component<Props, State> {
           <span class={css.fcas}>Health {fcas}</span>
           {trend.enabled && (
             <span class={css.trend}>
-              <Trend change={data.percent_change} value={fcas} />
+              <Trend pointChange={data.point_change} value={fcas} />
             </span>
           )}
           {rank.enabled && data.has_rank && (
             <a href={defaultFlipsideLink(api.key, "spectrum")}>
               <span class={css.rank}>
-                <Rank score={fcas} kind="normal" />
+                <Rank score={fcas} grade={data.grade} kind="normal" />
               </span>
             </a>
           )}

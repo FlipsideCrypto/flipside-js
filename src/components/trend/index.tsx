@@ -3,7 +3,8 @@ import classNames from "classnames";
 import * as css from "./style.css";
 
 type Props = {
-  change: number;
+  change?: number;
+  pointChange?: number;
   value: number;
   class?: string;
 };
@@ -14,7 +15,8 @@ export function calculateTrendDiff(value: number, percent: number): number {
 
 const Trend = (props: Props) => {
   let directionClass, icon;
-  if (props.change < 0) {
+  let changeDeterminate = props.pointChange ? props.pointChange : props.change;
+  if (changeDeterminate < 0) {
     directionClass = css.down;
     icon = require("./images/down.svg");
   } else {
@@ -22,7 +24,12 @@ const Trend = (props: Props) => {
     icon = require("./images/up.svg");
   }
 
-  const difference = calculateTrendDiff(props.value, props.change);
+  let difference;
+  if (props.pointChange) {
+    difference = props.pointChange;
+  } else {
+    difference = calculateTrendDiff(props.value, props.change);
+  }
   const classes = classNames(css.wrapper, directionClass, props.class);
 
   return (
