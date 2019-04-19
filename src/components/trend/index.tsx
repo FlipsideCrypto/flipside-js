@@ -19,7 +19,7 @@ const Trend = (props: Props) => {
   if (changeDeterminate < 0) {
     directionClass = css.down;
     icon = require("./images/down.svg");
-  } else {
+  } else if (changeDeterminate > 0) {
     directionClass = css.up;
     icon = require("./images/up.svg");
   }
@@ -30,6 +30,11 @@ const Trend = (props: Props) => {
   } else {
     difference = calculateTrendDiff(props.value, props.change);
   }
+
+  if (!difference || difference === 0) {
+    return <span />;
+  }
+
   const classes = classNames(css.wrapper, directionClass, props.class);
 
   return (
