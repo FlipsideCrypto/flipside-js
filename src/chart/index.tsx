@@ -8,13 +8,15 @@ import CustomLinks from "../components/customLinks";
 import * as css from "./style.css";
 import NoDataMessage from "../components/noDataMessage";
 
-let Highcharts: any;
-if (!window.Highcharts) {
-  Highcharts = require("highcharts/highstock");
-  require("highcharts/modules/exporting")(Highcharts);
-} else {
-  Highcharts = window.Highcharts;
-}
+import Highcharts from "highcharts/highstock";
+require("highcharts/modules/exporting")(Highcharts);
+// let Highcharts: any;
+// // if (!window.Highcharts) {
+//   Highcharts = require("highcharts/highstock");
+//   require("highcharts/modules/exporting")(Highcharts);
+// } else {
+//   Highcharts = window.Highcharts;
+// }
 
 type ChartType = "line" | "bar";
 type ChartAxis = "left" | "right";

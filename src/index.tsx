@@ -9,6 +9,7 @@ import { defaultsWithoutArrays } from "./utils";
 import Spectrum, { Props as SpectrumProps } from "./spectrum";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
 import Score, { Props as ScoreProps } from "./score";
+import Chart, { Props as ChartProps } from "./chart";
 
 export default class Flipside {
   api: API;
@@ -34,9 +35,6 @@ export default class Flipside {
   }
 
   async chart(el: string, opts: any) {
-    const {
-      default: Chart
-    } = await import(/* webpackChunkName: "chart" */ "./chart");
     render(<Chart {...opts} api={this.api} />, document.getElementById(el));
   }
 
