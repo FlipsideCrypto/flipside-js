@@ -12,13 +12,7 @@ export default class API {
     });
   }
 
-  async _fetch(
-    method: string,
-    url: string,
-    params = {},
-    retryCount = 0,
-    retryMax = 15
-  ): Promise<any> {
+  async _fetch(method: string, url: string, params = {}): Promise<any> {
     let res;
     try {
       res = await this.client.request({
@@ -33,9 +27,6 @@ export default class API {
       console.log(
         `Failed to fetch data from: "${url}". \nError message: "${e}"`
       );
-    }
-    if (retryCount < retryMax) {
-      return await this._fetch("GET", url, params, retryCount + 1);
     }
     return { data: null, success: false };
   }
