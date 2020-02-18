@@ -17,7 +17,7 @@ export default class API {
     url: string,
     params = {},
     retryCount = 0,
-    retryMax = 2
+    retryMax = 1
   ): Promise<any> {
     let res;
     try {

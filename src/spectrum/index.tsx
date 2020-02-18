@@ -99,7 +99,7 @@ class Spectrum extends Component<Props, State> {
     if (!success || !data) {
       setTimeout(() => {
         return this._getData();
-      }, 45000);
+      }, 120000);
       return success;
     }
 
