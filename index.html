@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>flipside.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="flipside-v1.11.0.js"></script>
+    <script src="flipside-v1.12.0.js"></script>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -21,8 +21,6 @@
       }
 
       .wrapper {
-        border: 1px solid #ccc;
-        padding: 20px;
         width: 600px;
         font-weight: 700;
         font-size: 20px;
@@ -65,8 +63,16 @@
       <div id="multiTableFcas"></div>
     </div>
 
+    <div class="wrapper">
+      <div id="widget"></div>
+    </div>
+
     <script>
-      const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
+      const flipside = new Flipside("6b7a8b4f-4d50-437f-ac29-47a0323c5842");
+
+      flipside.dynamic("widget", {
+        widgetId: "d25902d6-c4be-4445-a5bd-003b9f320b31"
+      });
 
       flipside.chart("chart", {
         title: "Flipside 25 - Overall Industry Health",
@@ -83,7 +89,10 @@
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, "#9EC9FE"], [1, "rgba(255, 255, 255, 0)"]]
+              stops: [
+                [0, "#9EC9FE"],
+                [1, "rgba(255, 255, 255, 0)"]
+              ]
             }
           }
         },
@@ -214,7 +223,7 @@
         },
         trend: {
           enabled: true,
-          changeOver: 7,
+          changeOver: 14,
           style: {}
         }
       });

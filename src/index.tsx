@@ -10,12 +10,18 @@ import Spectrum, { Props as SpectrumProps } from "./spectrum";
 import MultiTable, { Props as MultiTableProps } from "./multiTable";
 import Score, { Props as ScoreProps } from "./score";
 import Chart, { Props as ChartProps } from "./chart";
+import Axios from "axios";
+import dynamic from "./dynamic";
 
 export default class Flipside {
   api: API;
 
   constructor(apiKey: string) {
     this.api = new API(apiKey);
+  }
+
+  async dynamic(el: string, opts: any) {
+    dynamic(this.api, el, opts);
   }
 
   multiTable(el: string, opts: MultiTableProps) {

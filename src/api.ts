@@ -7,7 +7,7 @@ export default class API {
   constructor(apiKey: string) {
     this.key = apiKey;
     this.client = axios.create({
-      baseURL: "https://platform-api.flipsidecrypto.com/api/v1",
+      baseURL: "https://api.flipsidecrypto.com/api/v1",
       params: { api_key: apiKey }
     });
   }
@@ -56,6 +56,10 @@ export default class API {
     return await this._fetch("GET", `/metrics/FCAS/assets`, {
       visual_distribution: true
     });
+  }
+
+  async fetchDynamic(id: string) {
+    return this._fetch("GET", `/widgets/dynamic/${id}`)
   }
 
   async fetchMetrics(payload: {
