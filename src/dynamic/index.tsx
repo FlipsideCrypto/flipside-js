@@ -17,7 +17,7 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
 
   await loadJS([
     {
-      url: "https://d3sek7b10w79kp.cloudfront.net/flipside-v1.10.0.js",
+      url: res.data.js_url,
       allowExternal: true
     }
   ]);
