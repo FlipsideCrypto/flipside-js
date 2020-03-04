@@ -4,9 +4,14 @@ import Flipside from "..";
 import template from "lodash/template";
 import mapValues from "lodash/mapValues";
 
+type Asset = {
+  id?: number;
+  symbol?: string;
+};
+
 type DynamicOpts = {
   widgetId: string;
-  assetId: string;
+  asset: Asset;
 };
 
 export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
@@ -22,8 +27,6 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
     }
   ]);
 
-  const { function_name, function_config } = res.data;
-
   const flipside = new window.Flipside(api.key);
   const fn: any = (flipside as any)[res.data.function_name];
   if (!fn) {
@@ -32,19 +35,21 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
     );
   }
 
-  const config = interpolateConfig(opts.assetId, res.data.function_config);
+  const config = interpolateConfig(opts.asset, res.data.function_config);
   fn.call(flipside, el, config);
 }
 
 // Replaces instances of ${asset_id} in the config with the assetId
-function interpolateConfig(assetId: string, config: Object): any {
-  return mapValues(config, value => {
+function interpolateConfig(asset: any, config: Object): any {
+  return mapValues(config, (value: any) => {
+    const targetAsset =
+      typeof asset == "string" ? asset : asset.id || asset.symbol;
     if (typeof value === "string") {
       const compiled = template(value);
-      return compiled({ asset_id: assetId });
+      return compiled({ asset_id: targetAsset });
     }
     if (typeof value === "object") {
-      return interpolateConfig(assetId, value);
+      return interpolateConfig(targetAsset, value);
     }
     return value;
   });

@@ -118,7 +118,7 @@ class Spectrum extends Component<Props, State> {
   _update() {
     this.interval = window.setInterval(async () => {
       await this._getData();
-    }, 300000);
+    }, 90000);
   }
 
   componentWillUnmount() {

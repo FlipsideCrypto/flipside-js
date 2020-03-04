@@ -59,7 +59,7 @@ export default class API {
   }
 
   async fetchDynamic(id: string) {
-    return this._fetch("GET", `/widgets/dynamic/${id}`)
+    return this._fetch("GET", `/widgets/dynamic/${id}`);
   }
 
   async fetchMetrics(payload: {

@@ -40,6 +40,10 @@
     </style>
   </head>
   <body>
+    <div class="wrapper">
+      <div id="widget"></div>
+    </div>
+
     <div class="wrapper"><div id="chart"></div></div>
 
     <div class="wrapper dark" style="background-color:#000000">
@@ -63,17 +67,15 @@
       <div id="multiTableFcas"></div>
     </div>
 
-    <div class="wrapper">
-      <div id="widget"></div>
-    </div>
-
     <script>
-      const flipside = new Flipside("6b7a8b4f-4d50-437f-ac29-47a0323c5842");
+      const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
 
       flipside.dynamic("widget", {
-        widgetId: "d25902d6-c4be-4445-a5bd-003b9f320b31"
+        widgetId: "578375af-3467-4742-9863-5ca6f2fa30d1",
+        asset: {
+          symbol: "BTC"
+        }
       });
-
       flipside.chart("chart", {
         title: "Flipside 25 - Overall Industry Health",
         chart: {
