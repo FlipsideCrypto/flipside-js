@@ -12,6 +12,7 @@ type Asset = {
 type DynamicOpts = {
   widgetId: string;
   asset: Asset;
+  darkMode?: boolean;
 };
 
 export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
@@ -23,8 +24,8 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
   await loadJS([
     {
       url: res.data.js_url,
-      allowExternal: true
-    }
+      allowExternal: true,
+    },
   ]);
 
   const flipside = new window.Flipside(api.key);
@@ -36,7 +37,7 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
   }
 
   const config = interpolateConfig(opts.asset, res.data.function_config);
-  fn.call(flipside, el, config);
+  fn.call(flipside, el, { ...config, mode: opts.darkMode ? "dark" : "light" });
 }
 
 // Replaces instances of ${asset_id} in the config with the assetId
