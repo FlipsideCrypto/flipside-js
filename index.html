@@ -41,12 +41,16 @@
   </head>
   <body>
     <div class="wrapper">
+      <h3>Dynamic</h3>
       <div id="widget"></div>
     </div>
 
-    <div class="wrapper"><div id="chart"></div></div>
+    <div class="wrapper">
+      <h2>Chart</h2>
+      <div id="chart"></div>
+    </div>
 
-    <div class="wrapper dark" style="background-color:#000000">
+    <div class="wrapper dark" style="background-color: #000000;">
       <div id="chart2"></div>
     </div>
 
@@ -54,11 +58,11 @@
 
     <div class="wrapper"><div id="widget-0" style="width: 289px;"></div></div>
 
-    <div class="wrapper" style="background-color:#000000">
-      <div id="widget-1" style="width: 289px"></div>
+    <div class="wrapper" style="background-color: #000000;">
+      <div id="widget-1" style="width: 289px;"></div>
     </div>
 
-    <div class="wrapper" style="background-color: #33435e">
+    <div class="wrapper" style="background-color: #33435e;">
       <div id="widget-2"></div>
     </div>
 
@@ -72,14 +76,15 @@
 
       flipside.dynamic("widget", {
         widgetId: "578375af-3467-4742-9863-5ca6f2fa30d1",
+        darkMode: true,
         asset: {
-          symbol: "BTC"
-        }
+          symbol: "BTC",
+        },
       });
       flipside.chart("chart", {
         title: "Flipside 25 - Overall Industry Health",
         chart: {
-          type: "area"
+          type: "area",
         },
         plotOptions: {
           area: {
@@ -89,14 +94,14 @@
                 x1: 0,
                 y1: 0,
                 x2: 0,
-                y2: 1
+                y2: 1,
               },
               stops: [
                 [0, "#9EC9FE"],
-                [1, "rgba(255, 255, 255, 0)"]
-              ]
-            }
-          }
+                [1, "rgba(255, 255, 255, 0)"],
+              ],
+            },
+          },
         },
         series: [
           {
@@ -104,13 +109,13 @@
             symbol: "FLIP25",
             metric: "fcas",
             type: "line",
-            yAxis: 1
-          }
+            yAxis: 1,
+          },
         ],
         colors: ["#9EC9FE"],
         rangeSelector: {
-          enabled: true
-        }
+          enabled: true,
+        },
       });
 
       flipside.chart("chart2", {
@@ -120,14 +125,14 @@
         colors: ["#E44C27", "#7FCCC5"],
         series: [
           { asset_id: 2, metric: "fcas", type: "line", yAxis: 0 },
-          { asset_id: 2, metric: "dev", type: "line", yAxis: 1 }
-        ]
+          { asset_id: 2, metric: "dev", type: "line", yAxis: 1 },
+        ],
       });
 
       flipside.spectrum("widget-0", {
         asset: {
           asset_id: 1,
-          highlights: ["BTC", "ETH", "QTUM"]
+          highlights: ["BTC", "ETH", "QTUM"],
         },
         mode: "light",
         fontFamily: "inherit",
@@ -135,37 +140,37 @@
           enabled: true,
           bucketDistance: 35,
           lineDistance: 25,
-          fontFamily: "inherit"
+          fontFamily: "inherit",
         },
         name: { enabled: true, style: {} },
         spectrum: { enabled: true },
         icon: { enabled: true },
         rank: { enabled: true },
-        trend: { enabled: true }
+        trend: { enabled: true },
       });
 
       flipside.spectrum("widget-1", {
         assets: [
           {
             asset_id: 1,
-            highlights: ["BTC", "NMR", "QTUM"]
+            highlights: ["BTC", "NMR", "QTUM"],
           },
           {
             asset_id: 2,
-            highlights: ["BTC", "NMR", "QTUM"]
-          }
+            highlights: ["BTC", "NMR", "QTUM"],
+          },
         ],
         mode: "dark",
         bucketDistance: 100,
         relatedMarkers: {
           bucketDistance: 55,
-          lineDistance: 35
-        }
+          lineDistance: 35,
+        },
       });
 
       flipside.createTable("widget-2", "btc", {
         dark: true,
-        borderColor: "#737e8d"
+        borderColor: "#737e8d",
       });
 
       // Price table
@@ -180,21 +185,21 @@
         headers: {
           style: {
             fontWeight: "bold",
-            padding: "10px 0 10px 0"
-          }
+            padding: "10px 0 10px 0",
+          },
         },
         rows: {
           dividers: true,
           dividersColor: "#eaeaea",
           alternating: false,
           style: {
-            padding: "10px 0 10px 0"
-          }
+            padding: "10px 0 10px 0",
+          },
         },
         title: {
           text: "Top 50 Coins By Market Cap",
-          style: { fontSize: "24px", fontWeight: 400 }
-        }
+          style: { fontSize: "24px", fontWeight: 400 },
+        },
       });
 
       // FCAS
@@ -207,7 +212,7 @@
           "userActivity",
           "developerBehavior",
           "marketMaturity",
-          "rank"
+          "rank",
         ],
         exlusions: null,
         fontFamily: "inherit",
@@ -217,17 +222,17 @@
         rows: {
           alternating: true,
           alternatingColors: "#eeeeee",
-          dividers: false
+          dividers: false,
         },
         title: {
           text: "Top Coins",
-          style: {}
+          style: {},
         },
         trend: {
           enabled: true,
           changeOver: 14,
-          style: {}
-        }
+          style: {},
+        },
       });
 
       flipside.score("score", { symbol: "eth" });
