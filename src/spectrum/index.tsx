@@ -75,7 +75,7 @@ class Spectrum extends Component<Props, State> {
   interval: number;
 
   static defaultProps = {
-    mode: "light"
+    mode: "light",
   };
 
   constructor() {
@@ -109,8 +109,8 @@ class Spectrum extends Component<Props, State> {
       metric: {
         fcas: Math.round(data.value),
         change: data.percent_change,
-        name: data.asset_name
-      }
+        name: data.asset_name,
+      },
     });
     return success;
   }
@@ -133,8 +133,8 @@ class Spectrum extends Component<Props, State> {
         metric: {
           name: "NA",
           fcas: 0,
-          change: 0
-        }
+          change: 0,
+        },
       });
     }
     this._update();
@@ -211,7 +211,7 @@ MultiSpectrum.defaultProps = {
     symbol: "btc",
     highlights: ["eth", "zec", "zrx"],
     bootstrapAsset: null,
-    bootstrapHighlights: null
+    bootstrapHighlights: null,
   },
   disableLinks: false,
   assets: [],
@@ -221,14 +221,14 @@ MultiSpectrum.defaultProps = {
     enabled: true,
     bucketDistance: 35,
     lineDistance: 25,
-    fontFamily: "inherit"
+    fontFamily: "inherit",
   },
   name: { enabled: true },
   spectrum: { enabled: true },
   icon: { enabled: true },
   rank: { enabled: true },
   trend: { enabled: true },
-  linkBootstrap: null
+  linkBootstrap: null,
 } as Props;
 
 export default MultiSpectrum;

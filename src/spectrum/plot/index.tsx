@@ -27,7 +27,7 @@ export default class Plot extends Component<Props, any> {
       loading: true,
       distribution: null,
       highlights: [],
-      highlightedSymbols: []
+      highlightedSymbols: [],
     };
   }
 
@@ -54,7 +54,7 @@ export default class Plot extends Component<Props, any> {
     if (data && data.length > 0) {
       this.setState({
         loading: false,
-        distribution: data
+        distribution: data,
       });
     }
     return success;
@@ -71,11 +71,12 @@ export default class Plot extends Component<Props, any> {
       );
     } else {
       await Promise.all(
-        highlights.map(async asset => {
+        highlights.map(async (asset) => {
           const { data, success } = await this.props.api.fetchAssetMetric(
             asset,
             "fcas"
           );
+
           if (success === true && data) {
             nextHighlightState.push(data);
             nextHighlightedSymbolState.push(data.symbol);
@@ -88,7 +89,7 @@ export default class Plot extends Component<Props, any> {
     }
     this.setState({
       highlights: nextHighlightState,
-      highlightedSymbols: nextHighlightedSymbolState
+      highlightedSymbols: nextHighlightedSymbolState,
     });
   }
 
@@ -108,7 +109,7 @@ export default class Plot extends Component<Props, any> {
     if (!success) {
       this.setState({
         loading: false,
-        distribution: []
+        distribution: [],
       });
     }
     this._update();
@@ -184,7 +185,10 @@ export default class Plot extends Component<Props, any> {
     }
 
     let bucketIndex = scoresToBuckets[asset.value];
+
+    if (!bucketIndex) return;
     let bucket = buckets[bucketIndex];
+
     let index = 0;
 
     let toClose = false;
@@ -225,10 +229,10 @@ export default class Plot extends Component<Props, any> {
     if (props.relatedMarkers) {
       relatedLabelStyle = {
         fill: props.relatedMarkers.color,
-        fontFamily: props.relatedMarkers.fontFamily
+        fontFamily: props.relatedMarkers.fontFamily,
       };
       relatedLineStyle = {
-        stroke: props.relatedMarkers.color
+        stroke: props.relatedMarkers.color,
       };
     }
 
@@ -289,7 +293,9 @@ export default class Plot extends Component<Props, any> {
         {props.relatedMarkers.enabled &&
           highlightedAssets.map((a: any) => {
             const xPos = `${(a.value / 1000) * 100}%`;
-            let { y, toClose } = this.getYCoords(a, buckets, scoresToBuckets);
+            let result = this.getYCoords(a, buckets, scoresToBuckets);
+            if (!result) return;
+            let { y, toClose } = result;
             return (
               <g class={css.related} style={relatedLabelStyle}>
                 <text x={xPos} y={y} text-anchor="middle" font-size="10">
