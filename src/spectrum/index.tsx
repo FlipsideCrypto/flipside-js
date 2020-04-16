@@ -98,8 +98,13 @@ class Spectrum extends Component<Props, State> {
       success = true;
     }
 
-    let widgetLinksResp = await this.props.api.fetchWidgetLinks("spectrum");
-    let widgetLinks = widgetLinksResp.data;
+    let widgetLinks;
+    if (this.props.linkBootstrap) {
+      widgetLinks = this.props.linkBootstrap;
+    } else {
+      let widgetLinksResp = await this.props.api.fetchWidgetLinks("spectrum");
+      widgetLinks = widgetLinksResp.data;
+    }
 
     if (!success || !data) {
       setTimeout(() => {
