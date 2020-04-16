@@ -8,6 +8,7 @@ import Trend from "../components/trend";
 import Carousel from "./components/carousel";
 import { defaultFlipsideLink } from "../utils";
 import NoDataMessage from "../components/noDataMessage";
+import find from "lodash/find";
 
 export type BootstrapAssetType = {
   value: number;
@@ -69,6 +70,7 @@ type State = {
     fcas: number;
     change: number;
   };
+  widgetLinks: WidgetLinksLink[];
 };
 
 class Spectrum extends Component<Props, State> {
@@ -80,7 +82,7 @@ class Spectrum extends Component<Props, State> {
 
   constructor() {
     super();
-    this.state = { loading: true, metric: null };
+    this.state = { loading: true, metric: null, widgetLinks: [] };
   }
 
   async _getData() {
@@ -95,6 +97,9 @@ class Spectrum extends Component<Props, State> {
       data = this.props.asset.bootstrapAsset;
       success = true;
     }
+
+    let widgetLinksResp = await this.props.api.fetchWidgetLinks("spectrum");
+    let widgetLinks = widgetLinksResp.data;
 
     if (!success || !data) {
       setTimeout(() => {
@@ -111,6 +116,7 @@ class Spectrum extends Component<Props, State> {
         change: data.percent_change,
         name: data.asset_name,
       },
+      widgetLinks: widgetLinks,
     });
     return success;
   }
@@ -148,6 +154,15 @@ class Spectrum extends Component<Props, State> {
     const { metric, data } = state;
     const fcas = Math.round(data.value);
 
+    let scoreLink = find(state.widgetLinks, { name: "score_link" });
+    if (!scoreLink) {
+      scoreLink = {
+        widget_id: "",
+        name: "score_link",
+        link_html: defaultFlipsideLink(api.key, "spectrum"),
+      };
+    }
+
     return (
       <div class={css[mode]}>
         <div class={css.header}>
@@ -167,7 +182,7 @@ class Spectrum extends Component<Props, State> {
             </span>
           )}
           {rank.enabled && data.has_rank && (
-            <a href={defaultFlipsideLink(api.key, "spectrum")}>
+            <a href={scoreLink.link_html}>
               <span class={css.rank}>
                 <Rank score={fcas} grade={data.grade} kind="normal" />
               </span>
@@ -183,7 +198,7 @@ class Spectrum extends Component<Props, State> {
           <CustomLinks
             widget="spectrum"
             api={props.api}
-            linkBootstrap={props.linkBootstrap}
+            linkBootstrap={state.widgetLinks}
           />
         )}
       </div>

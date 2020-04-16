@@ -15,11 +15,11 @@ type State = {
 
 export default class Rank extends Component<Props, State> {
   static defaultProps = {
-    kind: "slim"
+    kind: "slim",
   };
 
   state: State = {
-    showTooltip: false
+    showTooltip: false,
   };
 
   showTooltip = () => {
@@ -58,6 +58,5 @@ export default class Rank extends Component<Props, State> {
         <span class={classes} />
       </div>
     );
-    // return <span class={`fs-rank fs-rank-${rank}`} />;
   }
 }
