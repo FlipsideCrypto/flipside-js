@@ -35,6 +35,7 @@ export type Props = {
   mode?: "light" | "dark";
   fontFamily?: string;
   autoWidth?: boolean;
+  showHeader?: boolean;
   relatedMarkers?: {
     bucketDistance?: number;
     lineDistance?: number;
@@ -170,30 +171,34 @@ class Spectrum extends Component<Props, State> {
 
     return (
       <div class={css[mode]}>
-        <div class={css.header}>
-          <img
-            class={css.icon}
-            src={`https://d301yvow08hyfu.cloudfront.net/svg/color/${data.symbol.toLowerCase()}.svg`}
-          />
-          <span class={css.name}>{data.asset_name}</span>
-        </div>
+        {props.showHeader && (
+          <div class={css.header}>
+            <img
+              class={css.icon}
+              src={`https://d301yvow08hyfu.cloudfront.net/svg/color/${data.symbol.toLowerCase()}.svg`}
+            />
+            <span class={css.name}>{data.asset_name}</span>
+          </div>
+        )}
 
-        <div class={css.meta}>
-          <span class={css.symbol}>{data.symbol}</span>
-          <span class={css.fcas}>Health {fcas}</span>
-          {trend.enabled && (
-            <span class={css.trend}>
-              <Trend pointChange={data.point_change} value={fcas} />
-            </span>
-          )}
-          {rank.enabled && data.has_rank && (
-            <a href={scoreLink.link_html}>
-              <span class={css.rank}>
-                <Rank score={fcas} grade={data.grade} kind="normal" />
+        {props.showHeader && (
+          <div class={css.meta}>
+            <span class={css.symbol}>{data.symbol}</span>
+            <span class={css.fcas}>Health {fcas}</span>
+            {trend.enabled && (
+              <span class={css.trend}>
+                <Trend pointChange={data.point_change} value={fcas} />
               </span>
-            </a>
-          )}
-        </div>
+            )}
+            {rank.enabled && data.has_rank && (
+              <a href={scoreLink.link_html}>
+                <span class={css.rank}>
+                  <Rank score={fcas} grade={data.grade} kind="normal" />
+                </span>
+              </a>
+            )}
+          </div>
+        )}
 
         {props.spectrum.enabled && (
           <Plot metric={metric} {...props} symbol={data.symbol} />
@@ -237,6 +242,7 @@ MultiSpectrum.defaultProps = {
   assets: [],
   mode: "light",
   fontFamily: "inherit",
+  showHeader: true,
   relatedMarkers: {
     enabled: true,
     bucketDistance: 35,
