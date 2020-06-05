@@ -2,6 +2,7 @@ import { h, Component } from "preact";
 import { sortObjectArray } from "../../utils";
 import classNames from "classnames";
 import * as css from "./style.css";
+import { score } from "../../score/style.css";
 
 const PLOT_WIDTH = 240;
 const PLOT_SCALE = PLOT_WIDTH / 1000;
@@ -16,6 +17,7 @@ const DEFAULT_LINE_DISTANCE = 25;
 type Props = {
   mode: "light" | "dark";
   symbol: string;
+  autoRefresh?: boolean;
 } & any;
 
 export default class Plot extends Component<Props, any> {
@@ -34,9 +36,11 @@ export default class Plot extends Component<Props, any> {
   async _getData() {
     let data;
     let success;
-
+    const fullDistribution = true
+      ? this.props.asset.fullDistribution == true
+      : false;
     if (!this.props.bootstrapFCASDistribution) {
-      let result = await this.props.api.fetchFCASDistribution();
+      let result = await this.props.api.fetchFCASDistribution(fullDistribution);
       data = result.data;
       success = result.success;
     } else {
@@ -76,7 +80,6 @@ export default class Plot extends Component<Props, any> {
             asset,
             "fcas"
           );
-
           if (success === true && data) {
             nextHighlightState.push(data);
             nextHighlightedSymbolState.push(data.symbol);
@@ -94,6 +97,9 @@ export default class Plot extends Component<Props, any> {
   }
 
   _update() {
+    if (this.props.autoRefresh !== true) {
+      return;
+    }
     this.interval = setInterval(() => {
       this._getData();
     }, 300000);
@@ -186,7 +192,7 @@ export default class Plot extends Component<Props, any> {
 
     let bucketIndex = scoresToBuckets[asset.value];
 
-    if (!bucketIndex) return;
+    if (bucketIndex == null || bucketIndex == undefined) return;
     let bucket = buckets[bucketIndex];
 
     let index = 0;
@@ -197,15 +203,16 @@ export default class Plot extends Component<Props, any> {
       if (ba.symbol == asset.symbol) {
         index = i;
         if (i === 0) {
-          break;
+          continue;
         }
         const prevAsset = bucket[i - 1];
         if (prevAsset && Math.abs(prevAsset.value - ba.value) <= lineDistance) {
           toClose = true;
         }
-        break;
+        continue;
       }
     }
+
     return { y: 44 - 10 * index, toClose };
   }
 
@@ -216,11 +223,16 @@ export default class Plot extends Component<Props, any> {
     const highlights = this.state.highlights;
 
     distribution = [...distribution, ...highlights];
-
     const xPos = `${(props.metric.fcas / 1000) * 100}%`;
+    const dupes: any = [];
     const highlightedAssets = distribution
       .filter((i: any) => highlightedSymbols.indexOf(i.symbol) > -1)
-      .filter((i: any) => i.symbol != props.symbol.toUpperCase());
+      .filter((i: any) => i.symbol != props.symbol.toUpperCase())
+      .filter((i: any) => {
+        let inList = dupes.indexOf(i.symbol) == -1;
+        dupes.push(i.symbol);
+        return inList;
+      });
 
     const { buckets, scoresToBuckets } = this.getBuckets();
 

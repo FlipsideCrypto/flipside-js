@@ -8,7 +8,7 @@ export default class API {
     this.key = apiKey;
     this.client = axios.create({
       baseURL: "https://api.flipsidecrypto.com/api/v1",
-      params: { api_key: apiKey }
+      params: { api_key: apiKey },
     });
   }
 
@@ -24,7 +24,7 @@ export default class API {
       res = await this.client.request({
         url,
         method,
-        params: params
+        params: params,
       });
       if (res.status >= 200 && res.status < 300) {
         return { data: res.data, success: true };
@@ -43,7 +43,7 @@ export default class API {
   async fetchAssetMetric(id: string, metric: string, days = 7) {
     const sym = `${id}`.toUpperCase();
     return await this._fetch("GET", `/assets/${sym}/metrics/${metric}`, {
-      change_over: days
+      change_over: days,
     });
   }
 
@@ -52,9 +52,9 @@ export default class API {
     return await this._fetch("GET", `/assets/${sym}/metrics`);
   }
 
-  async fetchFCASDistribution() {
+  async fetchFCASDistribution(fullDistribution: boolean = false) {
     return await this._fetch("GET", `/metrics/FCAS/assets`, {
-      visual_distribution: true
+      visual_distribution: !fullDistribution,
     });
   }
 
