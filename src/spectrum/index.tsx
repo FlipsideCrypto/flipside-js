@@ -81,6 +81,7 @@ class Spectrum extends Component<Props, State> {
 
   static defaultProps = {
     mode: "light",
+    autoRefresh: true,
   };
 
   constructor() {

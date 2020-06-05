@@ -32,8 +32,6 @@ export default class Flipside {
 
   spectrum(el: string, opts: SpectrumProps): void {
     const element = document.getElementById(el);
-    // console.log("super: ", Spectrum.defaultProps, opts);
-    // throw Error();
     const props = defaultsWithoutArrays(Spectrum.defaultProps, opts);
 
     render(<Spectrum {...props} api={this.api} />, element);
