@@ -203,13 +203,13 @@ export default class Plot extends Component<Props, any> {
       if (ba.symbol == asset.symbol) {
         index = i;
         if (i === 0) {
-          continue;
+          break;
         }
         const prevAsset = bucket[i - 1];
         if (prevAsset && Math.abs(prevAsset.value - ba.value) <= lineDistance) {
           toClose = true;
         }
-        continue;
+        break;
       }
     }
 
