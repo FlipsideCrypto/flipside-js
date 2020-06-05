@@ -25,6 +25,7 @@ export type AssetType = {
   asset_id?: string;
   symbol?: string;
   highlights?: string[];
+  fullDistribution?: boolean;
   bootstrapAsset?: BootstrapAssetType;
   bootstrapHighlights?: BootstrapHighlightType[];
 };
@@ -52,6 +53,7 @@ export type Props = {
   bootstrapFCASDistribution?: any;
   disableLinks?: boolean;
   linkBootstrap?: WidgetLinksLink[];
+  autoRefresh?: boolean;
 };
 
 type State = {
@@ -79,6 +81,7 @@ class Spectrum extends Component<Props, State> {
 
   static defaultProps = {
     mode: "light",
+    autoRefresh: true,
   };
 
   constructor() {
@@ -90,6 +93,7 @@ class Spectrum extends Component<Props, State> {
     let data: BootstrapAssetType;
     let success: boolean;
     const assetId = this.props.asset.asset_id || this.props.asset.symbol;
+
     if (!this.props.asset.bootstrapAsset) {
       let result = await this.props.api.fetchAssetMetric(assetId, "FCAS");
       data = result.data;
@@ -128,6 +132,9 @@ class Spectrum extends Component<Props, State> {
   }
 
   _update() {
+    if (this.props.autoRefresh !== true) {
+      return;
+    }
     this.interval = window.setInterval(async () => {
       await this._getData();
     }, 90000);

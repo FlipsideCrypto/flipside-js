@@ -33,6 +33,7 @@ export default class Flipside {
   spectrum(el: string, opts: SpectrumProps): void {
     const element = document.getElementById(el);
     const props = defaultsWithoutArrays(Spectrum.defaultProps, opts);
+
     render(<Spectrum {...props} api={this.api} />, element);
   }
 
@@ -46,7 +47,7 @@ export default class Flipside {
 
   createTable(el: string, symbol: string, opts: object) {
     const defaults = {
-      dark: false
+      dark: false,
     };
     const mergedOpts = Object.assign({}, defaults, opts);
 
