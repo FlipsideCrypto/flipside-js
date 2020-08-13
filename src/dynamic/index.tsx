@@ -1,18 +1,12 @@
 import loadJS from "load-js";
 import API from "../api";
-import Flipside from "..";
 import template from "lodash/template";
 import mapValues from "lodash/mapValues";
 
-type Asset = {
-  id?: number;
-  symbol?: string;
-};
-
 type DynamicOpts = {
   widgetId: string;
-  asset: Asset;
   darkMode?: boolean;
+  data?: object;
 };
 
 export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
@@ -36,22 +30,32 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
     );
   }
 
-  const config = interpolateConfig(opts.asset, res.data.function_config);
+  const config = interpolateConfig(res.data.function_config, opts.data);
   fn.call(flipside, el, { ...config, mode: opts.darkMode ? "dark" : "light" });
 }
 
-// Replaces instances of ${asset_id} in the config with the assetId
-function interpolateConfig(asset: any, config: Object): any {
-  return mapValues(config, (value: any) => {
-    const targetAsset =
-      typeof asset == "string" ? asset : asset.id || asset.symbol;
-    if (typeof value === "string") {
-      const compiled = template(value);
-      return compiled({ asset_id: targetAsset });
+function interpolateConfig(functionConfigTemplate: Object, data: Object): any {
+  const jsonConfig = JSON.stringify(functionConfigTemplate);
+  const compiledTemplate = template(jsonConfig);
+  const walk = (d: any): any => {
+    if (typeof d === "string") {
+      let n = parseInt(d);
+      if (!n) return d;
+      return n;
     }
-    if (typeof value === "object") {
-      return interpolateConfig(targetAsset, value);
+
+    if (Array.isArray(d)) {
+      return d.map((item) => {
+        return walk(item);
+      });
     }
-    return value;
-  });
+
+    if (typeof d === "object") {
+      return mapValues(d, (item: any) => {
+        return walk(item);
+      });
+    }
+    return d;
+  };
+  return walk(JSON.parse(compiledTemplate({ ...data })));
 }

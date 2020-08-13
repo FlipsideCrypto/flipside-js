@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>flipside.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="flipside-v1.14.1.js"></script>
+    <script src="flipside-v1.15.0.js"></script>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -13,7 +13,7 @@
           "Segoe UI Symbol";
         padding: 0;
         margin: 0;
-        background-color: #111111 !important;
+        background-color: #fff !important;
       }
 
       text {
@@ -77,9 +77,20 @@
 
       flipside.dynamic("widget", {
         widgetId: "578375af-3467-4742-9863-5ca6f2fa30d1",
-        darkMode: true,
-        asset: {
+        darkMode: false,
+        data: {
+          asset_id: 1,
+        },
+      });
+
+      flipside.dynamic("widget", {
+        widgetId: "26dd8193-b061-4ef5-a49d-b7bf3c282853",
+        darkMode: false,
+        data: {
+          asset_id: 1,
+          metric: "fcas",
           symbol: "BTC",
+          title: "BTC FCAS",
         },
       });
       flipside.chart("chart", {
@@ -120,7 +131,7 @@
       });
 
       flipside.chart("chart2", {
-        mode: "dark",
+        mode: "light",
         title: "Ethereum Health",
         axisTitles: ["FCAS", "Dev"],
         colors: ["#E44C27", "#7FCCC5"],
