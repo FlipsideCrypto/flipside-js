@@ -2,6 +2,7 @@ import { h, Component } from "preact";
 
 type Props = {
   apiKey: string;
+  mode: string;
   url: string;
   width?: number;
   height?: number;
@@ -30,6 +31,7 @@ export default class Frame extends Component<Props, State> {
   static defaultProps = {
     width: "100%",
     height: "100%",
+    mode: "light",
     data: {},
     messageKey: "flipside",
     messagePayloadType: "linkAction",
@@ -68,6 +70,7 @@ export default class Frame extends Component<Props, State> {
     if (!this.ref) return;
 
     const widgetData = {
+      mode: this.props.mode,
       data: this.props.data,
       window: {
         location: {
@@ -100,7 +103,7 @@ export default class Frame extends Component<Props, State> {
 
   render(props: Props, state: State) {
     let url = props.url;
-    let urlParams = { api_key: props.apiKey };
+    let urlParams = { api_key: props.apiKey, mode: props.mode };
     if (
       props.data &&
       typeof props.data === "object" &&
