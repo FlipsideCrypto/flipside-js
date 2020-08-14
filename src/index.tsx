@@ -47,7 +47,10 @@ export default class Flipside {
   }
 
   frame(el: string, opts: any) {
-    render(<Frame {...opts} api={this.api} />, document.getElementById(el));
+    render(
+      <Frame {...opts} apiKey={this.api.key} />,
+      document.getElementById(el)
+    );
   }
 
   createTable(el: string, symbol: string, opts: object) {

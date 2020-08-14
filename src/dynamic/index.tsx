@@ -15,12 +15,14 @@ export default async function dynamic(api: API, el: string, opts: DynamicOpts) {
     throw new Error(`Flipside: dynamic widget loading failed`);
   }
 
-  await loadJS([
-    {
-      url: res.data.js_url,
-      allowExternal: true,
-    },
-  ]);
+  if (res.data && res.data.js_url && res.data.js_url != "none") {
+    await loadJS([
+      {
+        url: res.data.js_url,
+        allowExternal: true,
+      },
+    ]);
+  }
 
   const flipside = new window.Flipside(api.key);
   const fn: any = (flipside as any)[res.data.function_name];
