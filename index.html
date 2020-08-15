@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>flipside.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="flipside-v1.15.0.js"></script>
+    <script src="flipside-v1.16.0.js"></script>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -23,8 +23,13 @@
 
       .wrapper {
         width: 1080px;
+        height: 800px;
         font-weight: 700;
         font-size: 20px;
+      }
+      .frameWidget {
+        width: 100%;
+        height: 100%;
       }
 
       .wrapper p {
@@ -41,6 +46,10 @@
     </style>
   </head>
   <body>
+    <div class="wrapper">
+      <h3>Frame</h3>
+      <div id="frame-widget" class="frameWidget"></div>
+    </div>
     <div class="wrapper">
       <h3>Dynamic</h3>
       <div id="widget"></div>
@@ -74,6 +83,11 @@
 
     <script>
       const flipside = new Flipside("a7936778-4f87-4790-889f-3ab617271458");
+
+      flipside.frame("frame-widget", {
+        url:
+          "https://velocity.flipsidecrypto.com/public/question/3964591d-a657-4432-b3e8-8675bfbfb714",
+      });
 
       flipside.dynamic("widget", {
         widgetId: "578375af-3467-4742-9863-5ca6f2fa30d1",

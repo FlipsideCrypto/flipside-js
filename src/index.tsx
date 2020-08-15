@@ -12,6 +12,7 @@ import Score, { Props as ScoreProps } from "./score";
 import Chart, { Props as ChartProps } from "./chart";
 import Axios from "axios";
 import dynamic from "./dynamic";
+import Frame from "./frame";
 
 export default class Flipside {
   api: API;
@@ -43,6 +44,13 @@ export default class Flipside {
 
   async chart(el: string, opts: any) {
     render(<Chart {...opts} api={this.api} />, document.getElementById(el));
+  }
+
+  frame(el: string, opts: any) {
+    render(
+      <Frame {...opts} apiKey={this.api.key} />,
+      document.getElementById(el)
+    );
   }
 
   createTable(el: string, symbol: string, opts: object) {
