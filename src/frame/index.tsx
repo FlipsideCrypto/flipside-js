@@ -14,19 +14,6 @@ type Props = {
 
 type State = {};
 
-const encodeURLParams = (url: string, data: any): string => {
-  let params = "";
-  for (const key in data) {
-    if (params !== "") {
-      params += "&";
-    }
-    if (data[key] !== undefined && data[key] !== null) {
-      params += key + "=" + encodeURIComponent(data[key]);
-    }
-  }
-  return `${url}?${params}`;
-};
-
 export default class Frame extends Component<Props, State> {
   static defaultProps = {
     width: "100%",
@@ -111,7 +98,8 @@ export default class Frame extends Component<Props, State> {
     ) {
       urlParams = { ...props.data, ...urlParams };
     }
-    url = encodeURLParams(props.url, urlParams);
+    const urlEncodedParams = new URLSearchParams(urlParams).toString();
+    url = `${url}?${urlEncodedParams}`;
 
     return (
       <iframe
