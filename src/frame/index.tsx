@@ -131,7 +131,7 @@ export default class Frame extends Component<Props, State> {
         ref={this.setRef}
         src={url}
         style={{ width: state.width, height: state.height, border: 0 }}
-        width={state.width}
+        width={state.width || "100%"}
         height={state.height}
       />
     );
