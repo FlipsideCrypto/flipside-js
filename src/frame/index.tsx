@@ -4,15 +4,18 @@ type Props = {
   apiKey: string;
   mode: string;
   url: string;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   data?: any;
   messageKey?: string;
   messagePayloadType?: string;
   messagePayloadActionKey?: string;
 };
 
-type State = {};
+type State = {
+  height: string;
+  width: string;
+};
 
 export default class Frame extends Component<Props, State> {
   static defaultProps = {
@@ -28,6 +31,10 @@ export default class Frame extends Component<Props, State> {
   ref: any = null;
   setRef = (dom: any) => (this.ref = dom);
 
+  handleResize = (height: string, width: string) => {
+    this.setState({ height: height, width: width });
+  };
+
   handleMessage = (e: any) => {
     const eventData = e.data;
     if (!eventData) return;
@@ -39,7 +46,15 @@ export default class Frame extends Component<Props, State> {
     } = this.props;
 
     const message = eventData[messageKey];
+
     if (!message) return;
+
+    if (message.type == "sizeAction") {
+      return this.handleResize(
+        message["sizeAction"].height,
+        message["sizeAction"].width
+      );
+    }
 
     if (message.type !== messagePayloadType) return;
 
@@ -52,9 +67,14 @@ export default class Frame extends Component<Props, State> {
     window.location.assign(messageAction);
   };
 
-  componentDidMount() {
+  componentWillMount() {
     window.addEventListener("message", this.handleMessage, false);
     if (!this.ref) return;
+
+    this.setState({
+      height: this.props.height,
+      width: this.props.width,
+    });
 
     const widgetData = {
       mode: this.props.mode,
@@ -73,15 +93,19 @@ export default class Frame extends Component<Props, State> {
         },
       },
     };
-    this.ref.contentWindow.postMessage(
-      {
-        flipsidePartner: {
-          type: "widgetData",
-          widgetData: widgetData,
+    let that = this;
+    let interval = setInterval(() => {
+      that.ref.contentWindow.postMessage(
+        {
+          flipsidePartner: {
+            type: "widgetData",
+            widgetData: widgetData,
+          },
         },
-      },
-      "*"
-    );
+        "*"
+      );
+    }, 200);
+    setTimeout(() => clearInterval(interval), 5000);
   }
 
   componentWillUnmount() {
@@ -98,6 +122,7 @@ export default class Frame extends Component<Props, State> {
     ) {
       urlParams = { ...props.data, ...urlParams };
     }
+
     const urlEncodedParams = new URLSearchParams(urlParams).toString();
     url = `${url}?${urlEncodedParams}`;
 
@@ -105,9 +130,9 @@ export default class Frame extends Component<Props, State> {
       <iframe
         ref={this.setRef}
         src={url}
-        style={{ width: props.width, height: props.height, border: 0 }}
-        width={props.width}
-        height={props.height}
+        style={{ width: state.width, height: state.height, border: 0 }}
+        width={state.width || "100%"}
+        height={state.height}
       />
     );
   }

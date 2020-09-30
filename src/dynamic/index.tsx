@@ -2,6 +2,7 @@ import loadJS from "load-js";
 import API from "../api";
 import template from "lodash/template";
 import mapValues from "lodash/mapValues";
+import { stringify } from "querystring";
 
 type DynamicOpts = {
   widgetId: string;
@@ -42,7 +43,7 @@ function interpolateConfig(functionConfigTemplate: Object, data: Object): any {
   const walk = (d: any): any => {
     if (typeof d === "string") {
       let n = parseInt(d);
-      if (!n) return d;
+      if (!n || (n && JSON.stringify(n).length != d.length)) return d;
       return n;
     }
 
