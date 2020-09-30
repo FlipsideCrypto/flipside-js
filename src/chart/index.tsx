@@ -49,11 +49,11 @@ class Chart extends Component<Props> {
   static defaultProps: Partial<Props> = {
     axisTitles: [],
     mode: "light",
-    exportingEnabled: false
+    exportingEnabled: false,
   };
 
   state = {
-    loading: true
+    loading: true,
   };
 
   container: HTMLElement;
@@ -75,7 +75,7 @@ class Chart extends Component<Props> {
       data = await api.fetchTimeseries({
         series: apiSeries,
         start_date: startDate,
-        end_date: endDate
+        end_date: endDate,
       });
       if (data.data.data.length > 0) {
         this.setState({ loading: false, data: data.data.data });
@@ -103,24 +103,24 @@ class Chart extends Component<Props> {
       {
         series: loadedSeries,
         chart: {
-          renderTo: this.container
+          renderTo: this.container,
         },
         title: {
           text: this.props.title,
-          style: { color: textColor }
+          style: { color: textColor },
         },
 
         legend: {
           enabled: series && series.length > 1,
           itemStyle: { color: textColor },
-          itemHoverStyle: { color: textColor }
+          itemHoverStyle: { color: textColor },
         },
 
         tooltip: {
           backgroundColor: tooltipBackground,
           style: {
-            color: textColor
-          }
+            color: textColor,
+          },
         },
 
         rangeSelector: {
@@ -128,16 +128,16 @@ class Chart extends Component<Props> {
             states: {
               select: {
                 style: {
-                  color: mode === "dark" ? "#fff" : "#000"
-                }
-              }
-            }
-          }
+                  color: mode === "dark" ? "#fff" : "#000",
+                },
+              },
+            },
+          },
         },
 
         xAxis: {
           lineColor: gridLineColor,
-          tickColor: gridLineColor
+          tickColor: gridLineColor,
         },
 
         yAxis: [
@@ -145,18 +145,18 @@ class Chart extends Component<Props> {
             gridLineColor,
             title: {
               text: this.props.axisTitles[0],
-              style: { color: textColor }
-            }
+              style: { color: textColor },
+            },
           }),
           merge({}, DEFAULT_YAXIS, {
             opposite: true,
             gridLineColor,
             title: {
               text: this.props.axisTitles[1],
-              style: { color: textColor }
-            }
-          })
-        ]
+              style: { color: textColor },
+            },
+          }),
+        ],
       },
       rest
     );
@@ -175,7 +175,7 @@ class Chart extends Component<Props> {
             theme: {
               fill: "transparent",
               cursor: "pointer",
-              states: { hover: { fill: "transparent", opacity: 0.7 } }
+              states: { hover: { fill: "transparent", opacity: 0.7 } },
             },
             menuItems: [
               "downloadCSV",
@@ -185,10 +185,10 @@ class Chart extends Component<Props> {
               "downloadPNG",
               "downloadJPEG",
               "downloadPDF",
-              "downloadSVG"
-            ]
-          }
-        }
+              "downloadSVG",
+            ],
+          },
+        },
       };
     } else {
       options.exporting = { enabled: false };
@@ -208,7 +208,7 @@ class Chart extends Component<Props> {
             style={{ display: "block", textAlign: "right" }}
           />
         )}
-        <div ref={el => (this.container = el)} />
+        <div ref={(el) => (this.container = el)} />
       </div>
     );
   }
