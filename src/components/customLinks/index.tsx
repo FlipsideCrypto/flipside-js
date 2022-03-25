@@ -102,12 +102,12 @@ class CustomLinks extends Component<Props, State> {
         <div class={css.wrapper} style={props.style}>
           <span class={linkClass}>
             <a
-              href="https://flipsidecrypto.com/fcas"
+              href="https://flipsidecrypto.com/products/ratings"
               onClick={(e) => {
                 e.stopPropagation();
                 e.cancelBubble;
-                this.sendParentMessage("https://flipsidecrypto.com/fcas");
-                window.location.assign("https://flipsidecrypto.com/fcas");
+                this.sendParentMessage("https://flipsidecrypto.com/products/ratings");
+                window.location.assign("https://flipsidecrypto.com/products/ratings");
               }}
             >
               What's this?
